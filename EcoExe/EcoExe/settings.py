@@ -54,7 +54,7 @@ ROOT_URLCONF = 'EcoExe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["EcoExe/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

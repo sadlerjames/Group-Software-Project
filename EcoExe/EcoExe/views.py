@@ -7,7 +7,7 @@ from django.http import Http404
 
 
 def profile(request):
-    return render(request, "profile.html", context="username")
+    return render(request, "profile.php")
 
 def login(request):
-    return render(request, "login.html")
+    return render(request, "login.php")
