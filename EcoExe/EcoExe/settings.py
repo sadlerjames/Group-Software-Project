@@ -75,14 +75,12 @@ WSGI_APPLICATION = 'EcoExe.wsgi.application'
 
 DATABASES = {
     'default': {
-        #default setting when creating a new project --> 'ENGINE': 'django.db.backends.sqlite3',
-        'ENGINE': 'django.db.backends.mysql',   #setting for MySql
-        'NAME': 'mydb', #'db.sqlite3',     <--- default is the sqlite file, has been changed to refer to a mysql file instead which needs to be stored on the MySQL server
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
         'USER': 'root',
         'PASSWORD': 'admin',
         'HOST':'localhost',
         'PORT':'3306',
-        #the above four lines should satisfy default settings for new installations of MySql
     }
 }
 
