@@ -4,7 +4,8 @@ from django.template import loader
 from django.http import HttpResponse
 from django.http import Http404
 
-
+def home(request):
+    return render(request, "index.php")
 
 def profile(request):
     return render(request, "profile.php")
