@@ -23,6 +23,10 @@ class PasswordChangeDoneView(TemplateView):
     template_name = 'registration/password_change_done.html'
 
 def home(request):
+    #return render(request, "index.html")
+    return render(request, "dashboard.html")
+
+def loginpage(request):
     return render(request, "index.html")
 
 def profile(request):
