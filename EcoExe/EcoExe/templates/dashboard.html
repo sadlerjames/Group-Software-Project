@@ -5,13 +5,11 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-<p>Hi {{ user.username }}!</p>
-
-<p><a href="{% url 'question' %}">question of the day</a></p>
+<p class="bubbly">Hi {{ user.username }}!</p>
 <p><a href="{% url 'password_change' %}">Password Change</a></p>
 <form action="{% url 'logout' %}" method="post">
   {% csrf_token %}
-  <button type="submit">Log Out</button>
+  <button type="submit" class="btn btn-primary btn-block mb-3">Log Out</button>
 </form>
 {% else %}
 {% endif %}
