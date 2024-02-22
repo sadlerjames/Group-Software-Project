@@ -6,3 +6,4 @@ class Profile(models.Model):
     points = models.IntegerField(default=0)
 
 # https://docs.djangoproject.com/en/5.0/topics/auth/customizing/#extending-the-existing-user-model
+# https://docs.djangoproject.com/en/5.0/ref/signals/#django.db.models.signals.post_save
