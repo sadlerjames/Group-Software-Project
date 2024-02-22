@@ -31,6 +31,3 @@ def loginpage(request):
 
 def profile(request):
     return render(request, "profile.html")
-
-def question(request):
-    return render(request, "question.html")

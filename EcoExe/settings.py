@@ -108,9 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-gb'
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'GMT'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -123,7 +123,7 @@ USE_TZ = True
 STATIC_ROOT = BASE_DIR / 'productionfiles'
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / 'mystaticfiles'
 ]
 #https://www.scaler.com/topics/add-css-file-to-django/ 
 #this is the tutorial used to add css and images
