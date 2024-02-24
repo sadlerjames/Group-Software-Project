@@ -1,0 +1,75 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on localhost:8000
+From: webmaster@localhost
+To: t@t.com
+Date: Sat, 24 Feb 2024 16:15:57 -0000
+Message-ID: <170879135751.30524.17158672693747638012@Jamess-MacBook-Air.local>
+
+
+You're receiving this email because you requested a password reset for your user account at localhost:8000.
+
+Please go to the following page and choose a new password:
+
+http://localhost:8000/accounts/reset/NA/c2wt6l-e75f5bd1bdc13dca7481c2f149786a92/
+
+Your username, in case you’ve forgotten: test
+
+Thanks for using our site!
+
+The localhost:8000 team
+
+
+
+-------------------------------------------------------------------------------
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on localhost:8000
+From: webmaster@localhost
+To: t@t.com
+Date: Sat, 24 Feb 2024 16:15:57 -0000
+Message-ID: <170879135753.30524.8713621782354242546@Jamess-MacBook-Air.local>
+
+
+You're receiving this email because you requested a password reset for your user account at localhost:8000.
+
+Please go to the following page and choose a new password:
+
+http://localhost:8000/accounts/reset/NQ/c2wt6l-5127e48decb4e3255243cdd7965223f3/
+
+Your username, in case you’ve forgotten: test1
+
+Thanks for using our site!
+
+The localhost:8000 team
+
+
+
+-------------------------------------------------------------------------------
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on localhost:8000
+From: webmaster@localhost
+To: t@t.com
+Date: Sat, 24 Feb 2024 16:15:57 -0000
+Message-ID: <170879135753.30524.10080102076312148628@Jamess-MacBook-Air.local>
+
+
+You're receiving this email because you requested a password reset for your user account at localhost:8000.
+
+Please go to the following page and choose a new password:
+
+http://localhost:8000/accounts/reset/OA/c2wt6l-4c6793e4d81e685a309217214ae6b9ca/
+
+Your username, in case you’ve forgotten: test2
+
+Thanks for using our site!
+
+The localhost:8000 team
+
+
+
+-------------------------------------------------------------------------------

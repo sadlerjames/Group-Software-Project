@@ -2,7 +2,7 @@
 URL configuration for EcoExe project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+    https://docs.djangoproject.com/en/4.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -16,17 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from . import views
-from .views import *
 
 urlpatterns = [
-    path('', views.loginpage, name="loginpage"),
-    path('accounts/signup/', SignUp.as_view(), name='signup'),
-    path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
-    path('password_change/done/', PasswordChangeDoneView.as_view(), name='password_change_done'),
-    path("accounts/", include("accounts.urls")),
-    path("accounts/", include("django.contrib.auth.urls")),
+
     path('admin/', admin.site.urls),
-    path('profile/', views.profile, name="profile"),
-    path('home/', views.home, name="home")
+    path('accounts/', include('accounts.urls')),
+    path("accounts/", include("django.contrib.auth.urls")),
+    # path("users/", include("django.contrib.auth.urls")),
+    #path('quiz/', include('quiz.urls')),
+    #path('treasurehunt/', include('treasurehunt.urls')),
+    #path('points/', include('points.urls')),
 ]
