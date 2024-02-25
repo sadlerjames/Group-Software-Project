@@ -22,6 +22,8 @@ from .views import *
 urlpatterns = [
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
+    path('quiz/', include('quiz.urls')),
+    path('gamekeeper/', include('gamekeeper.urls')),
     path('accounts/', include('accounts.urls')),
     path("accounts/", include("django.contrib.auth.urls")),
     # path("users/", include("django.contrib.auth.urls")),

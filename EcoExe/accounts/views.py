@@ -22,9 +22,6 @@ class CustomPasswordChangeView(PasswordChangeView):
 class PasswordChangeDoneView(TemplateView):
     template_name = 'registration/password_change_done.html'
 
-class LogIn():
-    success_url = reverse_lazy('signup')
-
 def loginpage(request):
     return render(request, "index.html")
 

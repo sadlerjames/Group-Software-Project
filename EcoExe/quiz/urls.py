@@ -2,7 +2,7 @@
 URL configuration for EcoExe project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+    https://docs.djangoproject.com/en/4.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -20,9 +20,5 @@ from . import views
 from .views import *
 
 urlpatterns = [
-    path('', views.loginpage, name="loginpage"),
-    path('dashboard/', views.dashboard, name="dashboard"),
-    path('signup/', SignUp.as_view(), {'redirect_if_logged_in': 'dashboard/'},  name='signup'),
-    path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
-    path('password_change/done/', PasswordChangeDoneView.as_view(), name='password_change_done'),
+    path('quizzes/', views.quizzes, name='quizzes'),
 ]
