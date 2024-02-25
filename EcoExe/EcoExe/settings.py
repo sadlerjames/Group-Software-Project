@@ -136,3 +136,7 @@ EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Authentication 
+LOGIN_REDIRECT_URL = '/accounts/dashboard'
+LOGOUT_REDIREDT_URL = '/accounts/login'

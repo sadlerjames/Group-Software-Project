@@ -21,6 +21,7 @@ from .views import *
 
 urlpatterns = [
     path('', views.loginpage, name="loginpage"),
+    path('dashboard/', views.dashboard, name="dashboard"),
     path('signup/', SignUp.as_view(), name='signup'),
     path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', PasswordChangeDoneView.as_view(), name='password_change_done'),
