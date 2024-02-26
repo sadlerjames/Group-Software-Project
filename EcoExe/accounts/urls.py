@@ -20,8 +20,8 @@ from . import views
 from .views import *
 
 urlpatterns = [
-    path('userprofile/', views.userprofile, name="userprofile"),
-    path('', views.loginpage, name="loginpage"),
+    # path('userprofile/', views.userprofile, name="userprofile"),
+    path('', views.login_view, name="loginpage"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('signup/', SignUp.as_view(), {'redirect_if_logged_in': 'dashboard/'},  name='signup'),
     path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
