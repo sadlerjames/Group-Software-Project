@@ -1,0 +1,21 @@
+.bg-primary {
+    background-color: #003c3c;
+}
+
+.bg-secondary {
+    background-color: #00DCA5;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items:center;
+}
+
+h1 {
+    color: #ccffbb;
+}
+
+h2 {
+    color: #eeffee
+}

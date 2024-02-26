@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    
+    <link href='https://fonts.googleapis.com/css?family=Bubblegum Sans' rel='stylesheet'>
+    <!-- Bootstrap for bubbly font-->
+
+
+    <base href="/">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/colours.css' %}" />
+    <!-- applying the stylesheet created for the project primarily to maintain consistent colours -->
+
+    <!-- applying bubbly font to elements of the bubble class-->
+    <style lang="css">
+        .bubble {
+            font-family: 'Bubblegum Sans'
+        }
+    </style>
+</head>
+<body>
+    <nav class="bg-primary navbar">
+        <a href="{% url 'dashboard' %}"><img src="{% static 'images/logo.png' %}"><h2>  Dashboard</h2></a>
+        <h1 class="bubble"> EcoExe </h1>
+        <h2 class="bubble">
+            {% if user.is_authenticated %}
+                <a href="{% url 'userprofile' %}" style="text-decoration: none;">{{user.username}}</a>
+            {% else %}
+            {% endif %}
+        </h2>
+    </nav>
+    {% block content %}
+    {% endblock %}
+ 
+</body>
+</html>
