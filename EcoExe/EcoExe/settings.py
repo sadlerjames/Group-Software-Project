@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'gamekeeper',
     'quiz',
     'EcoExe',
+    'points',
+    'userprofile',
 ]
 
 MIDDLEWARE = [
