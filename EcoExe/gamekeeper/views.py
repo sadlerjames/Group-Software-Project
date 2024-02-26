@@ -10,6 +10,7 @@ def loginpage(request):
 
 
 def dashboard(request):
+    
     return render(request, "gamekeeper/dashboard.html")
 
 @csrf_protect

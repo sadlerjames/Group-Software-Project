@@ -146,3 +146,5 @@ LOGIN_REDIRECT_URL = '/accounts/dashboard'
 LOGOUT_REDIREDT_URL = '/accounts/login'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+LOGIN_URL = '/accounts/login'

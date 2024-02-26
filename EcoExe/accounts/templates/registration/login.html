@@ -6,6 +6,9 @@
 <form method="post">
 {% csrf_token %}
 {{ form.as_p }}
+{% if msg %}
+    <div class="error">{{ msg }}</div>
+  {% endif %}
 <button type="submit">Log In</button>
 </form>
 {% endblock %}

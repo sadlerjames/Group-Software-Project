@@ -26,7 +26,7 @@ class PasswordChangeDoneView(TemplateView):
     template_name = 'registration/password_change_done.html'
 
 
-@login_required(login_url='/accounts/login')    
+@login_required()    
 def dashboard(request):
     return render(request, "dashboard.html")
     
@@ -34,18 +34,22 @@ def userprofile(request):
     return render(request, "../userprofile/templates/userprofile.html")
     
 def signup(request):
-    msg = None
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            msg = 'user created'
-            return redirect('login_view')
-        else:
-            msg = 'form is not valid'
+    if request.user.is_authenticated:
+        return redirect('/accounts/dashboard')
     else:
-        form = SignUpForm()
-    return render(request,'registration/signup.html',{'form':form,'msg':msg})
+        msg = None
+        if request.method == 'POST':
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                msg = 'user created'
+                return redirect('/accounts/login')
+            else:
+                print(form.errors)
+                msg = form.errors
+        else:
+            form = SignUpForm()
+        return render(request,'registration/signup.html',{'form':form,'msg':msg})
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -62,11 +66,12 @@ def login_view(request):
                     login(request,user)
                     return redirect('dashboard')
                 else:
-                    msg = 'invalid credentials'
+                    msg = 'Invalid Credentials'
             else:
-                msg = 'error validating form'
-        return render(request,'login.html',{'form':form,'msg':msg})
+                msg = 'Error validating form'
+        return render(request,'registration/login.html',{'form':form,'msg':msg})
 
+@login_required()  
 def logoutview(request):
     logout(request)
     return redirect('/accounts/login')
