@@ -29,7 +29,10 @@ def loginpage(request):
 
 def dashboard(request):
     return render(request, "dashboard.html")
-
+    
+def userprofile(request):
+    return render(request, "../userprofile/templates/userprofile.html")
+    
 def signup(request):
     msg = None
     if request.method == 'POST':
