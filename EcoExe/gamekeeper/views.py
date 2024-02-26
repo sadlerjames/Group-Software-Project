@@ -3,15 +3,17 @@ from .forms import LoginForm
 from django.contrib.auth import authenticate,login
 from accounts.models import User
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
-def loginpage(request):
-    return render(request, "gamekeeper/login.html")
-
-
+@login_required(login_url = '/gamekeeper/login')
 def dashboard(request):
+    if getattr(request.user,'is_gamekeeper'):
+        return render(request, "gamekeeper/dashboard.html")
     
-    return render(request, "gamekeeper/dashboard.html")
+    else:
+        return redirect('/accounts/dashboard')
 
 @csrf_protect
 def login_view(request):
