@@ -20,4 +20,6 @@ from .views import *
 
 urlpatterns = [
     path('leaderboard/', views.leaderboard, name="leaderboard"),
+    #path('get_points/', views.get_points, name='get_points'),
+    path('sort_leaderboard_by_user/', views.sort_leaderboard_by_user, name='sort_leaderboard_by_user'),
 ]

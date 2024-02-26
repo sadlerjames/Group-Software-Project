@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Leaderboard</h1>
+    <table id="points-table" border="1">
+        <thead>
+            <tr>
+                <!-- <th>Quiz ID</th> -->
+                <!-- <th>Quiz Name</th> -->
+                <th>Player Name</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody id="points-table-body">
+            <!-- Points will be displayed here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Perform AJAX request to fetch points data from server
+        $.ajax({
+            // url: '/points/get_points',
+            url: '/points/sort_leaderboard_by_user',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // Clear existing table rows
+                $('#points-table-body').empty();
+                // Iterate through each point and append to table
+                $.each(data, function(index, point) {
+                    $('#points-table-body').append(
+                        '<tr>' +
+                        //'<td>' + point.quiz_id + '</td>' +
+                        //'<td>' + point.quiz_name + '</td>' +
+                        '<td>' + point.username + '</td>' +
+                        '<td>' + point.points + '</td>' +
+                        '</tr>'
+                    );
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Failed to fetch points data:', status, error);
+            }
+        });
+    </script>
+</body>
+</html>
