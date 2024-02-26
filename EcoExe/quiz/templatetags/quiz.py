@@ -1,5 +1,8 @@
 import json
 import random
+import os
+cwd = os.getcwd()
+print(cwd)
 ##create quiz
 ##open existing quiz
 ##add questions and answers to quiz
@@ -52,8 +55,8 @@ class Quiz:
 
 
     def save(self):
-        myDict={'quizName':self.quizName,'questions':self.questions,'answers':self.answers}
-        with open(str(self.id)+'.json',"w") as outf:
+        myDict={'quizName':self.quizName,'questions':self.questions,'answers':self.answers,'correct':self.correct}
+        with open("quiz/templatetags/quizzes/"+str(self.id)+'.json',"w") as outf:
             json.dump(myDict,outf)
 
     def getName(self):
@@ -88,10 +91,13 @@ class Quiz:
 
         self.answers.append(a)
         self.save()
-
+print("LALAAL")
 def load(id):
-        with open(str(id)+'.json') as inf:
+        with open("quiz/templatetags/quizzes/"+str(id)+'.json') as inf:
             myDict=json.load(inf)
         return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id))
 
 
+#a=Quiz("One",["It’s acceptable to toss used automotive oil in with regular residential trash."],[["False","True"]],1)
+#a=load(1)
+#print(a.getAnswer())
