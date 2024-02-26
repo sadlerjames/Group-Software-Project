@@ -9,7 +9,8 @@ from django.contrib.auth.views import PasswordChangeView
 from django.views.generic import CreateView
 from .forms import CustomPasswordChangeForm
 from django.views.generic import TemplateView
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login, logout
+from django.contrib.auth.decorators import login_required
 
 class SignUp(generic.CreateView):
     form_class = CustomUserCreationForm
@@ -24,9 +25,8 @@ class CustomPasswordChangeView(PasswordChangeView):
 class PasswordChangeDoneView(TemplateView):
     template_name = 'registration/password_change_done.html'
 
-def loginpage(request):
-    return render(request, "index.html")
 
+@login_required(login_url='/accounts/login')    
 def dashboard(request):
     return render(request, "dashboard.html")
     
@@ -48,18 +48,25 @@ def signup(request):
     return render(request,'registration/signup.html',{'form':form,'msg':msg})
 
 def login_view(request):
-    form = LoginForm(request.POST or None)
-    msg = None
-    if request.method == 'POST':
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username,password=password)
-            if user is not None:
-                login(request,user)
-                return redirect('dashboard')
+    if request.user.is_authenticated:
+        return redirect('/accounts/dashboard')
+    else:
+        form = LoginForm(request.POST or None)
+        msg = None
+        if request.method == 'POST':
+            if form.is_valid():
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
+                user = authenticate(username=username,password=password)
+                if user is not None:
+                    login(request,user)
+                    return redirect('dashboard')
+                else:
+                    msg = 'invalid credentials'
             else:
-                msg = 'invalid credentials'
-        else:
-            msg = 'error validating form'
-    return render(request,'login.html',{'form':form,'msg':msg})
+                msg = 'error validating form'
+        return render(request,'login.html',{'form':form,'msg':msg})
+
+def logoutview(request):
+    logout(request)
+    return redirect('/accounts/login')

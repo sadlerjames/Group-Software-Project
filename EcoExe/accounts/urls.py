@@ -26,4 +26,5 @@ urlpatterns = [
     path('signup/', SignUp.as_view(), {'redirect_if_logged_in': 'dashboard/'},  name='signup'),
     path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', PasswordChangeDoneView.as_view(), name='password_change_done'),
+    path('logout/', views.logoutview, name='logout')
 ]
