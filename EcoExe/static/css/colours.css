@@ -1,9 +1,9 @@
-#bg-primary {
-    background-color: green;
+.bg-primary {
+    background-color: #003c3c;
 }
 
 .bg-secondary {
-    background-color: purple;
+    background-color: #00DCA5;
 }
 
 .navbar {
