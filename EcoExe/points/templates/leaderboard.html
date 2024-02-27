@@ -8,46 +8,116 @@
 </head>
 <body>
     <h1>Leaderboard</h1>
-    <table id="points-table" border="1">
-        <thead>
-            <tr>
-                <!-- <th>Quiz ID</th> -->
-                <!-- <th>Quiz Name</th> -->
-                <th>Player Name</th>
-                <th>Points</th>
-            </tr>
-        </thead>
-        <tbody id="points-table-body">
-            <!-- Points will be displayed here -->
-        </tbody>
-    </table>
+
+    <div id="ajax-response">
+        <select id="leaderboard-options" class="dropdown">
+            <option leaderboard="overall">Overall Leaderboard</option>
+        </select>
+    
+        <select id="filter-options" class="dropdown">
+            <option filter="all-time">All-Time</option>
+            <option filter="past-year">Past Year</option>
+            <option filter="past-month">Past Month</option>
+            <option filter="past-week">Past Week</option>
+            <option filter="past-day">Past Day</option>
+        </select>
+
+        <table id="points-table" border="1">
+            <thead>
+                <tr>
+                    <th>Player Name</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody id="points-table-body">
+                <!-- Points will be displayed here -->
+            </tbody>
+        </table>
+    </div>
 
     <script>
-        // Perform AJAX request to fetch points data from server
-        $.ajax({
-            // url: '/points/get_points',
-            url: '/points/sort_leaderboard_by_user',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                // Clear existing table rows
-                $('#points-table-body').empty();
-                // Iterate through each point and append to table
-                $.each(data, function(index, point) {
-                    $('#points-table-body').append(
-                        '<tr>' +
-                        //'<td>' + point.quiz_id + '</td>' +
-                        //'<td>' + point.quiz_name + '</td>' +
-                        '<td>' + point.username + '</td>' +
-                        '<td>' + point.points + '</td>' +
-                        '</tr>'
-                    );
+        $(document).ready(function(){
+            // Fetch options from server and populate dropdown
+            $.ajax({
+                url: '/points/fetch_options',
+                type: 'GET',
+                dataType: 'json',
+                success: function(options) {
+                var dropdown = $('#leaderboard-options');
+                $.each(options, function(index, value) {
+                    dropdown.append($('<option>').text('Quiz: ' + value.quiz_name).attr('leaderboard', value.quiz_id));
                 });
-            },
-            error: function(xhr, status, error) {
-                console.error('Failed to fetch points data:', status, error);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    $('#ajax-response').html('Error occurred while fetching options.');
+                }
+            });
+
+            // Event listener for dropdown change
+            $('.dropdown').change(function(){
+                var option = $('#leaderboard-options').find('option:selected').attr('leaderboard');
+                var filter_option = $('#filter-options').find('option:selected').attr('filter');
+                if(option && filter_option) {
+                    $.ajax({
+                        url: '/points/get_points',
+                        data: { 
+                            "quiz_id": option,
+                            "filter": filter_option
+                        },
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            // Clear existing table rows
+                            $('#points-table-body').empty();
+                            // Iterate through each point and append to table
+                            $.each(data, function(index, point) {
+                                $('#points-table-body').append(
+                                    '<tr>' +
+                                    '<td>' + point.username + '</td>' +
+                                    '<td>' + point.points + '</td>' +
+                                    '</tr>'
+                                );
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Failed to fetch points data:', status, error);
+                        }
+                    });
+                }
+            });
+            });
+
+        // Perform AJAX request on page load to fetch points data from server for first dropdown option
+        var option = $('#leaderboard-options').find('option:selected').attr('leaderboard');
+        var filter_option = $('#filter-options').find('option:selected').attr('filter');
+            if(option && filter_option) {
+                $.ajax({
+                    url: '/points/get_points',
+                    data: { 
+                        "quiz_id": option,
+                        "filter": filter_option
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        // Clear existing table rows
+                        $('#points-table-body').empty();
+                        // Iterate through each point and append to table
+                        $.each(data, function(index, point) {
+                            $('#points-table-body').append(
+                                '<tr>' +
+                                '<td>' + point.username + '</td>' +
+                                '<td>' + point.points + '</td>' +
+                                '</tr>'
+                            );
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to fetch points data:', status, error);
+                    }
+                });
             }
-        });
     </script>
 </body>
 </html>
