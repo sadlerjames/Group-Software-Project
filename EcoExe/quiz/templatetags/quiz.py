@@ -22,6 +22,7 @@ def find(list,a):
             return i
     return -1
 
+#print(find([0,1,2,3,4,5],0))
 
 '''
 quizName is the name of the quiz
@@ -45,7 +46,9 @@ class Quiz:
         self.correct=[]
         for i in range(len(answers)):
             tempCor=answers[i][0]
-            random.shuffle(answers[i])
+            #print("tempCorr "+tempCor)
+            #random.shuffle(answers[i])
+            #print("find "+str(find(answers[i],tempCor)))
             self.correct.append(find(answers[i],tempCor))
         self.answers=answers
         self.id=id
@@ -98,6 +101,6 @@ def load(id):
         return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id))
 
 
-#a=Quiz("One",["It’s acceptable to toss used automotive oil in with regular residential trash."],[["False","True"]],1)
+#a=Quiz("One",["It’s acceptable to toss used automotive oil in with regular residential trash.","Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"],[["False","True"],["$130","$12","$60"]],1)
 #a=load(1)
 #print(a.getAnswer())

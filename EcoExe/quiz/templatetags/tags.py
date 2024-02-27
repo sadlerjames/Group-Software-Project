@@ -109,9 +109,19 @@ def load(id):
 register=template.Library()
 
 @register.simple_tag
-def get_quiz():
+def get_question(a):
     #return "It\u2019s acceptable to toss used automotive oil in with regular residential trash."
     #perform some random computation
-    myQ= Quiz("One",["It’s acceptable to toss used automotive oil in with regular residential trash."],[["False","True"]],1)
+    myQ= load(1)
     #return "It\u2019s acceptable to toss used automotive oil in with regular residential trash."
-    return myQ.getQA(0)[0]
+    return myQ.getQuestion(a)
+
+@register.simple_tag
+def get_answers(a):
+    myQ=load(1)
+    return myQ.getAnswer(a)
+
+@register.simple_tag
+def get_correct(a):
+    myQ=load(1)
+    return myQ.getCorrect(a)

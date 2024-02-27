@@ -12,7 +12,12 @@ from django import template
 
 register=template.Library()
 @register.tag_function
-def getQuiz():
+def getQ(a):
     #perform some random computation
     myQ= q.load(1)
-    return myQ.getQA(0),myQ.getCorrect(0)
+    return myQ.getQ(a)
+
+@register.tag_function
+def getA(a):
+    myQ=q.load(1)
+    return myQ.get

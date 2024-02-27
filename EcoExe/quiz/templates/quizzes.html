@@ -1,5 +1,11 @@
 {% load tags %}
 <html>
     <h1>Quiz homepage</h1>
-    <strong> {% get_quiz %} </strong>
+    <strong> {% get_question 0 %} </strong>
+    <strong> {% get_answers 0 %} </strong>
+    <strong> {% get_correct 0 %} </strong>
+    <br></br>
+    <strong> {% get_question 1 %} </strong>
+    <strong> {% get_answers 1 %} </strong>
+    <strong> {% get_correct 1 %} </strong>
 </html>
