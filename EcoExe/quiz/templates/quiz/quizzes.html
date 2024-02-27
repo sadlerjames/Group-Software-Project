@@ -1,0 +1,100 @@
+{% load tags %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='UTF-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+		<link rel="stylesheet" href="{% static 'css/qrreader.css' %}" />
+	</head>
+
+	<body>
+		<h1>Quiz homepage</h1>
+		<!--<strong> {% get_quiz %} </strong>-->
+		<div class='container'>
+			<h1>Scan QR Codes</h1>
+			<div class='section'>
+				<div id='reader'></div>
+				<div id='questiondiv' hidden></div>
+			</div>
+		</div>
+		<script src="https://unpkg.com/html5-qrcode" type='text/javascript'></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.js" type='text/javascript'></script>
+		<script>
+			const reader = new Html5Qrcode('reader');
+			var responseReceived = false;
+			if(!responseReceived) {
+				function qrCodeSuccessCallback(decodedText,decodedResult) {
+					if(!responseReceived) {
+					responseReceived = true;
+						var csrftoken = jQuery('[name=csrfmiddlewaretoken]').val();
+					alert('gewgoiaheioghoo');
+				
+					function getResponseReceived() {
+						return responseReceived;
+					}
+					
+					function csrfSafeMethod(method) {
+						return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+					}
+					
+					$.ajaxSetup({
+						beforeSend: function(xhr,settings) {
+							if(!csrfSafeMethod(settings.type) && !this.crossDomain) {
+								xhr.setRequestHeader('X-CSRFToken',csrftoken);
+							}
+						}
+					});
+					
+					$.ajax({
+						url: "{% url 'get_quiz' %}",
+						data: {
+							'getdata': JSON.stringify(decodedText),
+						},
+						dataType: 'json',
+						success: function(res,status) {
+						/*
+							alert(res['questions']);
+							alert(status);
+							*/
+							alert(responseReceived);
+							const readerdiv = document.getElementById('reader');
+							const questiondiv = document.getElementById('questiondiv');
+							readerdiv.hidden = true;
+							questiondiv.hidden = false;
+							
+							const question = document.createElement('h2');
+							question.appendChild(document.createTextNode(res['questions']));
+							//const choices = document.createElement('');
+							questiondiv.appendChild(question);
+							alert('test');
+						},
+						error: function(err) {
+							alert('error');
+							alert(err.status);
+						}
+					});
+					
+					$(document).ajaxStop(() => {
+						alert("AJAX completed");
+					});
+					}
+			}
+			}
+			const config = {
+				fps:10,
+				qrbox: {
+					width:250,
+					height:250
+				}
+			};
+
+			reader.start({facingMode:'user'},config,qrCodeSuccessCallback).catch(err => {alert(err);});
+
+
+			reader.stop().catch(err => {
+				alert('stop failed');
+			});
+		</script>
+	</body>
+</html>

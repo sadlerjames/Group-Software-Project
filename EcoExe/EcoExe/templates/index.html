@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<head>
-    <title>EcoExe</title>
-</head>
-<body>
-    <h1>Welcome to EcoExe!</h1>
-    {% if user.is_authenticated %}
-        <a href="/accounts/dashboard">dashboard</a>
-    
-    {% else %}
-        <a href="/accounts/login">Login</a>
-        <br>
-        <a href="/accounts/signup">Sign Up</a>
-        <br>
-        <a href="/gamekeeper/login">Game Keeper Login</a>
-    {% endif %}
-</body>
+<html>
+	<head>
+		<title>EcoExe</title>
+	</head>
+	<body>
+		<h1>Welcome to EcoExe!</h1>
+		{% if user.is_authenticated %}
+			<a href="/accounts/dashboard">dashboard</a>
+		
+		{% else %}
+			<a href="/accounts/login">Login</a>
+			<br>
+			<a href="/accounts/signup">Sign Up</a>
+			<br>
+			<a href="/gamekeeper/login">Game Keeper Login</a>
+			<br>
+			<a href='/quiz/quizzes'>Start Quiz</a>
+		{% endif %}
+	</body>
 </html>

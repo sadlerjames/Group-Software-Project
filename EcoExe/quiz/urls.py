@@ -17,8 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
-from .views import *
+#from .views import *
 
 urlpatterns = [
     path('quizzes/', views.quizzes, name='quizzes'),
+    path('quizzes/get_quiz', views.get_quiz, name='get_quiz'),
 ]
