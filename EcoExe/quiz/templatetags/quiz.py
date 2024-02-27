@@ -63,7 +63,7 @@ class Quiz:
             json.dump(myDict,outf)
 
     def getName(self):
-         return self.Name
+         return self.quizName
 
     def getQuestion(self,n=-1):
         if n==-1:
