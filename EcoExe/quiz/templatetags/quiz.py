@@ -36,19 +36,31 @@ a question cannot be added without at least one answer
 load will load a quiz given its id and return a Quiz object
 '''
 class Quiz:
-    def __init__(self,quizName,questions=[],answers=[[]],id=0):
+    def __init__(self,quizName,questions=[],answers=[[]],id=0,correct=[]):
+        print(correct)
+        print(questions)
+        if len(correct)!=len(questions):
+            if correct==[]:
+                #print("J")
+                for i in range(len(questions)):
+                    correct.append(0)
+            else:
+                raise exception_maker(ValueError,"number of correct answer index is wrong")
+        
         if quizName==None:
             raise exception_maker(ValueError,"quizName can't be None")
         self.quizName=quizName
         if len(questions)!=len(answers):
             raise exception_maker(AttributeError,"questions length must be answers length")
         self.questions=questions
+        #self.correct=correct
         self.correct=[]
         for i in range(len(answers)):
-            tempCor=answers[i][0]
+            print(i)
+            tempCor=answers[i][correct[i]]
             #print("tempCorr "+tempCor)
-            #random.shuffle(answers[i])
-            #print("find "+str(find(answers[i],tempCor)))
+            random.shuffle(answers[i])
+            print("find "+str(find(answers[i],tempCor)))
             self.correct.append(find(answers[i],tempCor))
         self.answers=answers
         self.id=id
@@ -94,11 +106,11 @@ class Quiz:
 
         self.answers.append(a)
         self.save()
-print("LALAAL")
+
 def load(id):
         with open("quiz/templatetags/quizzes/"+str(id)+'.json') as inf:
             myDict=json.load(inf)
-        return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id))
+        return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id,myDict['correct']))
 
 
 #a=Quiz("One",["It’s acceptable to toss used automotive oil in with regular residential trash.","Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"],[["False","True"],["$130","$12","$60"]],1)
