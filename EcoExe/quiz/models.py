@@ -1,4 +1,7 @@
+#Authored by Finn
 from django.db import models
+import quiz as q
+from django import template
 
 # Create your models here.
 class Quizzes(models.Model):
@@ -6,9 +9,6 @@ class Quizzes(models.Model):
     points=models.IntegerField(default=0)
     def __str__(self):
         return self.id
-    
-import quiz as q
-from django import template
 
 register=template.Library()
 @register.tag_function

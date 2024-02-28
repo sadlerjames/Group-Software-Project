@@ -1,18 +1,13 @@
 #Authored by Sam Arrowsmith, Finn Ashby, Dan Harkness-Moore
 
 from django.shortcuts import render
-#<<<<<<< HEAD
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 import json
 import ast
-#=======
-from quiz.templatetags.quiz import Quiz, load
+from quiz.templatetags.quiz import load
 # Create your views here.
-#>>>>>>> 2be866cdc4c145ecdba944b25ba25cd05305cac6
-
 
 def quizzes(request):
-#<<<<<<< HEAD
     return render(request, 'quiz/quiznew.html')
 
 def get_quiz(request):

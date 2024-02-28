@@ -1,8 +1,8 @@
 <!-- Authored by Sam Arrowsmith, Jack Hales -->
 <html lang="en">
 <head>
+    <!-- This 'if' block will redirect any page in the site to the login/signup if the user is not authenticated -->
     {% if user.is_authenticated %}
-        <!-- This 'if' block will redirect any page in the site to the login/signup if the user is not authenticated -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{% endblock %}</title>

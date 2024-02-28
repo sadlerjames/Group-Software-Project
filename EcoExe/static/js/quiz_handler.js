@@ -1,4 +1,3 @@
-console.log(111);
 var opt0 = document.getElementsByClassName("0 ");
 var opt1 = document.getElementsByClassName("1 ");
 var opt2 = document.getElementsByClassName("2 ");

@@ -1,16 +1,10 @@
 # Authored by Jack Hales
 
-from django.shortcuts import get_object_or_404, render
-from django.template import loader
-from django.http import HttpResponse
+from django.shortcuts import render
 from django.http import Http404
 from django.http import JsonResponse
-from django.urls import reverse_lazy
-from django.views import generic
-from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.utils import timezone
-from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from collections import defaultdict
 from operator import itemgetter

@@ -25,9 +25,9 @@ class QuizCreationForm(forms.Form):
     extra_field_count = forms.CharField(widget = forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
-        extra_fields = kwargs.pop('extra', 0)    
+        extra_fields = kwargs.pop('extra', 0) #get the extra argument passed in
         super(QuizCreationForm, self).__init__(*args, **kwargs)
-        self.fields['extra_field_count'].initial = extra_fields
+        self.fields['extra_field_count'].initial = extra_fields #initialise the form with extra fields
 
         #add in the extra fields for added questions and answers
         for i in range(1,int(extra_fields)):
