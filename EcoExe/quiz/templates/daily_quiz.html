@@ -1,0 +1,202 @@
+{% load tags %}
+<html>
+    <!-- 
+        Authored by Sam Arrowsmith
+    -->
+
+    <style lang="css">
+        .hideMe {
+            visibility: hidden;
+        }
+        .btn-group button {
+            background-color: #04AA6D; /* Green background */
+            border: 1px solid green; /* Green border */
+            color: white; /* White text */
+            padding: 10px 24px; /* Some padding */
+            cursor: pointer; /* Pointer/hand icon */
+            float: left; /* Float the buttons side by side */
+          }
+          
+          .btn-group button:not(:last-child) {
+            border-right: none; /* Prevent double borders */
+          }
+          
+          /* Clear floats (clearfix hack) */
+          .btn-group:after {
+            content: "";
+            clear: both;
+            display: table;
+          }
+          
+          /* Add a background color on hover */
+          .btn-group button:hover {
+            background-color: #3e8e41;
+          }
+    </style>
+    <body id="body">
+    <h1>Quiz loaded: {{id}}</h1>
+    <br>
+    <p id="timer"></p>
+    {% for correctOption in correct %}
+        <p class="correctOption">{{correctOption}}</p>
+    {% endfor %}
+    {% for option in answer0 %}
+            <button class="0 answer-button">{{option}}</button>
+            <br>
+    {% endfor %}
+
+    {% for option in answer1 %}
+            <button class="1 answer-button">{{option}}</button>
+            <br>
+    {% endfor %}
+
+    {% for option in answer2 %}
+            <button class="2 answer-button">{{option}}</button>
+            <br>
+    {% endfor %}
+
+    {% for option in answer3 %}
+            <button class="3 answer-button">{{option}}</button>
+            <br>
+    {% endfor %}
+
+    {% for question in questions %}
+        <h2>{{question}}</h2>
+        <div class="btn-group unclicked" style="width:100%">
+        </div>
+    {% endfor %}
+
+    <script lang="javascript">
+
+        var pointsEarned = 0;
+
+        var timeUp = false;
+
+        var btnGroups = Array.from(document.getElementsByClassName("btn-group"));
+        var option0 = Array.from(document.getElementsByClassName("0"));
+        var option1 = Array.from(document.getElementsByClassName("1"));
+        var option2 = Array.from(document.getElementsByClassName("2"));
+        var option3 = Array.from(document.getElementsByClassName("3"));
+
+        var correctAnswers = Array.from(document.getElementsByClassName("correctOption"));
+
+        for(let i = 0; i < btnGroups.length; i++){
+            btnGroups[i].setAttribute("id", i);
+            console.log(correctAnswers[i].id)
+            if(option0[i].textContent != "EMPTY ANSWER"){
+                if(option0[i].textContent == correctAnswers[i].textContent){
+                    option0[i].classList.add("correctButton");
+                    console.log("ADDED");
+                }
+                btnGroups[i].appendChild(option0[i]);
+                
+            }
+            else{
+                option0[i].style.visibility = "hidden";
+            }
+            if(option1[i].textContent != "EMPTY ANSWER"){
+                if(option1[i].textContent == correctAnswers[i].textContent){
+                    option1[i].classList.add("correctButton");
+                    console.log("ADDED");
+                }
+                btnGroups[i].appendChild(option1[i]);
+            }
+            else{
+                option1[i].style.visibility = "hidden";
+            }
+            if(option2[i].textContent != "EMPTY ANSWER"){
+                if(option2[i].textContent == correctAnswers[i].textContent){
+                    option2[i].classList.add("correctButton");
+                    console.log("ADDED");
+                }
+                btnGroups[i].appendChild(option2[i]);
+            }
+            else{
+                option2[i].style.visibility = "hidden";
+            }
+            if(option3[i].textContent != "EMPTY ANSWER"){
+                if(option3[i].textContent == correctAnswers[i].textContent){
+                    option3[i].classList.add("correctButton");
+                    console.log("ADDED");
+                }
+                btnGroups[i].appendChild(option[i]);
+            }
+            else{
+                option3[i].style.visibility = "hidden";
+            }
+        }
+
+        buttons = document.querySelectorAll(".answer-button");
+        [...buttons].forEach(
+            (button)=> 
+            {
+            button.addEventListener( 'click', function() {
+                if(!timeUp){
+                    if(button.parentNode.classList.contains("unclicked") ){
+                        if(button.classList.contains("correctButton")){
+                            alert("correct!");
+                            pointsEarned += 10;
+                        }
+                        else{
+                            alert("wrong!");
+                        }
+                        button.parentNode.classList.remove("unclicked");
+                        button.parentNode.classList.add("clicked");
+                    }
+                    
+                }
+            })
+        }
+        );
+
+        
+
+
+        var defaultTime = 10;  //the time that is allotted per Quiz
+        var timer = document.getElementById("timer");
+
+        function delay(milliseconds){
+            return new Promise(resolve => {
+                setTimeout(resolve, milliseconds);
+            });
+        }
+
+        async function startTimer(){
+            var groups = Array.from(document.getElementsByClassName("btn-group"));
+            var count = 0;
+            groups.forEach((group)=>{
+                if(group.classList.contains("clicked")){
+                    count++;
+                }
+            });
+            if(count == groups.length){
+                //end of quiz, all questions completed
+                endQuiz();
+            }
+            else{
+                if(defaultTime > -1){
+                    timer.textContent = "Time remaining: " + defaultTime;
+                    defaultTime--;
+                    await delay(1000);
+                    startTimer();
+                }
+                else{
+                    endQuiz();
+                }
+            }
+            
+        }
+        startTimer();
+        function endQuiz(){
+            alert("Quiz done! Points earned: " + pointsEarned);
+            var link = document.createElement("a");
+            var returnToDashboard = document.createElement("button");
+            returnToDashboard.textContent = "Return to dashboard";
+            link.href="../../accounts/dashboard";
+            link.appendChild(returnToDashboard);
+            document.getElementById("body").appendChild(link);
+        }
+        
+    </script>
+    </body>
+</html>
