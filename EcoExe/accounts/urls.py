@@ -22,11 +22,12 @@ from . import views
 from .views import *
 
 urlpatterns = [
-    # path('userprofile/', views.userprofile, name="userprofile"),
+    path('', views.dashboard, name="dashboard"),
     path('login/', views.login_view, name="loginpage"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('signup/', views.signup, name='signup'),
     path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', PasswordChangeDoneView.as_view(), name='password_change_done'),
-    path('logout/', views.logoutview, name='logout')
+    path('logout/', views.logoutview, name='logout'),
+    path('profile/', views.userprofile, name='profile'),
 ]
