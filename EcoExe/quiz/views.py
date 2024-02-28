@@ -1,16 +1,16 @@
 from django.shortcuts import render
-<<<<<<< HEAD
+#<<<<<<< HEAD
 from django.http import JsonResponse, HttpResponse
 import json
 import ast
-=======
+#=======
 from quiz.templatetags.quiz import Quiz, load
 # Create your views here.
->>>>>>> 2be866cdc4c145ecdba944b25ba25cd05305cac6
+#>>>>>>> 2be866cdc4c145ecdba944b25ba25cd05305cac6
 
 
 def quizzes(request):
-<<<<<<< HEAD
+#<<<<<<< HEAD
     return render(request, 'quiz/quiznew.html')
 
 def get_quiz(request):
@@ -21,7 +21,7 @@ def get_quiz(request):
             question = json.load(inf)
             print(question)
         return JsonResponse(question)
-=======
+#=======
     context = {}
     quiz = load(1)
     context['id'] = quiz.id
@@ -52,4 +52,4 @@ def get_quiz(request):
 
     context['correct'] = correct
     return render(request, 'quizzes.html', context)
->>>>>>> 2be866cdc4c145ecdba944b25ba25cd05305cac6
+#>>>>>>> 2be866cdc4c145ecdba944b25ba25cd05305cac6
