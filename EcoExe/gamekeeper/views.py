@@ -62,7 +62,7 @@ def creation_view(request):
                     i+=1
 
                 #call the quiz class to save the quiz to json file
-                Quiz(quizName, questions, answers, id=None,[], quizPoints)
+                Quiz(quizName, questions, answers,correct=[],noPoints= quizPoints)
                 return redirect('/gamekeeper/quiz/create')
 
             else:
