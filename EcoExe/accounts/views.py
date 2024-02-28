@@ -33,7 +33,7 @@ def dashboard(request):
     return render(request, "dashboard.html")
     
 def userprofile(request):
-    return render(request, "../userprofile/templates/userprofile.html")
+    return render(request, "profile.html")
     
 def signup(request):
     if request.user.is_authenticated:

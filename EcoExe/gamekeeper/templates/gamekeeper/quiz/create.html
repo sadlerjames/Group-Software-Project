@@ -1,13 +1,14 @@
+<!--Authored by George Piper and James Sadler-->
 <html>
-    
     <head>
         <title>Create a Quiz</title>
         {% load static %}
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="{% static '/gamekeeper/js/create.js' %}"></script>
-
     </head>
     <body>
+        <h1>Create a Quiz</h1>
+        <p>Please enter the correct answer first</p>
         <form method="post">
             {% csrf_token %}
             <div id="forms">

@@ -1,3 +1,5 @@
+#Authored by George Piper and James Sadler
+
 from django import forms
 
 class LoginForm(forms.Form):
@@ -27,6 +29,7 @@ class QuizCreationForm(forms.Form):
         super(QuizCreationForm, self).__init__(*args, **kwargs)
         self.fields['extra_field_count'].initial = extra_fields
 
-        for index in range(1,int(extra_fields)):
-            self.fields['extra_field_{index}'.format(index=index)] = \
+        #add in the extra fields for added questions and answers
+        for i in range(1,int(extra_fields)):
+            self.fields['extra_field_{index}'.format(index=i)] = \
                 forms.CharField()
