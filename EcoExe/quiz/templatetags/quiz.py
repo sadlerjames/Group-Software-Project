@@ -1,6 +1,8 @@
 import json
 import random
 import os
+from .. import models
+from django.db.utils import IntegrityError
 cwd = os.getcwd()
 print(cwd)
 ##create quiz
@@ -22,6 +24,7 @@ def find(list,a):
             return i
     return -1
 
+#print(find([0,1,2,3,4,5],0))
 
 '''
 quizName is the name of the quiz
@@ -35,20 +38,35 @@ a question cannot be added without at least one answer
 load will load a quiz given its id and return a Quiz object
 '''
 class Quiz:
-    def __init__(self,quizName,questions=[],answers=[[]],id=0):
+    def __init__(self,quizName,questions=[],answers=[[]],id=0,correct=[],noPoints=10):
+        #print(correct)
+        #print(questions)
+        if len(correct)!=len(questions):
+            if correct==[]:
+                #print("J")
+                for i in range(len(questions)):
+                    correct.append(0)
+            else:
+                raise exception_maker(ValueError,"number of correct answer index is wrong")
+        
         if quizName==None:
             raise exception_maker(ValueError,"quizName can't be None")
         self.quizName=quizName
         if len(questions)!=len(answers):
             raise exception_maker(AttributeError,"questions length must be answers length")
         self.questions=questions
+        #self.correct=correct
         self.correct=[]
         for i in range(len(answers)):
-            tempCor=answers[i][0]
+            #print(i)
+            tempCor=answers[i][correct[i]]
+            #print("tempCorr "+tempCor)
             random.shuffle(answers[i])
+            #print("find "+str(find(answers[i],tempCor)))
             self.correct.append(find(answers[i],tempCor))
         self.answers=answers
         self.id=id
+        self.points=noPoints
         self.save()
 
 
@@ -58,9 +76,13 @@ class Quiz:
         myDict={'quizName':self.quizName,'questions':self.questions,'answers':self.answers,'correct':self.correct}
         with open("quiz/templatetags/quizzes/"+str(self.id)+'.json',"w") as outf:
             json.dump(myDict,outf)
+        try :
+            models.Quizzes.objects.create(id=self.id,points=self.points)
+        except IntegrityError:
+            return
 
     def getName(self):
-         return self.Name
+         return self.quizName
 
     def getQuestion(self,n=-1):
         if n==-1:
@@ -91,13 +113,13 @@ class Quiz:
 
         self.answers.append(a)
         self.save()
-print("LALAAL")
+
 def load(id):
         with open("quiz/templatetags/quizzes/"+str(id)+'.json') as inf:
             myDict=json.load(inf)
-        return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id))
+        return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id,myDict['correct']))
 
 
-#a=Quiz("One",["It’s acceptable to toss used automotive oil in with regular residential trash."],[["False","True"]],1)
+#a=Quiz("One",["It’s acceptable to toss used automotive oil in with regular residential trash.","Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"],[["False","True"],["$130","$12","$60"]],8)
 #a=load(1)
 #print(a.getAnswer())
