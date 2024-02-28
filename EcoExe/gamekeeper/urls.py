@@ -22,5 +22,6 @@ from .views import *
 urlpatterns = [
     path('login/', views.login_view,  name='login'),
     path('dashboard/', views.dashboard, name="dashboard"),
+    path('quiz/create/', views.creation_view, name="create"),
 ]
 
