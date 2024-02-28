@@ -1,6 +1,8 @@
 {% load tags %}
 <html>
-    <!--Authored by Sam Arrowsmith-->
+    <!-- 
+        Authored by Sam Arrowsmith
+    -->
 
     <style lang="css">
         .hideMe {
@@ -30,17 +32,20 @@
           .btn-group button:hover {
             background-color: #3e8e41;
           }
+          /*Quite an ad hoc solution to getting a basic daily quiz to work */
     </style>
     <body id="body">
     <h1>Quiz loaded: {{id}}</h1>
     <br>
     <p id="timer"></p>
     {% for correctOption in correct %}
-        <p class="correctOption">{{correctOption}}</p>
+        <!-- create the correct answers as hidden DOM elements so that they can be accessed by javascript -->
+        <p class="correctOption hideMe">{{correctOption}}</p>
     {% endfor %}
     {% for option in answer0 %}
-            <button class="0 answer-button">{{option}}</button>
-            <br>
+        <!-- create options for each question-->
+        <button class="0 answer-button">{{option}}</button>
+        <br>
     {% endfor %}
 
     {% for option in answer1 %}
@@ -59,6 +64,7 @@
     {% endfor %}
 
     {% for question in questions %}
+        <!-- Generate questions -->
         <h2>{{question}}</h2>
         <div class="btn-group unclicked" style="width:100%">
         </div>
@@ -76,9 +82,14 @@
         var option2 = Array.from(document.getElementsByClassName("2"));
         var option3 = Array.from(document.getElementsByClassName("3"));
 
+        //create arrays for the first options of each question, second options of each question, third, etc.
+        //get an array of the button groups for each question which will contain the options
+
         var correctAnswers = Array.from(document.getElementsByClassName("correctOption"));
+        //gather the correct answers from the hidden DOM elements
 
         for(let i = 0; i < btnGroups.length; i++){
+            //this for loop will essentially construct the questions with their relevant components
             btnGroups[i].setAttribute("id", i);
             console.log(correctAnswers[i].id)
             if(option0[i].textContent != "EMPTY ANSWER"){
@@ -91,6 +102,7 @@
             }
             else{
                 option0[i].style.visibility = "hidden";
+                //if a question only has 2 or 3 options to choose from, buttons will be created for them but hidden so that players can't select them
             }
             if(option1[i].textContent != "EMPTY ANSWER"){
                 if(option1[i].textContent == correctAnswers[i].textContent){
@@ -128,12 +140,14 @@
         [...buttons].forEach(
             (button)=> 
             {
+                //add functionality to the button so that when clicked, it checks the answer is right or not for that question
             button.addEventListener( 'click', function() {
                 if(!timeUp){
                     if(button.parentNode.classList.contains("unclicked") ){
                         if(button.classList.contains("correctButton")){
                             alert("correct!");
                             pointsEarned += 10;
+                            //add points to total if answer is correct
                         }
                         else{
                             alert("wrong!");
@@ -147,6 +161,9 @@
         }
         );
 
+        
+
+
         var defaultTime = 10;  //the time that is allotted per Quiz
         var timer = document.getElementById("timer");
 
@@ -156,16 +173,19 @@
             });
         }
 
+        //timer counts down, currently set so that quiz is 10 secs long but can be altered
+        //if the timer reaches 0 or all questions are answered, the quiz ends
         async function startTimer(){
             var groups = Array.from(document.getElementsByClassName("btn-group"));
             var count = 0;
             groups.forEach((group)=>{
                 if(group.classList.contains("clicked")){
                     count++;
+                    //counts how many button groups have been clicked on 
                 }
             });
             if(count == groups.length){
-                //end of quiz, all questions completed
+                //end of quiz, all questions completed - each button group has been interacted with
                 endQuiz();
             }
             else{
@@ -190,6 +210,8 @@
             link.href="../../accounts/dashboard";
             link.appendChild(returnToDashboard);
             document.getElementById("body").appendChild(link);
+            //scruffily shows a button to go back to dashboard, points aren't inserted into the database yet but will be
+            //the framework is ready to use to make more criteria regarding points, e.g. time impacting how many points you get for a question, etc.
         }
         
     </script>
