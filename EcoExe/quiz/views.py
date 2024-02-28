@@ -1,3 +1,5 @@
+#Authored by Sam Arrowsmith, Finn Ashby, Dan Harkness-Moore
+
 from django.shortcuts import render
 #<<<<<<< HEAD
 from django.http import JsonResponse, HttpResponse
@@ -21,7 +23,10 @@ def get_quiz(request):
             question = json.load(inf)
             print(question)
         return JsonResponse(question)
-#=======
+
+
+
+def daily_quiz(request):
     context = {}
     quiz = load(1)
     context['id'] = quiz.id
@@ -51,5 +56,5 @@ def get_quiz(request):
         correct.append(quiz.getCorrect(i))
 
     context['correct'] = correct
-    return render(request, 'quizzes.html', context)
+    return render(request, 'daily_quiz.html', context)
 #>>>>>>> 2be866cdc4c145ecdba944b25ba25cd05305cac6

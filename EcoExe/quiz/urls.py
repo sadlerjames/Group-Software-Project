@@ -22,4 +22,5 @@ from . import views
 urlpatterns = [
     path('quizzes/', views.quizzes, name='quizzes'),
     path('quizzes/get_quiz', views.get_quiz, name='get_quiz'),
+    path('quizzes/daily', views.daily_quiz, name='daily_quiz'),
 ]
