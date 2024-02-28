@@ -1,10 +1,11 @@
+#Authored by Finn Ashby
 import json
 import random
 import os
 from .. import models
 from django.db.utils import IntegrityError
 cwd = os.getcwd()
-#print(cwd)
+#yprint(cwd)
 ##create quiz
 ##open existing quiz
 ##add questions and answers to quiz
