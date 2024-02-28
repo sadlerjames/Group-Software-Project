@@ -85,8 +85,8 @@ class Quiz:
             except IntegrityError:
                 return
         
-        #print(models.Quizzes.objects.count())
-        self.id=models.Quizzes.objects.count()+1
+        print(models.Quizzes.objects.count()+10
+        self.id=models.Quizzes.objects.count()+10
         entry=models.Quizzes.objects.create(id=models.Quizzes.objects.count()+1,points=self.points)
         
         #print("imp"+models.Quizzes.get_id(entry))
