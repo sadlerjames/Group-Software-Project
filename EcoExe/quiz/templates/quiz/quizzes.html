@@ -10,7 +10,6 @@
 
 	<body>
 		<h1>Quiz homepage</h1>
-		<!--<strong> {% get_quiz %} </strong>-->
 		<div class='container'>
 			<h1>Scan QR Codes</h1>
 			<div class='section'>
@@ -26,60 +25,68 @@
 			if(!responseReceived) {
 				function qrCodeSuccessCallback(decodedText,decodedResult) {
 					if(!responseReceived) {
-					responseReceived = true;
-						var csrftoken = jQuery('[name=csrfmiddlewaretoken]').val();
-					alert('gewgoiaheioghoo');
-				
-					function getResponseReceived() {
-						return responseReceived;
-					}
+						responseReceived = true;
+							var csrftoken = jQuery('[name=csrfmiddlewaretoken]').val();
 					
-					function csrfSafeMethod(method) {
-						return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-					}
-					
-					$.ajaxSetup({
-						beforeSend: function(xhr,settings) {
-							if(!csrfSafeMethod(settings.type) && !this.crossDomain) {
-								xhr.setRequestHeader('X-CSRFToken',csrftoken);
+						function getResponseReceived() {
+							return responseReceived;
+						}
+						
+						function csrfSafeMethod(method) {
+							return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+						}
+						
+						$.ajaxSetup({
+							beforeSend: function(xhr,settings) {
+								if(!csrfSafeMethod(settings.type) && !this.crossDomain) {
+									xhr.setRequestHeader('X-CSRFToken',csrftoken);
+								}
 							}
-						}
-					});
-					
-					$.ajax({
-						url: "{% url 'get_quiz' %}",
-						data: {
-							'getdata': JSON.stringify(decodedText),
-						},
-						dataType: 'json',
-						success: function(res,status) {
-						/*
-							alert(res['questions']);
-							alert(status);
-							*/
-							alert(responseReceived);
-							const readerdiv = document.getElementById('reader');
-							const questiondiv = document.getElementById('questiondiv');
-							readerdiv.hidden = true;
-							questiondiv.hidden = false;
-							
-							const question = document.createElement('h2');
-							question.appendChild(document.createTextNode(res['questions']));
-							//const choices = document.createElement('');
-							questiondiv.appendChild(question);
-							alert('test');
-						},
-						error: function(err) {
-							alert('error');
-							alert(err.status);
-						}
-					});
-					
-					$(document).ajaxStop(() => {
-						alert("AJAX completed");
-					});
+						});
+						
+						$.ajax({
+							url: "{% url 'get_quiz' %}",
+							data: {
+								'getdata': JSON.stringify(decodedText),
+							},
+							dataType: 'json',
+							success: function(res,status) {
+								const readerdiv = document.getElementById('reader');
+								const questiondiv = document.getElementById('questiondiv');
+								readerdiv.hidden = true;
+								questiondiv.hidden = false;
+								
+								const question = document.createElement('h2');
+								question.appendChild(document.createTextNode(res['questions']));
+								questiondiv.appendChild(question);
+								const answerlist = document.createElement('ul');
+								
+								for(var i in res['answers']) {
+									let answernode = document.createElement('li');
+									let answerbutton = document.createElement('input');
+									answerlist.appendChild(answernode);
+									answerbutton.type='button';
+									answerbutton.value=res['answers'][i];
+									if(i == res['correct']) {
+										answerbutton.onclick = function() {
+											alert('correct');
+										}
+									} else {
+										answerbutton.onclick = function() {
+											alert('faillllll');
+										}
+									}
+									answernode.appendChild(answerbutton);
+								}
+								
+								questiondiv.appendChild(answerlist);
+							},
+							error: function(err) {
+								alert('error: ' + err.status);
+							}
+						});
 					}
-			}
+				}
 			}
 			const config = {
 				fps:10,
