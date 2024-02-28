@@ -4,7 +4,7 @@ import os
 from .. import models
 from django.db.utils import IntegrityError
 cwd = os.getcwd()
-print(cwd)
+#print(cwd)
 ##create quiz
 ##open existing quiz
 ##add questions and answers to quiz
@@ -118,6 +118,7 @@ def load(id):
         with open("quiz/templatetags/quizzes/"+str(id)+'.json') as inf:
             myDict=json.load(inf)
         return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id,myDict['correct']))
+
 
 
 #a=Quiz("One",["It’s acceptable to toss used automotive oil in with regular residential trash.","Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"],[["False","True"],["$130","$12","$60"]],8)
