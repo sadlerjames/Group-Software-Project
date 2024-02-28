@@ -1,3 +1,4 @@
+<!-- Authored by Sam Arrowsmith, Jack Hales -->
 <html lang="en">
 <head>
     {% if user.is_authenticated %}
@@ -32,6 +33,9 @@
         <h1 class="bubble"> EcoExe </h1>
         <h2 class="bubble">
         <a href="{% url 'userprofile' %}" style="text-decoration: none;">{{user.username}}</a>
+        </h2>
+        <h2 class="bubble">
+            <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
         </h2>
     </nav>
     {% block content %}
