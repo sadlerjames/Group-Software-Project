@@ -4,7 +4,7 @@ import json
 import ast
 
 def quizzes(request):
-    return render(request, 'quiz/quizzes.html')
+    return render(request, 'quiz/quiznew.html')
 
 def get_quiz(request):
     if request.method == "GET":
