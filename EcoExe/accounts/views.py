@@ -1,3 +1,5 @@
+# Authored by Jack Hales, George Piper, James Sadler
+
 from django.shortcuts import get_object_or_404, render,redirect
 from django.template import loader
 from django.http import HttpResponse

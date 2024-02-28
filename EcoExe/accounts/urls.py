@@ -1,3 +1,5 @@
+# Authored by Jack Hales, George Piper, James Sadler
+
 """
 URL configuration for EcoExe project.
 

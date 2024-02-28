@@ -1,3 +1,5 @@
+# Authored by Jack Hales, George Piper, James Sadler
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
