@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect
 from .forms import LoginForm
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 from accounts.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
@@ -73,3 +73,8 @@ def creation_view(request):
             return render(request,"gamekeeper/quiz/create.html",{'form':form})
     else:
         return redirect('/account/dashboard')
+
+@login_required()  
+def logoutview(request):
+    logout(request)
+    return redirect('/gamekeeper/login/')
