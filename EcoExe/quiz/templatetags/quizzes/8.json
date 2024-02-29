@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"quizName": "Ge", "questions": ["a"], "answers": [["d", "c", "e", "b"]], "correct": [3]}
+=======
+{"quizName": "Ge", "questions": ["a"], "answers": [["e", "b", "c", "d"]], "correct": [1]}
+>>>>>>> 429be59d1dfe27a91d89fba3488c1396d6962bae
