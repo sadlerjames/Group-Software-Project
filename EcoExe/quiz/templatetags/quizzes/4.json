@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 {"quizName": "Four", "questions": ["It\u2019s acceptable to toss used automotive oil in with regular residential trash.", "Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually", "Test question"], "answers": [["False", "True"], ["$12", "$60", "$130"], ["Really wrong", "Wrong", "Right"]], "correct": [0, 2, 2]}
-=======
-{"quizName": "Four", "questions": ["It\u2019s acceptable to toss used automotive oil in with regular residential trash.", "Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually", "Test question"], "answers": [["True", "False"], ["$12", "$60", "$130"], ["Right", "Wrong", "Really wrong"]], "correct": [1, 2, 0]}
->>>>>>> 429be59d1dfe27a91d89fba3488c1396d6962bae
