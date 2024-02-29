@@ -1,10 +1,11 @@
+#Authored by Finn Ashby
 import json
 import random
 import os
 from .. import models
 from django.db.utils import IntegrityError
 cwd = os.getcwd()
-print(cwd)
+#yprint(cwd)
 ##create quiz
 ##open existing quiz
 ##add questions and answers to quiz
@@ -38,7 +39,7 @@ a question cannot be added without at least one answer
 load will load a quiz given its id and return a Quiz object
 '''
 class Quiz:
-    def __init__(self,quizName,questions=[],answers=[[]],id=0,correct=[],noPoints=10):
+    def __init__(self,quizName,questions=[],answers=[[]],id=None,correct=[],noPoints=10):
         #print(correct)
         #print(questions)
         if len(correct)!=len(questions):
@@ -73,14 +74,32 @@ class Quiz:
 
 
     def save(self):
+        if self.id!=None:
+            myDict={'quizName':self.quizName,'questions':self.questions,'answers':self.answers,'correct':self.correct}
+            with open("quiz/templatetags/quizzes/"+str(self.id)+'.json',"w") as outf:
+                json.dump(myDict,outf)
+            try :
+                entry=models.Quizzes.objects.create(id=self.id,points=self.points)
+                entry.save()
+                return
+            except IntegrityError:
+                return
+        
+        #print(models.Quizzes.objects.count()+10)
+        self.id=models.Quizzes.objects.count()+10
+        entry=models.Quizzes.objects.create(id=models.Quizzes.objects.count()+10,points=self.points)
+        
+        #print("imp"+models.Quizzes.get_id(entry))
+        entry.save()
+        
+        #print(self.id)
         myDict={'quizName':self.quizName,'questions':self.questions,'answers':self.answers,'correct':self.correct}
         with open("quiz/templatetags/quizzes/"+str(self.id)+'.json',"w") as outf:
-            json.dump(myDict,outf)
-        try :
-            models.Quizzes.objects.create(id=self.id,points=self.points)
-        except IntegrityError:
-            return
+                json.dump(myDict,outf)
 
+    def getId(self):
+        return self.id
+    
     def getName(self):
          return self.quizName
 
@@ -120,6 +139,7 @@ def load(id):
         return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id,myDict['correct']))
 
 
-#a=Quiz("One",["It’s acceptable to toss used automotive oil in with regular residential trash.","Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"],[["False","True"],["$130","$12","$60"]],8)
+#print("A")
+#a=Quiz("One",["It’s acceptable to toss used automotive oil in with regular residential trash.","Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"],[["False","True"],["$130","$12","$60"]])
 #a=load(1)
 #print(a.getAnswer())

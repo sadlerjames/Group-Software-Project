@@ -1,0 +1,219 @@
+{% load tags %}
+<html>
+    <!-- 
+        Authored by Sam Arrowsmith
+    -->
+
+    <style lang="css">
+        .hideMe {
+            visibility: hidden;
+        }
+        .btn-group button {
+            background-color: #04AA6D; /* Green background */
+            border: 1px solid green; /* Green border */
+            color: white; /* White text */
+            padding: 10px 24px; /* Some padding */
+            cursor: pointer; /* Pointer/hand icon */
+            float: left; /* Float the buttons side by side */
+          }
+          
+          .btn-group button:not(:last-child) {
+            border-right: none; /* Prevent double borders */
+          }
+          
+          /* Clear floats (clearfix hack) */
+          .btn-group:after {
+            content: "";
+            clear: both;
+            display: table;
+          }
+          
+          /* Add a background color on hover */
+          .btn-group button:hover {
+            background-color: #3e8e41;
+          }
+          /*Quite an ad hoc solution to getting a basic daily quiz to work */
+    </style>
+    <body id="body">
+    <h1>Quiz loaded: {{id}}</h1>
+    <br>
+    <p id="timer"></p>
+    {% for correctOption in correct %}
+        <!-- create the correct answers as hidden DOM elements so that they can be accessed by javascript -->
+        <p class="correctOption hideMe">{{correctOption}}</p>
+    {% endfor %}
+    {% for option in answer0 %}
+        <!-- create options for each question-->
+        <button class="0 answer-button">{{option}}</button>
+        <br>
+    {% endfor %}
+
+    {% for option in answer1 %}
+            <button class="1 answer-button">{{option}}</button>
+            <br>
+    {% endfor %}
+
+    {% for option in answer2 %}
+            <button class="2 answer-button">{{option}}</button>
+            <br>
+    {% endfor %}
+
+    {% for option in answer3 %}
+            <button class="3 answer-button">{{option}}</button>
+            <br>
+    {% endfor %}
+
+    {% for question in questions %}
+        <!-- Generate questions -->
+        <h2>{{question}}</h2>
+        <div class="btn-group unclicked" style="width:100%">
+        </div>
+    {% endfor %}
+
+    <script lang="javascript">
+
+        var pointsEarned = 0;
+
+        var timeUp = false;
+
+        var btnGroups = Array.from(document.getElementsByClassName("btn-group"));
+        var option0 = Array.from(document.getElementsByClassName("0"));
+        var option1 = Array.from(document.getElementsByClassName("1"));
+        var option2 = Array.from(document.getElementsByClassName("2"));
+        var option3 = Array.from(document.getElementsByClassName("3"));
+
+        //create arrays for the first options of each question, second options of each question, third, etc.
+        //get an array of the button groups for each question which will contain the options
+
+        var correctAnswers = Array.from(document.getElementsByClassName("correctOption"));
+        //gather the correct answers from the hidden DOM elements
+
+        for(let i = 0; i < btnGroups.length; i++){
+            //this for loop will essentially construct the questions with their relevant components
+            btnGroups[i].setAttribute("id", i);
+            console.log(correctAnswers[i].id)
+            if(option0[i].textContent != "EMPTY ANSWER"){
+                if(option0[i].textContent == correctAnswers[i].textContent){
+                    option0[i].classList.add("correctButton");
+                    console.log("ADDED");
+                }
+                btnGroups[i].appendChild(option0[i]);
+                
+            }
+            else{
+                option0[i].style.visibility = "hidden";
+                //if a question only has 2 or 3 options to choose from, buttons will be created for them but hidden so that players can't select them
+            }
+            if(option1[i].textContent != "EMPTY ANSWER"){
+                if(option1[i].textContent == correctAnswers[i].textContent){
+                    option1[i].classList.add("correctButton");
+                    console.log("ADDED");
+                }
+                btnGroups[i].appendChild(option1[i]);
+            }
+            else{
+                option1[i].style.visibility = "hidden";
+            }
+            if(option2[i].textContent != "EMPTY ANSWER"){
+                if(option2[i].textContent == correctAnswers[i].textContent){
+                    option2[i].classList.add("correctButton");
+                    console.log("ADDED");
+                }
+                btnGroups[i].appendChild(option2[i]);
+            }
+            else{
+                option2[i].style.visibility = "hidden";
+            }
+            if(option3[i].textContent != "EMPTY ANSWER"){
+                if(option3[i].textContent == correctAnswers[i].textContent){
+                    option3[i].classList.add("correctButton");
+                    console.log("ADDED");
+                }
+                btnGroups[i].appendChild(option[i]);
+            }
+            else{
+                option3[i].style.visibility = "hidden";
+            }
+        }
+
+        buttons = document.querySelectorAll(".answer-button");
+        [...buttons].forEach(
+            (button)=> 
+            {
+                //add functionality to the button so that when clicked, it checks the answer is right or not for that question
+            button.addEventListener( 'click', function() {
+                if(!timeUp){
+                    if(button.parentNode.classList.contains("unclicked") ){
+                        if(button.classList.contains("correctButton")){
+                            alert("correct!");
+                            pointsEarned += 10;
+                            //add points to total if answer is correct
+                        }
+                        else{
+                            alert("wrong!");
+                        }
+                        button.parentNode.classList.remove("unclicked");
+                        button.parentNode.classList.add("clicked");
+                    }
+                    
+                }
+            })
+        }
+        );
+
+        
+
+
+        var defaultTime = 10;  //the time that is allotted per Quiz
+        var timer = document.getElementById("timer");
+
+        function delay(milliseconds){
+            return new Promise(resolve => {
+                setTimeout(resolve, milliseconds);
+            });
+        }
+
+        //timer counts down, currently set so that quiz is 10 secs long but can be altered
+        //if the timer reaches 0 or all questions are answered, the quiz ends
+        async function startTimer(){
+            var groups = Array.from(document.getElementsByClassName("btn-group"));
+            var count = 0;
+            groups.forEach((group)=>{
+                if(group.classList.contains("clicked")){
+                    count++;
+                    //counts how many button groups have been clicked on 
+                }
+            });
+            if(count == groups.length){
+                //end of quiz, all questions completed - each button group has been interacted with
+                endQuiz();
+            }
+            else{
+                if(defaultTime > -1){
+                    timer.textContent = "Time remaining: " + defaultTime;
+                    defaultTime--;
+                    await delay(1000);
+                    startTimer();
+                }
+                else{
+                    endQuiz();
+                }
+            }
+            
+        }
+        startTimer();
+        function endQuiz(){
+            alert("Quiz done! Points earned: " + pointsEarned);
+            var link = document.createElement("a");
+            var returnToDashboard = document.createElement("button");
+            returnToDashboard.textContent = "Return to dashboard";
+            link.href="../../accounts/dashboard";
+            link.appendChild(returnToDashboard);
+            document.getElementById("body").appendChild(link);
+            //scruffily shows a button to go back to dashboard, points aren't inserted into the database yet but will be
+            //the framework is ready to use to make more criteria regarding points, e.g. time impacting how many points you get for a question, etc.
+        }
+        
+    </script>
+    </body>
+</html>

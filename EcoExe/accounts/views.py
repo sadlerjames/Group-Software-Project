@@ -1,12 +1,10 @@
-from django.shortcuts import get_object_or_404, render,redirect
-from django.template import loader
-from django.http import HttpResponse
-from django.http import Http404
+# Authored by Jack Hales, George Piper, James Sadler
+
+from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from .forms import CustomUserCreationForm, LoginForm, SignUpForm
 from django.contrib.auth.views import PasswordChangeView
-from django.views.generic import CreateView
 from .forms import CustomPasswordChangeForm
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate,login, logout
@@ -31,40 +29,48 @@ def dashboard(request):
     return render(request, "dashboard.html")
     
 def userprofile(request):
-    return render(request, "../userprofile/templates/userprofile.html")
-    
+    return render(request, "profile.html")
+   
+#process the POST request and create the user 
 def signup(request):
+    #if the user is already signed in take them to dashboard
     if request.user.is_authenticated:
         return redirect('/accounts/dashboard')
     else:
         msg = None
         if request.method == 'POST':
             form = SignUpForm(request.POST)
+
+            #check the inputted form is valid, create user if so
             if form.is_valid():
-                user = form.save()
+                form.save()
                 msg = 'user created'
                 return redirect('/accounts/login')
             else:
-                print(form.errors)
                 msg = form.errors
         else:
             form = SignUpForm()
         return render(request,'registration/signup.html',{'form':form,'msg':msg})
 
+#process the login request and sign the user in if checks pass
 def login_view(request):
+    #if the user is already signed in take them to dashboard
     if request.user.is_authenticated:
         return redirect('/accounts/dashboard')
     else:
         form = LoginForm(request.POST or None)
         msg = None
         if request.method == 'POST':
+            #check the form is valid
             if form.is_valid():
                 username = form.cleaned_data.get('username')
                 password = form.cleaned_data.get('password')
                 user = authenticate(username=username,password=password)
+
                 if user is not None and not user.is_gamekeeper:
                     login(request,user)
                     return redirect('dashboard')
+                
                 else:
                     msg = 'Invalid Credentials'
             else:
@@ -75,3 +81,7 @@ def login_view(request):
 def logoutview(request):
     logout(request)
     return redirect('/accounts/login')
+
+@login_required()  
+def userprofile(request):
+    return render(request, "profile.html")

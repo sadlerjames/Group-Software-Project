@@ -1,3 +1,4 @@
+#Authored by George Piper and James Sadler
 """
 URL configuration for EcoExe project.
 
@@ -20,7 +21,9 @@ from . import views
 from .views import *
 
 urlpatterns = [
+    path('', views.dashboard,  name='dashboard'),
     path('login/', views.login_view,  name='login'),
     path('dashboard/', views.dashboard, name="dashboard"),
+    path('quiz/create/', views.creation_view, name="create"),
 ]
 

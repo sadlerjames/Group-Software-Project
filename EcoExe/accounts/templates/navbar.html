@@ -1,3 +1,4 @@
+<!-- Authored by Sam Arrowsmith, Jack Hales -->
 <html lang="en">
 <head>
     {% if user.is_authenticated %}
@@ -18,25 +19,90 @@
         <!-- applying bubbly font to elements of the bubble class-->
         <style lang="css">
             .bubble {
-                font-family: 'Bubblegum Sans'
+                font-family: 'Bubblegum Sans';
             }
+            
+            /*
+            Below will style the DOM elements for mobile views
+            */
+            nav .links {
+                display: flex;
+            }
+            #mobile-menu-btn {
+                display: none;
+            }
+            .mobile-menu {
+                color: white;
+                display: none;
+                position: absolute;
+                padding: 10px;
+                right: 0;
+                height: 50vh;
+                width: 40vw;
+            }
+            
+            @media (max-width: 600px) {
+                #mobile-menu-btn {
+                  display: block;
+                }
+                nav a {
+                  display: none;
+                }
+                .mobile-menu {
+                  display: none;
+                  flex-direction: column;
+                  justify-content: space-around;
+                  align-items: center;
+                }
+              }
         </style>
+        
     {% else %}
         <meta http-equiv="refresh" content="0; URL={% url 'loginpage' %}"/>
     {% endif %}
 </head>
 <body>
     {% if user.is_authenticated %}
+    <!-- Nav tag encloses the desktop navbar -->
     <nav class="bg-primary navbar">
-        <a href="{% url 'dashboard' %}"><img src="{% static 'images/logo.png' %}"><h2>  Dashboard</h2></a>
-        <h1 class="bubble"> EcoExe </h1>
-        <h2 class="bubble">
-        <a href="{% url 'userprofile' %}" style="text-decoration: none;">{{user.username}}</a>
-        </h2>
+        <div class="container">
+            <a href="{% url 'dashboard' %}"><img src="{% static 'images/logo.png' %}"><h2>  Dashboard</h2></a>
+        </div>
+            <h1 class="bubble"> EcoExe </h1>
+            <h2 class="bubble">
+            <a href="{% url 'profile' %}" style="text-decoration: none;">{{user.username}}</a>
+            </h2>
+            <h2 class="bubble">
+                <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
+            </h2>
+            <button id="mobile-menu-btn" class="bg-secondary">Menu</button>
     </nav>
+    <!-- above is for desktop, below is the mobile view -->
+    <div class="mobile-menu bg-secondary">
+        <a href="{% url 'profile' %}" style="text-decoration: none;">{{user.username}}</a>
+        <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+    </div>
     {% block content %}
     {% endblock %}
     {% else %}
     {% endif %}
+    <script lang="javascript" defer>
+        //this code effectively shows the menu for mobile view if a mobile is being used to access the webpage, otherwise the usual desktop view shows
+        //the menu simply has the same features but as a dropdown menu
+        var mobileMenuBtn = document.querySelector("#mobile-menu-btn");
+        console.log(mobileMenuBtn);
+        var mobileMenu = document.querySelector(".mobile-menu");
+        mobileMenuBtn.addEventListener("click", () => {
+        if (mobileMenu.style.display === "none") {
+            mobileMenu.style.display = "flex";
+            mobileMenuBtn.innerHTML = "Close";
+        } 
+        else {
+            mobileMenu.style.display = "none";
+            mobileMenuBtn.innerHTML = "Menu";
+        }
+        });
+    </script>
 </body>
 </html>

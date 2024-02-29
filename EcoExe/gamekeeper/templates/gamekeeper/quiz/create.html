@@ -1,0 +1,22 @@
+<!--Authored by George Piper and James Sadler-->
+<html>
+    <head>
+        <title>Create a Quiz</title>
+        {% load static %}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{% static '/gamekeeper/js/create.js' %}"></script>
+    </head>
+    <body>
+        <h1>Create a Quiz</h1>  
+        <p>Please enter the correct answer first</p>
+        <form method="post">
+            {% csrf_token %}
+            <div id="forms">
+                {{ form.as_p }}
+            </div>
+            <input type="hidden" name="extra_field_count" value="0">
+            <button type="button" id="add-another">Add Question</button>
+            <input type="submit" />
+        </form>
+    </body>
+</html>

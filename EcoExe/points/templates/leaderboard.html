@@ -1,3 +1,5 @@
+<!-- Authored by Jack Hales -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,6 +46,7 @@
                 dataType: 'json',
                 success: function(options) {
                 var dropdown = $('#leaderboard-options');
+                // Iterate through each option and append to dropdown
                 $.each(options, function(index, value) {
                     dropdown.append($('<option>').text('Quiz: ' + value.quiz_name).attr('leaderboard', value.quiz_id));
                 });
@@ -70,7 +73,7 @@
                         success: function(data) {
                             // Clear existing table rows
                             $('#points-table-body').empty();
-                            // Iterate through each point and append to table
+                            // Iterate through each user and append to table
                             $.each(data, function(index, point) {
                                 $('#points-table-body').append(
                                     '<tr>' +
@@ -103,7 +106,7 @@
                     success: function(data) {
                         // Clear existing table rows
                         $('#points-table-body').empty();
-                        // Iterate through each point and append to table
+                        // Iterate through each user and append to table
                         $.each(data, function(index, point) {
                             $('#points-table-body').append(
                                 '<tr>' +
