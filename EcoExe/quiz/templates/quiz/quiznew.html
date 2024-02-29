@@ -65,7 +65,7 @@
 									while(question_index < quiz['questions'].length) {
 										question.appendChild(document.createTextNode(quiz['questions'][question_index]));
 										questiondiv.appendChild(question);
-										console.log(question_index);
+										//console.log(question_index);
 										
 										for(var i in quiz['answers'][question_index]) {
 											let answernode = document.createElement('li');
@@ -80,7 +80,7 @@
 													answerlist.innerHTML = ''; // clears list
 													question.innerHTML = ''; // clears question
 													answered = true;
-													console.log(question_iterator.next().value); // goes to next question
+													//console.log(question_iterator.next().value); // goes to next question
 												}
 											} else {
 												answerbutton.onclick = function() {
@@ -88,7 +88,7 @@
 													answerlist.innerHTML = ''; // clears list
 													question.innerHTML = ''; // clears question
 													answered = true;
-													console.log(question_iterator.next().value); // goes to next question
+													//console.log(question_iterator.next().value); // goes to next question
 												}
 											}
 											answernode.appendChild(answerbutton);
