@@ -1,1 +1,5 @@
-{"quizName": "Three", "questions": ["It\u2019s acceptable to toss used automotive oil in with regular residential trash.", "Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"], "answers": [["True", "False"], ["$130", "$12", "$60"]], "correct": [1, 0]}
+<<<<<<< HEAD
+{"quizName": "Three", "questions": ["It\u2019s acceptable to toss used automotive oil in with regular residential trash.", "Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"], "answers": [["True", "False"], ["$12", "$130", "$60"]], "correct": [1, 1]}
+=======
+{"quizName": "Three", "questions": ["It\u2019s acceptable to toss used automotive oil in with regular residential trash.", "Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"], "answers": [["True", "False"], ["$12", "$60", "$130"]], "correct": [1, 2]}
+>>>>>>> 429be59d1dfe27a91d89fba3488c1396d6962bae
