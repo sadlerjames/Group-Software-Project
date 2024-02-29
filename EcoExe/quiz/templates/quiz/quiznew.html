@@ -80,6 +80,7 @@
 													answerlist.innerHTML = ''; // clears list
 													question.innerHTML = ''; // clears question
 													answered = true;
+													question_iterator.next();
 													//console.log(question_iterator.next().value); // goes to next question
 												}
 											} else {
@@ -88,6 +89,7 @@
 													answerlist.innerHTML = ''; // clears list
 													question.innerHTML = ''; // clears question
 													answered = true;
+													question_iterator.next();
 													//console.log(question_iterator.next().value); // goes to next question
 												}
 											}
@@ -102,7 +104,8 @@
 								
 								var question_iterator = getQuestion(res, 0);
 								
-								console.log(question_iterator.next().value);
+								question_iterator.next();
+								//console.log(question_iterator.next().value);
 								//console.log(question_iterator.next().value);
 							},
 							error: function(err) {
