@@ -3,8 +3,8 @@ To install the packages that we use throughout this project, run the following c
 `pip install -r requirements.txt`
 
 # Run Server
-To run the web app, execute the following in the root directory:
-`python3 manage.py runserver`
+To run the web app, execute the following:
+`python manage.py runserver`
 
 # View Webpage
 Visit http://127.0.0.1:8000/ in your browser to view the web app
