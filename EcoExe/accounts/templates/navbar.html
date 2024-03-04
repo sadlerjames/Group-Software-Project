@@ -16,47 +16,6 @@
         <link rel="stylesheet" href="{% static 'css/colours.css' %}" />
         <!-- applying the stylesheet created for the project primarily to maintain consistent colours -->
 
-        <!-- applying bubbly font to elements of the bubble class-->
-        <style lang="css">
-            .bubble {
-                font-family: 'Bubblegum Sans';
-            }
-            
-            /*
-            Below will style the DOM elements for mobile views
-            */
-            nav .links {
-                display: flex;
-            }
-            #mobile-menu-btn {
-                display: none;
-            }
-            .mobile-menu {
-                color: white;
-                display: none;
-                position: absolute;
-                padding: 10px;
-                right: 0;
-                height: 50vh;
-                width: 40vw;
-            }
-            
-            @media (max-width: 600px) {
-                #mobile-menu-btn {
-                  display: block;
-                }
-                nav a {
-                  display: none;
-                }
-                .mobile-menu {
-                  display: none;
-                  flex-direction: column;
-                  justify-content: space-around;
-                  align-items: center;
-                }
-              }
-        </style>
-        
     {% else %}
         <meta http-equiv="refresh" content="0; URL={% url 'loginpage' %}"/>
     {% endif %}
@@ -83,26 +42,16 @@
         <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
         <a href="{% url 'dashboard' %}">Dashboard</a>
     </div>
+    
     {% block content %}
     {% endblock %}
+    <div class="dropdiv wave"></div>
+    <div class="dropdiv wave"></div>
+    <div class="dropdiv wave"></div>
     {% else %}
     {% endif %}
-    <script lang="javascript" defer>
-        //this code effectively shows the menu for mobile view if a mobile is being used to access the webpage, otherwise the usual desktop view shows
-        //the menu simply has the same features but as a dropdown menu
-        var mobileMenuBtn = document.querySelector("#mobile-menu-btn");
-        console.log(mobileMenuBtn);
-        var mobileMenu = document.querySelector(".mobile-menu");
-        mobileMenuBtn.addEventListener("click", () => {
-        if (mobileMenu.style.display === "none") {
-            mobileMenu.style.display = "flex";
-            mobileMenuBtn.innerHTML = "Close";
-        } 
-        else {
-            mobileMenu.style.display = "none";
-            mobileMenuBtn.innerHTML = "Menu";
-        }
-        });
+    <script src="{% static 'js/navbar_mobile_menu.js' %}" defer>
+        
     </script>
 </body>
 </html>

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'quiz',
     'EcoExe',
     'points',
+    'sortit',
 ]
 
 MIDDLEWARE = [

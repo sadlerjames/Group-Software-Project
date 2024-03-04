@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/sortit.css' %}" />
+
+        <link href='https://fonts.googleapis.com/css?family=Bubblegum Sans' rel='stylesheet'>
+        <!-- adds bubble font as an option -->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Fill mobile view -->
+    </head>
+    <body>
+        <div id="banner">
+            <h1 id="banner-info">
+                Sort trash into the correct bins as it falls! Don't let it get to the sea!
+            </h1>
+            <h2 id="lives" class="tidyfont fill">Lives</h2>
+        </div>
+        <div id="game">
+            <div id="fallzone">
+                <div id="fz1">
+                    <img src="{% static 'images/bin.png' %}">
+                </div>
+                <div id="fz2">
+                    <div id="trash-generator" class="fill">
+                        <img src="{% static 'images/trash_source.png' %}">
+                    </div>
+                <canvas id="canvas">
+                </canvas>
+                </div>
+                <div id="fz3">
+                    <img src="{% static 'images/bin.png' %}">
+                </div>
+            </div>
+            <div class="wave-container">
+                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(100,100,255,0.7" />
+                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(100,100,255,0.5)" />
+                <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(100,100,255,0.3)" />
+                <use xlink:href="#gentle-wave" x="48" y="6" fill="rgba(100,100,255,0.9)" />
+                <use xlink:href="#gentle-wave" x="48" y="7" fill="#0044f5" />
+                </g>
+                </svg>
+                <!--Waves Container-->
+                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                </svg>
+                <!--Waves end-->
+            </div>
+        </div>
+        <script src="{% static 'js/sortit.js' %}">
+        </script> 
+    </body>
+</html>
