@@ -3,7 +3,7 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from .forms import CustomUserCreationForm, LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm
 from django.contrib.auth.views import PasswordChangeView
 from .forms import CustomPasswordChangeForm
 from django.views.generic import TemplateView
@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.decorators import login_required
 
 class SignUp(generic.CreateView):
-    form_class = CustomUserCreationForm
+    form_class = SignUpForm
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
