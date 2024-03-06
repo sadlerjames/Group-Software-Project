@@ -25,13 +25,11 @@
     <!-- Nav tag encloses the desktop navbar -->
     <nav class="bg-primary navbar">
         <div class="container">
-            <a href="{% url 'dashboard' %}"><img src="{% static 'images/logo.png' %}"></a>
-            
+            <a href="{% url 'dashboard' %}"><img src="{% static 'images/logo.png' %}"><h2>  Dashboard</h2></a>
         </div>
             <h1 class="bubble"> EcoExe </h1>
-            <button href="{% url 'dashboard' %}">Dashboard</button>
             <h2 class="bubble">
-            <button href="{% url 'profile' %}" style="text-decoration: none;">{{user.username}}</button>
+            <a href="{% url 'profile' %}" style="text-decoration: none;">{{user.username}}</a>
             </h2>
             <h2 class="bubble">
                 <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
