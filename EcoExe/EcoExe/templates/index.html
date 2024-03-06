@@ -1,20 +1,19 @@
 <!--Authored by James Sadler-->
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>EcoExe</title>
-	</head>
-	<body>
-		<h1>Welcome to EcoExe!</h1>
-		{% if user.is_authenticated %}
-			<a href="/accounts/dashboard">dashboard</a>
-		
-		{% else %}
-			<a href="/accounts/login">Login</a>
-			<br>
-			<a href="/accounts/signup">Sign Up</a>
-			<br>
-			<a href="/gamekeeper/login">Game Keeper Login</a>
-		{% endif %}
-	</body>
-</html>
+
+{% extends "base_ecoexe.html" %}
+
+{% block title %}EcoExe{% endblock %}
+
+{% block index %}
+<h1>Welcome to EcoExe!</h1>
+{% if user.is_authenticated %}
+	<a href="/accounts/dashboard">dashboard</a>
+
+{% else %}
+	<a href="/accounts/login">Login</a>
+	<br>
+	<a href="/accounts/signup">Sign Up</a>
+	<br>
+	<a href="/gamekeeper/login">Game Keeper Login</a>
+{% endif %}
+{% endblock %}
