@@ -17,7 +17,8 @@ var spawnRateOfDescent = 0.50;
 var lastSpawn = -1;
 
 // this array holds all spawned object
-var objects = [];
+//var objects = [];
+var objects = Array.from(document.querySelectorAll('.trash'));
 
 // save the starting time (used to calc elapsed time)
 var startTime = Date.now();
@@ -25,11 +26,21 @@ var startTime = Date.now();
 // start animating
 animate();
 
+function spawnObj() {
+  console.log(objects[0]);
+  //objects[0].style.margin-left = Math.random() * (canvas.width - 50);
+  objects[0].style.marginTop = spawnLineY;
+  //console.log(objects[0].style.marginLeft);
+  console.log(objects[0].style.marginTop);
+}
 
-function spawnRandomObject() {
+function spawnTrash() {
 
   // select a random type for this new object
   var t;
+  //var obj = document.createElement("img");
+  //obj.src = '../images/trash.png';
+  //obj.classList.add("trash");
 
   // About Math.random()
   // Math.random() generates a semi-random number
@@ -37,16 +48,17 @@ function spawnRandomObject() {
   // will be A or B, we say if the random# is 0-.49 we
   // create A and if the random# is .50-1.00 we create B
 
+  
   if (Math.random() < 0.50) {
     t = "red";
   } else {
     t = "blue";
   }
-
+  
   // create the new object
   var object = {
     // set this objects type
-    type: t,
+    type: obj,
     // set x randomly but at least 15px off the canvas edges
     x: Math.random() * (canvas.width - 50),
     // set y to start on the line where objects are spawned
@@ -67,7 +79,7 @@ function animate() {
   // see if its time to spawn a new object
   if (time > (lastSpawn + spawnRate)) {
     lastSpawn = time;
-    spawnRandomObject();
+    spawnObj();
   }
 
   // request another animation frame
@@ -86,12 +98,12 @@ function animate() {
   for (var i = 0; i < objects.length; i++) {
     var object = objects[i];
     //if(!object.classList.contains("getting-sorted")){
-        object.y += spawnRateOfDescent;
+        object.style.marginTop += spawnRateOfDescent;
         ctx.beginPath();
-        ctx.arc(object.x, object.y, 8, 0, Math.PI * 2);
+        ctx.arc(object.style.marginLeft, object.style.marginTop, 8, 0, Math.PI * 2);
         ctx.closePath();
-        ctx.fillStyle = object.type;
-        ctx.fill();
+        //ctx.fillStyle = object.type;
+        //ctx.fill();
     /*}
     else{
         //need to make it follow the mouse cursor

@@ -1,139 +1,109 @@
 @import url(//fonts.googleapis.com/css?family=Lato:300:400);
-
-#fz2 {
-    margin: auto;
-    width: 50vw;
-    height: 10%;
-    float: center;
-}
-#fz1 {
-    float: left;
-}
-#fz3 {
-    float: right;
-}
-img {
-    max-width: 20;
-    max-height: 20;
-}
-.fill {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden
-}
-.fill img {
-    flex-shrink: 0;
-    min-width: 100%;
-    min-height: 100%
-}
-#banner {
-    /*background: url('../images/sortit_banner.png');*/
-    background: repeating-linear-gradient(0deg, rgba(0,255,30,1) 0%, rgb(5, 51, 5) 100%);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    width: 100%;
-}
-#banner-info {
-    padding: 5%;
-    height: 5vh;
-    color: #ddffdd;
-    font-family: 'Bubblegum Sans';
-}
-html {
-    height: 100%;
-}
 body {
-    background: repeating-linear-gradient(0deg, rgba(0,172,193,1) 0%, rgba(176,255,176,1) 100%);
-    margin: 0;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-#game {
-    height: 80%;
-    width: 100vw;
+  background: repeating-linear-gradient(0deg, rgba(0,172,193,1) 0%, rgba(176,255,176,1) 100%);
+  margin: 0;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .tidyfont {
-  font-family: 'Lato', sans-serif;
-  font-size:24px;
-  color: #81a8f0;
+font-family: 'Lato', sans-serif;
+font-size:24px;
+color: #81a8f0;
 }
-
-
-
-
+#banner {
+  /*background: url('../images/sortit_banner.png');*/
+  background: repeating-linear-gradient(0deg, rgba(0,255,30,1) 0%, rgb(5, 51, 5) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height:10vh;
+  width:100vw;
+  word-wrap: normal /*|break-word|initial|inherit;*/
+}
 /* CSS for the sea */
 .wave-container {
-  position:relative;
-  text-align:center;
-  height: 5%;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
+position:relative;
+text-align:center;
+height: 5%;
+width: 100%;
+position: absolute;
+bottom: 0;
 }
-.flex { /*Flexbox for containers*/
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+/*Flexbox for containers*/
+.flex { 
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
 }
 .waves {
-  position:relative;
-  width: 100%;
-  height:5vh;
-  margin-bottom:-7px; /*Fix for safari gap*/
-  min-height:30px;
-  max-height:50px;
+position:relative;
+width: 100%;
+height:5vh;
+margin-bottom:-7px; /*Fix for safari gap*/
+min-height:30px;
+max-height:50px;
 }
 
 .content {
-  position:relative;
-  height:20vh;
-  text-align:center;
-  background-color: white;
+position:relative;
+height:20vh;
+text-align:center;
+background-color: white;
 }
 
 /* Animation */
-
 .parallax > use {
-  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
 }
 .parallax > use:nth-child(1) {
-  animation-delay: -2s;
-  animation-duration: 7s;
+animation-delay: -2s;
+animation-duration: 7s;
 }
 .parallax > use:nth-child(2) {
-  animation-delay: -3s;
-  animation-duration: 10s;
+animation-delay: -3s;
+animation-duration: 10s;
 }
 .parallax > use:nth-child(3) {
-  animation-delay: -4s;
-  animation-duration: 13s;
+animation-delay: -4s;
+animation-duration: 13s;
 }
 .parallax > use:nth-child(4) {
-  animation-delay: -5s;
-  animation-duration: 20s;
+animation-delay: -5s;
+animation-duration: 20s;
 }
 @keyframes move-forever {
-  0% {
-   transform: translate3d(-90px,0,0);
-  }
-  100% { 
-    transform: translate3d(85px,0,0);
-  }
+0% {
+transform: translate3d(-90px,0,0);
+}
+100% { 
+  transform: translate3d(85px,0,0);
+}
 }
 /*Shrinking for mobile*/
 @media (max-width: 768px) {
-  .waves {
-    height:40px;
-    min-height:40px;
-  }
-  .content {
-    height:30vh;
-  }
-  h1 {
-    font-size:24px;
-  }
+.waves {
+  height:40px;
+  min-height:40px;
+}
+.content {
+  height:30vh;
+}
+h1 {
+  font-size:24px;
+}
+}
+
+#banner-info {
+  
+  color: #ddffdd;
+  font-family: 'Bubblegum Sans';
+}
+
+.fill {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden
 }
