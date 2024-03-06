@@ -2,15 +2,14 @@
 
 {% extends "base_accounts.html" %} 
 {% block title %}Login{% endblock %}
-
 {% block form %}
 <h1>Log In</h1>
 <form method="post">
 {% csrf_token %}
 {{ form.as_p }}
 {% if msg %}
-    <div class="error">{{ msg }}</div>
-  {% endif %}
+  <div class="error">{{ msg }}</div>
+{% endif %}
 <button type="submit">Log In</button>
 </form>
 <a href="/">Back to homepage</a>
