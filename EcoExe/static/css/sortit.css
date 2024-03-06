@@ -1,11 +1,45 @@
 @import url(//fonts.googleapis.com/css?family=Lato:300:400);
 body {
-  background: repeating-linear-gradient(0deg, rgba(0,172,193,1) 0%, rgba(176,255,176,1) 100%);
+  background: repeating-linear-gradient(0deg, rgba(0, 88, 245 ,1) 100%, rgba(176,255,176,1) 100%);
   margin: 0;
   height: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  overflow: hidden;
 }
+
+.fallzone .trash {
+  position: absolute;
+  top: 0; /* Initial position from the top */
+  transition: top 0.2s; /* Smooth transition when the position changes */
+  animation-name: revolve;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes revolve {
+  0% {transform : rotate(20deg);}
+  10% {transform : rotate(30deg);}
+  20% {transform : rotate(40deg);}
+  30% {transform : rotate(50deg);}
+  40% {transform : rotate(70deg);}
+  50% {transform : rotate(100deg);}
+  70% {transform : rotate(140deg);}
+  100% {transform : rotate(360deg);}
+}
+
+
+.hidden {
+display: none;
+}
+
+.fallzone {
+position: relative;
+height: 100vh; /* Set the height of the container as needed */
+width: 100%; /* Set the width of the container as needed */
+overflow: hidden; /* Hide the images that move outside the container */
+}
+
 
 .tidyfont {
 font-family: 'Lato', sans-serif;

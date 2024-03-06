@@ -1,145 +1,65 @@
-
-
-// get a refrence to the canvas and its context
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
-
-// newly spawned objects start at Y=25
-var spawnLineY = 0;
-
-// spawn a new object every 1500ms
-var spawnRate = 1500;
-
-// set how fast the objects will fall
-var spawnRateOfDescent = 0.50;
-
-// when was the last object spawned
-var lastSpawn = -1;
-
-// this array holds all spawned object
-//var objects = [];
-var objects = Array.from(document.querySelectorAll('.trash'));
-
-// save the starting time (used to calc elapsed time)
-var startTime = Date.now();
-
-// start animating
-animate();
-
-function spawnObj() {
-  console.log(objects[0]);
-  //objects[0].style.margin-left = Math.random() * (canvas.width - 50);
-  objects[0].style.marginTop = spawnLineY;
-  //console.log(objects[0].style.marginLeft);
-  console.log(objects[0].style.marginTop);
+function getPosAsNum(str) {
+  return(str.split("v")[0]);
 }
 
-function spawnTrash() {
+var images = Array.from(document.querySelectorAll('.trash'));
 
-  // select a random type for this new object
-  var t;
-  //var obj = document.createElement("img");
-  //obj.src = '../images/trash.png';
-  //obj.classList.add("trash");
-
-  // About Math.random()
-  // Math.random() generates a semi-random number
-  // between 0-1. So to randomly decide if the next object
-  // will be A or B, we say if the random# is 0-.49 we
-  // create A and if the random# is .50-1.00 we create B
-
-  
-  if (Math.random() < 0.50) {
-    t = "red";
-  } else {
-    t = "blue";
-  }
-  
-  // create the new object
-  var object = {
-    // set this objects type
-    type: obj,
-    // set x randomly but at least 15px off the canvas edges
-    x: Math.random() * (canvas.width - 50),
-    // set y to start on the line where objects are spawned
-    y: spawnLineY,
-  }
-
-  // add the new object to the objects[] array
-  objects.push(object);
+images.forEach(
+  (image) => 
+  {
+      image.addEventListener('click', function() {
+          if(image.classList.contains("being-held")){
+              image.classList.remove("being-held");
+          }
+          else{
+              image.classList.add("being-held");
+          }
+  })
 }
+);
 
 
-
-function animate() {
-
-  // get the elapsed time
-  var time = Date.now();
-
-  // see if its time to spawn a new object
-  if (time > (lastSpawn + spawnRate)) {
-    lastSpawn = time;
-    spawnObj();
-  }
-
-  // request another animation frame
-  requestAnimationFrame(animate);
-
-  // clear the canvas so all objects can be 
-  // redrawn in new positions
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // draw the line where new objects are spawned
-  ctx.beginPath();
-  ctx.moveTo(0, spawnLineY);
-  ctx.lineTo(canvas.width, spawnLineY);
-
-  // move each object down the canvas
-  for (var i = 0; i < objects.length; i++) {
-    var object = objects[i];
-    //if(!object.classList.contains("getting-sorted")){
-        object.style.marginTop += spawnRateOfDescent;
-        ctx.beginPath();
-        ctx.arc(object.style.marginLeft, object.style.marginTop, 8, 0, Math.PI * 2);
-        ctx.closePath();
-        //ctx.fillStyle = object.type;
-        //ctx.fill();
-    /*}
+document.addEventListener('mousemove', function(event) {
+  images.forEach(function(image) {
+    if (image.classList.contains("being-held")) {
+      image.style.left = event.clientX + 'px';
+      image.style.top = event.clientY + 'px';
+    }
     else{
-        //need to make it follow the mouse cursor
-        console.log("being clicked");
-    }*/
-  }
-
-}
-
-
-/*rubbish = []
-
-for(let i = 0; i < 10; i++){
-    var trash = document.createElement("img");
-    document.getElementById("fz2").appendChild(trash);
-
-    trash.src = '../images/trash.png';
-    trash.classList.add("trash");
-
-    rubbish.add(trash);
-}
-
-function getOffset(el) {
-    const rect = el.getBoundingClientRect();
-    return {
-      left: rect.left + window.scrollX,
-      top: rect.top + window.scrollY
-    };
-  }
-
-document.addEventListener('mousemove', function(e) {
-    let body = document.querySelector('body');
-    let circle = document.getElementById('circle');
-    let left = e.offsetX;
-    let top = e.offsetY;
-    circle.style.left = left + 'px';
-    circle.style.top = top + 'px';
+      
+    }
   });
-  */
+});
+
+
+// Iterate over each image and move them down
+for (var i = 0; i < images.length; i++) {
+  
+  var image = images[i];
+  
+  var position = 0;
+  // Set interval to move the image down every 100 milliseconds
+  setInterval(function() {
+      var pos = getPosAsNum(image.style.top);
+      if(image.classList.contains("being-held")){
+          //need to make the image follow the mouse pointer
+      }
+      else{
+          if(pos >= 90){
+              //image.classList.add("hidden");
+              position = 0;
+              image.style.top = 0 + 'vh'; //reset image's position
+              //image.classList.remove("hidden");
+          }
+          else{
+              position += 0.5; // Adjust this value to control the speed of the movement
+              image.style.top = position + 'vh';
+          }
+          
+      }
+
+      
+      //console.log(position);
+}, 100);
+
+}
