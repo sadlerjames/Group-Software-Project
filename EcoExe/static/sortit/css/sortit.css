@@ -37,7 +37,7 @@ display: none;
 position: relative;
 height: 100vh; /* Set the height of the container as needed */
 width: 100%; /* Set the width of the container as needed */
-overflow: hidden; /* Hide the images that move outside the container */
+/*overflow: hidden; /* Hide the images that move outside the container */
 }
 
 
@@ -139,5 +139,5 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden
+  /*overflow: hidden*/
 }

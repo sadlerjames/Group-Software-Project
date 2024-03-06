@@ -35,6 +35,7 @@ document.addEventListener('mousemove', function(event) {
 // Iterate over each image and move them down
 for (var i = 0; i < images.length; i++) {
   
+  console.log("hello");
   var image = images[i];
   
   var position = 0;
