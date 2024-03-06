@@ -11,36 +11,39 @@
   <p>
     <label for="id_username">Username:</label>
     {{ form.username }}
+    {{ form.username.errors }}
   </p>
 
   <p>
     <label for="id_email">Email:</label>
     {{ form.email }}
+    {{ form.email.errors }}
   </p>
 
   <p>
     <label for="id_first_name">First Name:</label>
     {{ form.first_name }}
+    {{ form.first_name.errors }}
   </p>
 
   <p>
     <label for="id_last_name">Last Name:</label>
     {{ form.last_name }}
+    {{ form.last_name.errors }}
   </p>
 
   <p>
     <label for="id_password1">Password:</label>
     {{ form.password1 }}
+    {{ form.password1.errors }}
   </p>
 
   <p>
     <label for="id_password2">Confirm Password:</label>
     {{ form.password2 }}
+    {{ form.password2.errors }}
   </p>
   
-  {% if msg %}
-    <div class="error">{{ msg }}</div>
-  {% endif %}
   <p>
     <button type="submit">Sign Up</button>
   </p>
