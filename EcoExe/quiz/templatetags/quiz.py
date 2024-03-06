@@ -39,7 +39,7 @@ a question cannot be added without at least one answer
 load will load a quiz given its id and return a Quiz object
 '''
 class Quiz:
-    def __init__(self,quizName,questions=[],answers=[[]],id=None,correct=[],noPoints=10):
+    def __init__(self,quizName,questions=[],answers=[[]],id=None,correct=[],noPoints=10,loading=False):
         #print(correct)
         #print(questions)
         if len(correct)!=len(questions):
@@ -68,7 +68,8 @@ class Quiz:
         self.answers=answers
         self.id=id
         self.points=noPoints
-        self.save()
+        if (not loading):
+            self.save()
 
 
 
@@ -136,7 +137,7 @@ class Quiz:
 def load(id):
         with open("quiz/templatetags/quizzes/"+str(id)+'.json') as inf:
             myDict=json.load(inf)
-        return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id,myDict['correct']))
+        return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id,myDict['correct'],loading=True))
 
 
 #print("A")
