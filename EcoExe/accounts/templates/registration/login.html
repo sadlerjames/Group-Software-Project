@@ -1,10 +1,10 @@
 <!-- Authored by Jack Hales, George Piper, James Sadler -->
 
-{% extends "base.html" %} 
+{% extends "base_accounts.html" %} 
 {% block title %}Login{% endblock %}
 
-{% block content %}
-<h2>Log In</h2>
+{% block form %}
+<h1>Log In</h1>
 <form method="post">
 {% csrf_token %}
 {{ form.as_p }}

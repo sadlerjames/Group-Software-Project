@@ -1,35 +1,51 @@
 <!-- Authored by Jack Hales, George Piper, James Sadler -->
 
-{% extends "base.html" %}
+{% extends "base_accounts.html" %}
 
 {% block title %}Sign Up{% endblock %}
 
-{% block content %}
-<h2>Sign up</h2>
+{% block form %}
+<h1>Sign up</h1>
 <form method="post">
   {% csrf_token %}
-  <label for="id_username">Username:</label>
-  {{ form.username }}
+  <p>
+    <label for="id_username">Username:</label>
+    {{ form.username }}
+  </p>
 
-  <label for="id_email">Email:</label>
-  {{ form.email }}
+  <p>
+    <label for="id_email">Email:</label>
+    {{ form.email }}
+  </p>
 
-  <label for="id_first_name">First Name:</label>
-  {{ form.first_name }}
+  <p>
+    <label for="id_first_name">First Name:</label>
+    {{ form.first_name }}
+  </p>
 
-  <label for="id_last_name">Last Name:</label>
-  {{ form.last_name }}
+  <p>
+    <label for="id_last_name">Last Name:</label>
+    {{ form.last_name }}
+  </p>
 
-  <label for="id_last_name">Password:</label>
-  {{ form.password1 }}
+  <p>
+    <label for="id_password1">Password:</label>
+    {{ form.password1 }}
+  </p>
 
-  <label for="id_last_name">Confirm Password:</label>
-  {{ form.password2 }}
-  <br>
+  <p>
+    <label for="id_password2">Confirm Password:</label>
+    {{ form.password2 }}
+  </p>
+  
   {% if msg %}
     <div class="error">{{ msg }}</div>
   {% endif %}
-  <button type="submit">Sign Up</button>
+  <p>
+    <button type="submit">Sign Up</button>
+  </p>
 </form>
-<a href="/">Back to homepage</a>
+<p>
+  <a href="/">Back to homepage</a>
+</p>
 {% endblock %}
