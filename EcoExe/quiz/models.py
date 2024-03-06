@@ -5,7 +5,7 @@ from django import template
 
 # Create your models here.
 class Quizzes(models.Model):
-    id=models.IntegerField(primary_key=True)
+    #id=models.AutoField(primary_key=True)
     points=models.IntegerField(default=0)
     def __str__(self):
         return self.id

@@ -1,0 +1,51 @@
+/* Authored by Jack Hales */
+
+@import url("https://fonts.googleapis.com/css?family=Outfit");
+h1 {
+    color: #00dca5;
+    font-family: Outfit;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+h2 {
+    color: #00dca5;
+    font-family: Outfit;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+h3 {
+    color: #00dca5;
+    font-family: Outfit;
+    font-size: large;
+    font-weight: bold;
+}
+
+h4 {
+    color: #00dca5;
+    font-family: Outfit;
+    font-size: medium;
+    font-weight: normal;
+}
+
+h5 {
+    color: #00dca5;
+    font-family: Outfit;
+    font-size: small;
+    font-weight: lighter;
+}
+
+h6 {
+    color: #00dca5;
+    font-family: Outfit;
+    font-size: x-small;
+    font-weight: lighter;
+}
+
+p {
+    color: #ffffff;
+    font-family: Outfit;
+    font-size: medium;
+    font-weight: normal;
+}

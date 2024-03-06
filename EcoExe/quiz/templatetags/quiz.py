@@ -87,8 +87,10 @@ class Quiz:
                 return
         
         #print(models.Quizzes.objects.count()+10)
-        self.id=models.Quizzes.objects.count()+10
-        entry=models.Quizzes.objects.create(id=models.Quizzes.objects.count()+10,points=self.points)
+        #self.id=models.Quizzes.objects.count()+10
+        #entry=models.Quizzes.objects.create(id=models.Quizzes.objects.count()+10,points=self.points)
+        entry=models.Quizzes.objects.create(points=self.points)
+        self.id=entry.pk
         
         #print("imp"+models.Quizzes.get_id(entry))
         entry.save()
@@ -141,6 +143,9 @@ def load(id):
 
 
 #print("A")
-#a=Quiz("One",["It’s acceptable to toss used automotive oil in with regular residential trash.","Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"],[["False","True"],["$130","$12","$60"]])
-#a=load(1)
+#a=Quiz(quizName="One",questions=["It’s acceptable to toss used automotive oil in with regular residential trash.","Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"],noPoints=666,answers=[["False","True"],["$130","$12","$60"]],loading=False)
+#a=load(31)
 #print(a.getAnswer())
+#print(a.id)
+
+

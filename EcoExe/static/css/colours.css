@@ -1,10 +1,10 @@
 /* Authored by Sam Arrowsmith */
-.bg-primary {
+.background-primary {
     background-color: #003c3c;
 }
 
-.bg-secondary {
-    background-color: #00DCA5;
+.background-secondary {
+    background-color: #00dca5;
 }
 
 .bubble {
@@ -51,20 +51,9 @@ nav .links {
     align-items:center;
 }
 
-#override {
-	background-color: green;
-}
-
-h1 {
-    color: #ccffbb;
-}
-
-h2 {
-    color: #ccffbb;
-}
 
 body {
-    background-color: #3498DB;
+    /*background-color: #3498DB;*/
     overflow: hidden;
   }
   
