@@ -25,7 +25,7 @@ urlpatterns = [
     path('login/', views.login_view,  name='login'),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('quiz/create/', views.creation_view, name="create"),
-    path('treasurehunt/create/', views.create_treasurehunt, name="create_treasurehunt"),
+    path('treasurehunt/create/', views.create_qr, name="create_qr"),
     path('logout/', views.logoutview, name='logout'),
 ]
 
