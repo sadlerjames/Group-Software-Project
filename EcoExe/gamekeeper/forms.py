@@ -33,3 +33,6 @@ class QuizCreationForm(forms.Form):
         for i in range(1,int(extra_fields)):
             self.fields['extra_field_{index}'.format(index=i)] = \
                 forms.CharField()
+            
+class TreasureHuntCreationForm(forms.Form):
+    treasure_hunt_name = forms.CharField()

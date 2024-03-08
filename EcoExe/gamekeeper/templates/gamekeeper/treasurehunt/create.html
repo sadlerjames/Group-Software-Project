@@ -1,0 +1,12 @@
+<html>
+    <body>
+        <h1>create a treasure hunt by creating custom QR codes and custom activities for them!</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div id="forms">
+                {{ form.as_p }}
+            </div>
+            <input type="submit" />
+        </form>
+    </body>
+</html>

@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate,login,logout
 from accounts.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
-from .forms import QuizCreationForm
+from .forms import QuizCreationForm,TreasureHuntCreationForm
 from quiz.templatetags.quiz import Quiz
 
 
@@ -78,3 +78,24 @@ def creation_view(request):
 def logoutview(request):
     logout(request)
     return redirect('/gamekeeper/login/')
+
+@login_required(login_url = '/gamekeeper/login')
+def create_treasurehunt(request):
+    if getattr(request.user,'is_gamekeeper'):
+        if request.method == 'POST':
+            #get the number of questions from the post request
+            form = TreasureHuntCreationForm(request.POST)
+
+            if form.is_valid():
+                treasurehuntName = request.POST.get('treasure_hunt_name')
+                #call the quiz class to save the quiz to json file
+                return redirect('/gamekeeper/treasurehunt/create')
+
+            else:
+                form = TreasureHuntCreationForm()
+            return render(request,"gamekeeper/treasurehunt/create.html",{'form':form})
+        else:
+            form = TreasureHuntCreationForm()
+            return render(request,"gamekeeper/treasurehunt/create.html",{'form':form})
+    else:
+        return redirect('/account/dashboard')

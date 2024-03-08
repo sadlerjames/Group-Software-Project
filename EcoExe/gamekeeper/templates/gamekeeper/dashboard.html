@@ -1,7 +1,12 @@
 <!--Authored by George Piper and James Sadler-->
+{% extends "base_accounts.html" %} 
 <html>
+    {% block form %}
     <h1>Welcome to your game keeper dashboard!</h1>
     <a href = "/gamekeeper/quiz/create">Create a quiz</a>
     <br>
+    <a href = "/gamekeeper/treasurehunt/create">Create a treasure hunt</a>
+    <br>
     <a href="/gamekeeper/logout">Logout</a>
+    {% endblock %}
 </html>
