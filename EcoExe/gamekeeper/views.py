@@ -84,20 +84,26 @@ def logoutview(request):
 def create_qr(request):
     if getattr(request.user,'is_gamekeeper'):
         #list files from the quizzes and pass them to the create.html as a context variable
+        contextVars = {}
+        contextVars['quiz_files'] = os.listdir(path="./quiz/templatetags/quizzes")
+        contextVars['form'] = ""
+
         if request.method == 'POST':
             #get the number of questions from the post request
             form = QRCreationForm(request.POST)
+            contextVars['form'] = form
 
             if form.is_valid():
                 treasurehuntName = request.POST.get('qr_name')
                 #call the quiz class to save the quiz to json file
-                return redirect('/gamekeeper/treasurehunt/create')
+                
+                return redirect('/gamekeeper/treasurehunt/create', context=contextVars)
 
             else:
                 form = QRCreationForm()
-            return render(request,"gamekeeper/treasurehunt/create.html",{'form':form})
+            return render(request,"gamekeeper/treasurehunt/create.html",context=contextVars)
         else:
             form = QRCreationForm()
-            return render(request,"gamekeeper/treasurehunt/create.html",{'form':form})
+            return render(request,"gamekeeper/treasurehunt/create.html",context=contextVars)
     else:
         return redirect('/account/dashboard')
