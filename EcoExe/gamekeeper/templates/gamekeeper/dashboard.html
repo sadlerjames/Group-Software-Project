@@ -1,12 +1,19 @@
-<!--Authored by George Piper and James Sadler-->
-{% extends "base_accounts.html" %} 
-<html>
-    {% block form %}
-    <h1>Welcome to your game keeper dashboard!</h1>
-    <a href = "/gamekeeper/quiz/create">Create a quiz</a>
-    <br>
-    <a href = "/gamekeeper/treasurehunt/create">Create a QR Code</a>
-    <br>
-    <a href="/gamekeeper/logout">Logout</a>
-    {% endblock %}
-</html>
+<!--Authored by George Piper, James Sadler and Jack Hales-->
+
+{% extends "base_gamekeeper.html" %}
+
+{% block title %}Game Keeper Dashboard{% endblock %}
+
+{% block index %}
+<h1>Welcome to the Game Keeper Dashboard!</h1>
+<br>
+<p>
+    <a href="/gamekeeper/quiz/create" class="button">Create a Quiz</a>
+</p>
+<p>
+    <a href="/gamekeeper/treasurehunt/create" class="button">Create a QR Code</a>
+</p>
+<p>
+    <a href="/gamekeeper/logout" class="button">Sign Out</a>
+</p>
+{% endblock %}

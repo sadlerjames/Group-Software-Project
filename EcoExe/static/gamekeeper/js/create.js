@@ -7,7 +7,7 @@ $(document).ready(function() {
         form_count ++;
 
         //add a question input box to the DOM
-        let question = $('<br/><br/><p1>Question: </p1><input type ="text"/><br/>');
+        let question = $('<br/><br/><p>Question: </p><input type ="text"/><br/>');
         question.attr('name','extra_field_'+form_count);
         $("#forms").append(question);
         $("[name=extra_field_count]").val(form_count);
@@ -15,7 +15,7 @@ $(document).ready(function() {
         //add 4 answer input box to the DOM
         for (let i=1; i <= 4; i++) {
             form_count ++;
-            let element = $('<p1>Answer: </p1><input type ="text"/> ');
+            let element = $('<p>Answer: </p><input type ="text"/> ');
             element.attr('name','extra_field_'+form_count);
             $("#forms").append(element);
             $("[name=extra_field_count]").val(form_count);

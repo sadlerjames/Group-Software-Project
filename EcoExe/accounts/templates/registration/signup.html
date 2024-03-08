@@ -2,10 +2,10 @@
 
 {% extends "base_accounts.html" %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block form %}
-<h1>Sign up</h1>
+<h1>Register</h1>
 <form method="post">
   {% csrf_token %}
   <p>
@@ -45,7 +45,7 @@
   </p>
   
   <p>
-    <button type="submit">Sign Up</button>
+    <button type="submit">Register</button>
   </p>
 </form>
 <p>
