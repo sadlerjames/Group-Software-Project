@@ -26,8 +26,9 @@
   cursor: pointer;
   display: inline-flex;
   fill: currentcolor;
+  font-family: Outfit;
   font-size: medium;
-  font-weight: 500;
+  font-weight: bolder;
   height: 48px;
   justify-content: center;
   letter-spacing: .25px;
