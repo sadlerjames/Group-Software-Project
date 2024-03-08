@@ -7,6 +7,9 @@
     </head>
     <body>
         <h1>Create a QR code with a custom activity - these can then be used to compose a treasure hunt!</h1>
+        {% for x in quiz_files %}
+            <p>{{x}}</p>
+        {% endfor %}
         <form method="post" id="create-qr">
             {% csrf_token %}
             <div id="forms">
