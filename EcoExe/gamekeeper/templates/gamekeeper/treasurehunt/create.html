@@ -1,18 +1,17 @@
 <html>
     <head>
-        <title>Create a Treasure Hunt</title>
+        <title>Create a QR Code</title>
         {% load static %}
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="{% static '/gamekeeper/js/thcreate.js' %}"></script>
+        <script src="{% static '/gamekeeper/js/qrcreate.js' %}"></script>
     </head>
     <body>
-        <h1>Create a treasure hunt by creating custom QR codes and custom activities for them!</h1>
+        <h1>Create a QR code with a custom activity - these can then be used to compose a treasure hunt!</h1>
         <form method="post" id="create-qr">
             {% csrf_token %}
             <div id="forms">
                 {{ form.as_p }}
             </div>
-            <button type="button" id="add-another-qr">Add QR Code</button>
             <input type="submit" />
         </form>
     </body>

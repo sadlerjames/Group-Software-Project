@@ -34,5 +34,5 @@ class QuizCreationForm(forms.Form):
             self.fields['extra_field_{index}'.format(index=i)] = \
                 forms.CharField()
             
-class TreasureHuntCreationForm(forms.Form):
-    treasure_hunt_name = forms.CharField()
+class QRCreationForm(forms.Form):
+    qr_name = forms.CharField()
