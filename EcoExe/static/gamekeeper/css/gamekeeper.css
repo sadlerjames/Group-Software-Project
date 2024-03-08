@@ -9,6 +9,9 @@
     top: 50%;
     transform: translate(-50%, -50%);
     min-width: 500px;
+    overflow: auto;
+    max-height: 90%;
+    max-width: 90%;
 }
 
 .button, button {
@@ -45,19 +48,19 @@
   text-decoration: none;
 }
 
-.button:hover {
+.button:hover, button:hover {
   background-color: #00c896;
   color: #ffffff;
   text-decoration: none;
 }
 
-.button:active {
+.button:active, button:active {
   box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
   outline: none;
   text-decoration: none;
 }
 
-.button:focus {
+.button:focus, button:focus {
   outline: none;
   border: 2px solid #4285f4;
   text-decoration: none;

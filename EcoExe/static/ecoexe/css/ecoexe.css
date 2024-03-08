@@ -9,6 +9,9 @@
     top: 50%;
     transform: translate(-50%, -50%);
     min-width: 500px;
+    overflow: auto;
+    max-height: 90%;
+    max-width: 90%;
 }
 
 .button {

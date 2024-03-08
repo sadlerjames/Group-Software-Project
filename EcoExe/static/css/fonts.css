@@ -49,3 +49,13 @@ p, ul {
     font-size: medium;
     font-weight: normal;
 }
+
+p1 {
+    color: #ffffff;
+    font-family: Outfit;
+    font-size: medium;
+    font-weight: normal;
+    margin-bottom: 1em;
+    margin-right: 1em;
+    display: inline-block;
+}
