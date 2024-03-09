@@ -1,6 +1,6 @@
 <style>
     .option{
-        color: red;
+        color: black;
         padding: 20px;
         display: none;
         margin-top: 20px;
@@ -18,14 +18,6 @@
     </head>
     <body>
         <h1>Create a QR code with a custom activity - these can then be used to compose a treasure hunt!</h1>
-        <!-- <form method="post" id="create-qr">
-            {% csrf_token %}
-            <div id="forms">
-                {{ form.as_p }}
-            </div>
-           
-            <input type="submit" />
-        </form> -->
         <div>
             <select id="activity_selection">
                 <option value="quiz">Quiz</option>
@@ -33,14 +25,37 @@
             </select>
         </div>
         <div class="quiz option">
-            <select>
-                {% for x in quiz_files %}
-                    <option value=x>{{ x }}</option>
-                {% endfor %}
-            </select>
+            <form method="post">
+                {% csrf_token %} 
+                <label for="qr_name">Name of activity:</label>
+                <input id = "qr_name" name = "qr_name">
+                <br>
+                <label for="location">Coordinates:</label>
+                <input id = "location" name = "location">
+                <br>
+                <label for="quiz">Select a quiz:</label>
+                <select id = "quiz" name = "quiz">
+                    {% load filter%}
+                    {% for x in quiz_files %}
+                        <option value={{x}}>{{x|getName}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" class="button" value="Submit"/>
+            </form>
         </div>
         <div class="trivia option">
-            You have selected <strong>green option</strong> so i am here
+            <form method = "post">
+                {% csrf_token %} 
+                <label for="qr_name">Name of activity:</label>
+                <input id = "qr_name" name = "qr_name">
+                <br>
+                <label for="location">Coordinates:</label>
+                <input id = "location">
+                <br>
+                <label for="trivia">Enter a fun fact:</label>
+                <input id = "trivia">
+                <input type="submit" class="button" value="Submit"/>
+            </form>
         </div>
     </body>
 </html>

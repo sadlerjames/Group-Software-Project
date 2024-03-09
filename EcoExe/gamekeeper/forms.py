@@ -36,3 +36,5 @@ class QuizCreationForm(forms.Form):
             
 class QRCreationForm(forms.Form):
     qr_name = forms.CharField()
+    location = forms.CharField()
+    extra = forms.CharField(required=False)

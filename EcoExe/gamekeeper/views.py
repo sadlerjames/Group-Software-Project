@@ -75,12 +75,13 @@ def creation_view(request):
     else:
         return redirect('/account/dashboard')
 
-@login_required()  
+@login_required(login_url = 'gamekeeper/login')  
 def logoutview(request):
     logout(request)
     return redirect('/gamekeeper/login/')
 
 @login_required(login_url = '/gamekeeper/login')
+@csrf_protect
 def create_qr(request):
     if getattr(request.user,'is_gamekeeper'):
         #list files from the quizzes and pass them to the create.html as a context variable
@@ -92,11 +93,11 @@ def create_qr(request):
             #get the number of questions from the post request
             form = QRCreationForm(request.POST)
             contextVars['form'] = form
-
             if form.is_valid():
-                treasurehuntName = request.POST.get('qr_name')
-                #call the quiz class to save the quiz to json file
-                
+                qrName = request.POST.get('qr_name')
+                location = request.POST.get('location')
+                extraInfo = request.POST.get('extra')      
+                #create the qr code          
                 return redirect('/gamekeeper/treasurehunt/create', context=contextVars)
 
             else:

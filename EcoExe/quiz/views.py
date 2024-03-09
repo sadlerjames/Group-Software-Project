@@ -52,4 +52,3 @@ def daily_quiz(request):
 
     context['correct'] = correct
     return render(request, 'daily_quiz.html', context)
-#>>>>>>> 2be866cdc4c145ecdba944b25ba25cd05305cac6
