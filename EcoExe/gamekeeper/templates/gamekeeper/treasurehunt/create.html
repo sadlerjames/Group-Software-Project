@@ -1,21 +1,45 @@
+<style>
+    .option{
+        color: red;
+        padding: 20px;
+        display: none;
+        margin-top: 20px;
+    }
+    .quiz{ padding: 20px;}
+    .trivia{ padding: 20px; }
+
+</style>
 <html>
     <head>
         <title>Create a QR Code</title>
         {% load static %}
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="{% static '/gamekeeper/js/qrcreate.js' %}"></script>
     </head>
     <body>
         <h1>Create a QR code with a custom activity - these can then be used to compose a treasure hunt!</h1>
-        {% for x in quiz_files %}
-            <p>{{x}}</p>
-        {% endfor %}
-        <form method="post" id="create-qr">
+        <!-- <form method="post" id="create-qr">
             {% csrf_token %}
             <div id="forms">
                 {{ form.as_p }}
             </div>
+           
             <input type="submit" />
-        </form>
+        </form> -->
+        <div>
+            <select>
+                <option value="quiz">Quiz</option>
+                <option value="trivia">Trivia</option>
+            </select>
+        </div>
+        <div class="quiz option">
+            {% for x in quiz_files %}
+                <p>{{x}}</p>
+            {% endfor %}
+            <form></form>
+        </div>
+        <div class="trivia option">
+            You have selected <strong>green option</strong> so i am here
+        </div>
     </body>
 </html>
