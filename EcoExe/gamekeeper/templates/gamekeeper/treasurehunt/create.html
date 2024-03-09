@@ -27,16 +27,17 @@
             <input type="submit" />
         </form> -->
         <div>
-            <select>
+            <select id="activity_selection">
                 <option value="quiz">Quiz</option>
                 <option value="trivia">Trivia</option>
             </select>
         </div>
         <div class="quiz option">
-            {% for x in quiz_files %}
-                <p>{{x}}</p>
-            {% endfor %}
-            <form></form>
+            <select>
+                {% for x in quiz_files %}
+                    <option value=x>{{ x }}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="trivia option">
             You have selected <strong>green option</strong> so i am here
