@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-6u8v&v4_#sth$f6fm-#m_d&y1kvs4za-0kkk&4s^!omf8s-mm_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [] # for hosting server so that other devices can access website. you will need your own IP address though.
+ALLOWED_HOSTS = ['*'] # for hosting server so that other devices can access website. you will need your own IP address though.
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'EcoExe',
     'points',
     'sortit',
+    'treasurehunt',
 ]
 
 MIDDLEWARE = [

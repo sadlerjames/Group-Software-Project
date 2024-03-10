@@ -7,8 +7,17 @@
     background-color: #00dca5;
 }
 
-.bubble {
-    font-family: 'Bubblegum Sans';
+#logo-image {
+  width: auto;
+  height: 4rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 1rem;
+}
+
+#logo {
+  display: inline-block;
+  justify-content: left;
 }
 
 /*
@@ -21,36 +30,59 @@ nav .links {
     display: none;
 }
 .mobile-menu {
-    color: white;
     display: none;
     position: absolute;
-    padding: 10px;
     right: 0;
-    height: 50vh;
-    width: 40vw;
 }
 
-@media (max-width: 600px) {
-    #mobile-menu-btn {
-      display: block;
-    }
-    nav a {
-      display: none;
-    }
-    .mobile-menu {
-      display: none;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-    }
+.mobile-menu a {
+  padding: 2vh;
+  width: 40vw;
+  text-align: center;
+  color: #ffffff;
+}
+
+@media (max-width: 750px) {
+  #logo-image {
+    height: 3rem;
+    margin: 0.5rem;
   }
+
+  #mobile-menu-btn {
+    display: block;
+    margin-left: auto;
+  }
+  nav a {
+    display: none;
+  }
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
 
 .navbar {
     display: flex;
-    justify-content: space-evenly;
-    align-items:center;
+    align-items: center;
 }
 
+.navbar h2 a {
+  font-weight: bold;
+  color: #ffffff;
+  padding: 1rem;
+}
+
+.navbar h2 a:hover {
+  background-color: #002727;
+  color: #ffffff;
+}
+
+#links {
+  display: flex;
+  justify-content: flex-end;
+}
 
 body {
     /*background-color: #3498DB;*/

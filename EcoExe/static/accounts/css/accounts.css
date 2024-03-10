@@ -15,12 +15,12 @@
 }
 
 @media only screen and (min-width: 500px) {
-  .index {
+  .form {
       min-width: 500px;
   }
 }
 
-button {
+button, #dashboard-buttons a {
   align-items: center;
   appearance: none;
   background-color: #00dca5;
@@ -54,17 +54,129 @@ button {
   z-index: 0;
 }
 
-button:hover {
+button:hover, #dashboard-buttons a:hover {
   background-color: #00c896;
   color: #ffffff;
 }
 
-button:active {
+button:active, #dashboard-buttons a:active {
   box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
   outline: none;
 }
 
-button:focus {
+button:focus, #dashboard-buttons a:focus {
   outline: none;
   border: 2px solid #4285f4;
 }
+
+#treasure-hunt {
+  background-color: #ffffff;
+  height: 500px;
+  max-height: 60vh;
+  width: 100vw;
+  display: flex;
+  align-items: center; 
+  flex: 1;
+}
+
+#treasure-hunt:hover {
+  background-color: #eeeeee;
+}
+
+#treasure-hunt-text p {
+  color: #002727;
+}
+
+#google-maps-display {
+  height: 100%;
+  min-width: 60%;
+  width: 70vw;
+  max-width: 70vw;
+}
+
+#google-maps-display iframe {
+  width: 100%;
+  height: 100%;
+}
+
+#dashboard-buttons {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+#dashboard-buttons a {
+  font-size: 150%;
+  width: 50%;
+  margin: 1rem;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+@media (min-width: 750px) {
+  #treasure-hunt-text {
+    margin: 3rem;
+  }
+
+  #treasure-hunt-text h1 {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 750px) {
+  #treasure-hunt {
+    height: fit-content;
+    max-height: fit-content;
+  }
+
+  #google-maps-display {
+    height: 50vw;
+    min-height: 40vh;
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  #treasure-hunt {
+    display: inline-block;
+    align-items: center; 
+  }
+  
+  #treasure-hunt-text {
+    margin: 1rem;
+    text-align: center;
+  }
+
+  #treasure-hunt-text p {
+    margin-bottom: 0.5rem;
+    line-height: normal;
+  }
+}
+
+@media (max-height: 750px) {  
+  #treasure-hunt-text h1 {
+    font-size: large;
+  }
+
+  #treasure-hunt-text p {
+    font-size: small;
+  }
+
+  #dashboard-buttons a {
+    font-size: 100%;
+    margin: 0.5rem;
+  }
+}
+

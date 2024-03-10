@@ -20,13 +20,5 @@ from . import views
 from .views import *
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('admin/', admin.site.urls),
-    path('quiz/', include('quiz.urls')),
-    path('gamekeeper/', include('gamekeeper.urls')),
-    path('accounts/', include('accounts.urls')),
-    path("accounts/", include("django.contrib.auth.urls")),
-    path('points/', include('points.urls')),
-    path('sortit/', include('sortit.urls')),
-    path('treasurehunt/', include('treasurehunt.urls')),
+    path('scan/', views.scan, name='scan'),
 ]

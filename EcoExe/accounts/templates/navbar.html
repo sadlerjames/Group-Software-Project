@@ -1,57 +1,57 @@
 <!-- Authored by Sam Arrowsmith, Jack Hales -->
-<html lang="en">
-<head>
+
+{% extends "base_dashboard.html" %}
+
+{% block navbar_head %}
+
+    {% load static %}
+    <script src="{% static 'js/navbar_mobile_menu.js' %}" defer></script>
+
     {% if user.is_authenticated %}
         <!-- This 'if' block will redirect any page in the site to the login/signup if the user is not authenticated -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}{% endblock %}</title>
-        
-        <link href='https://fonts.googleapis.com/css?family=Bubblegum Sans' rel='stylesheet'>
-        <!-- Bootstrap for bubbly font-->
-
-
         <base href="/">
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'css/colours.css' %}" />
-        <!-- applying the stylesheet created for the project primarily to maintain consistent colours -->
 
     {% else %}
         <meta http-equiv="refresh" content="0; URL={% url 'loginpage' %}"/>
     {% endif %}
-</head>
-<body>
+
+{% endblock %}
+
+{% block navbar_body %}
+
     {% if user.is_authenticated %}
     <!-- Nav tag encloses the desktop navbar -->
-    <nav class="bg-primary navbar">
-        <div class="container">
-            <a href="{% url 'dashboard' %}"><img src="{% static 'images/logo.png' %}"><h2>  Dashboard</h2></a>
-        </div>
-            <h1 class="bubble"> EcoExe </h1>
-            <h2 class="bubble">
-            <a href="{% url 'profile' %}" style="text-decoration: none;">{{user.username}}</a>
-            </h2>
-            <h2 class="bubble">
+    <nav class="background-primary navbar">
+        <a href="{% url 'dashboard' %}" id="logo">
+            <img src="{% static 'images/logo.png' %}" id="logo-image">
+        </a>
+        
+        <div id="links">
+            <h2>
                 <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
             </h2>
-            <button id="mobile-menu-btn" class="bg-secondary">Menu</button>
+            <!-- <h2>
+                <a href="{% url 'profile' %}" style="text-decoration: none;">Profile: <i>{{user.username}}</i></a>
+            </h2> -->
+            <h2>
+                <a href="{% url 'logout' %}" style="text-decoration: none;">Sign Out</a>
+            </h2>
+            <button id="mobile-menu-btn" class="background-secondary">Menu</button>
+        </div>
+        
     </nav>
     <!-- above is for desktop, below is the mobile view -->
-    <div class="mobile-menu bg-secondary">
-        <a href="{% url 'profile' %}" style="text-decoration: none;">{{user.username}}</a>
+    <div class="mobile-menu background-secondary" style="display: none;">
+        <a href="{% url 'profile' %}" style="text-decoration: none;">Profile: <i>{{user.username}}</i></a>
         <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
-        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'logout' %}">Sign Out</a>
     </div>
     
-    {% block content %}
+    {% block maincontent %}
     {% endblock %}
-    <div class="dropdiv wave"></div>
-    <div class="dropdiv wave"></div>
-    <div class="dropdiv wave"></div>
+
     {% else %}
     {% endif %}
-    <script src="{% static 'js/navbar_mobile_menu.js' %}" defer>
-        
-    </script>
-</body>
-</html>
+    
+
+{% endblock %}
