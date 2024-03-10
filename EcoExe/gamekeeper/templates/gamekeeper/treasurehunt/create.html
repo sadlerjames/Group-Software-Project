@@ -31,7 +31,7 @@
         <input id = "location" name = "location">
         <br>
         <label for="quiz">Select a quiz:</label>
-        <select id = "quiz" name = "quiz">
+        <select id = "quiz" name = "extra">
             {% load filter%}
             {% for x in quiz_files %}
                 <option value={{x}}>{{x|getName}}</option>
@@ -48,10 +48,10 @@
         <input id = "qr_name" name = "qr_name">
         <br>
         <label for="location">Coordinates:</label>
-        <input id = "location">
+        <input id = "location" name = "location">
         <br>
         <label for="trivia">Enter a fun fact:</label>
-        <input id = "trivia">
+        <input id = "trivia" name = "extra">
         <br>
         <input type="submit" class="button" value="Submit"/>
     </form>

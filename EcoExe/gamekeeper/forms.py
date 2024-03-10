@@ -38,3 +38,18 @@ class QRCreationForm(forms.Form):
     qr_name = forms.CharField()
     location = forms.CharField()
     extra = forms.CharField(required=False)
+
+class TreasureHuntCreationForm(forms.Form):
+    treasure_hunt_name = forms.CharField()
+    bonus_points = forms.IntegerField()
+    extra_field_count = forms.CharField(widget = forms.HiddenInput())
+
+    def __init__(self, *args, **kwargs):
+        extra_fields = kwargs.pop('extra', 0) #get the extra argument passed in
+        super(TreasureHuntCreationForm, self).__init__(*args, **kwargs)
+        self.fields['extra_field_count'].initial = extra_fields #initialise the form with extra fields
+
+        #add in the extra fields for added questions and answers
+        for i in range(1,int(extra_fields)):
+            self.fields['extra_field_{index}'.format(index=i)] = \
+                forms.CharField()

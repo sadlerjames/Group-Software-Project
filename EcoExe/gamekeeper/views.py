@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate,login,logout
 from accounts.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
-from .forms import QuizCreationForm,QRCreationForm
+from .forms import QuizCreationForm,QRCreationForm,TreasureHuntCreationForm
 from quiz.templatetags.quiz import Quiz
 import os
 
@@ -90,14 +90,13 @@ def create_qr(request):
         contextVars['form'] = ""
 
         if request.method == 'POST':
-            #get the number of questions from the post request
             form = QRCreationForm(request.POST)
             contextVars['form'] = form
             if form.is_valid():
                 qrName = request.POST.get('qr_name')
                 location = request.POST.get('location')
-                extraInfo = request.POST.get('extra')      
-                #create the qr code          
+                extraInfo = request.POST.get('extra') 
+                #save the activity to the object     
                 return redirect('/gamekeeper/treasurehunt/create', context=contextVars)
 
             else:
@@ -108,3 +107,21 @@ def create_qr(request):
             return render(request,"gamekeeper/treasurehunt/create.html",context=contextVars)
     else:
         return redirect('/account/dashboard')
+    
+@login_required(login_url = '/gamekeeper/login')
+@csrf_protect
+def link_qr(request):
+    if request.method == 'POST':
+        print("POST")
+        #get the number of questions from the post request
+        form = TreasureHuntCreationForm(request.POST,extra= request.POST.get('extra_field_count'))
+        print("extra is",request.POST.get('extra_field_count'))
+        if form.is_valid():
+            name = request.POST.get('treasure_hunt_name')
+            points = request.POST.get('bonus_points')
+            activities=[]
+            for i in range(request.POST.get('extra_field_count')):
+                activities.append(request.POST.get('extra_field_{index}'.format(index=i)))
+        return render(request,"gamekeeper/treasurehunt/link.html")
+    else:
+        return render(request,"gamekeeper/treasurehunt/link.html")
