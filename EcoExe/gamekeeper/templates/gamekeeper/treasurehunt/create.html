@@ -1,61 +1,59 @@
-<style>
-    .option{
-        color: black;
-        padding: 20px;
-        display: none;
-        margin-top: 20px;
-    }
-    .quiz{ padding: 20px;}
-    .trivia{ padding: 20px; }
+<!--Authored by George Piper, James Sadler and Jack Hales-->
 
-</style>
-<html>
-    <head>
-        <title>Create a QR Code</title>
-        {% load static %}
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="{% static '/gamekeeper/js/qrcreate.js' %}"></script>
-    </head>
-    <body>
-        <h1>Create a QR code with a custom activity - these can then be used to compose a treasure hunt!</h1>
-        <div>
-            <select id="activity_selection">
-                <option value="quiz">Quiz</option>
-                <option value="trivia">Trivia</option>
-            </select>
-        </div>
-        <div class="quiz option">
-            <form method="post">
-                {% csrf_token %} 
-                <label for="qr_name">Name of activity:</label>
-                <input id = "qr_name" name = "qr_name">
-                <br>
-                <label for="location">Coordinates:</label>
-                <input id = "location" name = "location">
-                <br>
-                <label for="quiz">Select a quiz:</label>
-                <select id = "quiz" name = "quiz">
-                    {% load filter%}
-                    {% for x in quiz_files %}
-                        <option value={{x}}>{{x|getName}}</option>
-                    {% endfor %}
-                </select>
-                <input type="submit" class="button" value="Submit"/>
-            </form>
-        </div>
-        <div class="trivia option">
-            <form method = "post">
-                {% csrf_token %} 
-                <label for="qr_name">Name of activity:</label>
-                <input id = "qr_name" name = "qr_name">
-                <br>
-                <label for="location">Coordinates:</label>
-                <input id = "location">
-                <br>
-                <label for="trivia">Enter a fun fact:</label>
-                <input id = "trivia">
-                <input type="submit" class="button" value="Submit"/>
-            </form>
-        </div>
-    </body>
-</html>
+{% extends "base_gamekeeper.html" %}
+
+{% block title %}Create a QR Code{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static '/gamekeeper/js/qrcreate.js' %}"></script>
+{% endblock %}
+
+{% block index %}
+<h1>Create a QR code with a custom activity</h1>
+<h3>These can be used to compose a treasure hunt!</h3>
+<br>
+<div>
+    <label for="activity_selection">Choose activity type:</label>
+    <select id="activity_selection">
+        <option value="quiz">Quiz</option>
+        <option value="trivia">Trivia</option>
+    </select>
+</div>
+<div class="quiz option">
+    <form method="post">
+        {% csrf_token %} 
+        <label for="qr_name">Name of activity:</label>
+        <input id = "qr_name" name = "qr_name">
+        <br>
+        <label for="location">Coordinates:</label>
+        <input id = "location" name = "location">
+        <br>
+        <label for="quiz">Select a quiz:</label>
+        <select id = "quiz" name = "quiz">
+            {% load filter%}
+            {% for x in quiz_files %}
+                <option value={{x}}>{{x|getName}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" class="button" value="Submit"/>
+    </form>
+</div>
+<div class="trivia option">
+    <form method = "post">
+        {% csrf_token %} 
+        <label for="qr_name">Name of activity:</label>
+        <input id = "qr_name" name = "qr_name">
+        <br>
+        <label for="location">Coordinates:</label>
+        <input id = "location">
+        <br>
+        <label for="trivia">Enter a fun fact:</label>
+        <input id = "trivia">
+        <br>
+        <input type="submit" class="button" value="Submit"/>
+    </form>
+</div>
+{% endblock %}

@@ -43,7 +43,7 @@ h6 {
     font-weight: lighter;
 }
 
-p, ul {
+p, ul, label {
     color: #ffffff;
     font-family: Outfit;
     font-size: medium;

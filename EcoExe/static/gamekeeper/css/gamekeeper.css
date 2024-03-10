@@ -8,10 +8,16 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    min-width: 500px;
+    min-width: 90%;
     overflow: auto;
     max-height: 90%;
     max-width: 90%;
+}
+
+@media only screen and (min-width: 500px) {
+  .index {
+      min-width: 500px;
+  }
 }
 
 .button, button {
@@ -65,4 +71,9 @@
   outline: none;
   border: 2px solid #4285f4;
   text-decoration: none;
+}
+
+label, input {
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
