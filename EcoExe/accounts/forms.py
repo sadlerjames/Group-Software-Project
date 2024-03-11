@@ -81,7 +81,7 @@ class UpdateUserForm(forms.ModelForm):
             }
         )
     )
-    
+
     email = forms.CharField(
         widget = forms.EmailInput(
             attrs={
@@ -90,6 +90,14 @@ class UpdateUserForm(forms.ModelForm):
         )
     )
 
+    avatar = forms.ImageField(
+        widget=forms.FileInput(
+            attrs={
+                "class": "form-control-file"
+            }
+        )
+    )
+
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'avatar')
