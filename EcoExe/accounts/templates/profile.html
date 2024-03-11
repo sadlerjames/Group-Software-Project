@@ -1,5 +1,20 @@
-<!-- Authored by Sam Arrowsmith -->
-{% extends "navbar.html" %}
+
 {% block content %}
     <h1>User profile page</h1>
+    <form method="post" >
+        {% csrf_token %}
+
+        <label class="">Username:</label>
+            {{ user_form.username }}
+        <br>
+        <label class="">Email:</label>
+            {{ user_form.email }}
+
+        <br>
+
+        <a href="#">Change Password</a>
+        <br><br>
+        <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+        <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+    </form>
 {% endblock content %}
