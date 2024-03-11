@@ -1,4 +1,5 @@
-/* Authored by Sam Arrowsmith */
+/* Authored by Sam Arrowsmith and Jack Hales */
+
 .background-primary {
     background-color: #003c3c;
 }
@@ -6,6 +7,8 @@
 .background-secondary {
     background-color: #00dca5;
 }
+
+/* NAVBAR START */
 
 #logo-image {
   width: auto;
@@ -20,19 +23,53 @@
   justify-content: left;
 }
 
-/*
-Below will style the DOM elements for mobile views
-*/
+#pfp-image {
+  width: auto;
+  height: 4rem;
+  vertical-align: middle;
+  margin: 1rem;
+}
+
 nav .links {
-    display: flex;
+  display: flex;
 }
+
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.navbar h2 a {
+font-weight: bold;
+color: #ffffff;
+padding: 1rem;
+}
+
+.navbar h2 a:hover {
+background-color: #002727;
+color: #ffffff;
+}
+
+#links {
+display: flex;
+justify-content: flex-end;
+align-items: center;
+}
+
+#links a {
+text-decoration: none;
+}
+
+/* Below will style the DOM elements for mobile views */
+
 #mobile-menu-btn {
-    display: none;
+  display: none;
 }
+
 .mobile-menu {
-    display: none;
-    position: absolute;
-    right: 0;
+  display: none;
+  position: absolute;
+  right: 0;
 }
 
 .mobile-menu a {
@@ -52,9 +89,21 @@ nav .links {
     display: block;
     margin-left: auto;
   }
+
   nav a {
     display: none;
   }
+
+  #pfp {
+    display: block;
+  }
+
+  #pfp-image {
+    height: 3rem;
+    margin: 0.5rem;
+    margin-right: 1rem;
+  }
+
   .mobile-menu {
     display: none;
     flex-direction: column;
@@ -63,38 +112,12 @@ nav .links {
   }
 }
 
-.navbar {
-    display: flex;
-    align-items: center;
-}
-
-.navbar h2 a {
-  font-weight: bold;
-  color: #ffffff;
-  padding: 1rem;
-}
-
-.navbar h2 a:hover {
-  background-color: #002727;
-  color: #ffffff;
-}
-
-#links {
-  display: flex;
-  justify-content: flex-end;
-}
+/* NAVBAR END */
 
 body {
-    /*background-color: #3498DB;*/
-    overflow: hidden;
-  }
-  
+  overflow: hidden;
+}
 
-  .dropdiv {
-    margin: 175px auto;
-  }
-  
-  
 .wave {
   position: relative;
   opacity: 0;
