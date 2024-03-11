@@ -87,17 +87,16 @@ def create_qr(request):
         contextVars = {}
         contextVars['quiz_files'] = os.listdir(path="./quiz/templatetags/quizzes")
         contextVars['form'] = ""
-
         if request.method == 'POST':
             form = QRCreationForm(request.POST)
             contextVars['form'] = form
             if form.is_valid():
-                qrName = request.POST.get('qr_name')
+                activityType = request.POST.get('activity_type')
+                activityName = request.POST.get('qr_name')
                 location = request.POST.get('location')
-                extraInfo = request.POST.get('extra') 
-                #save the activity to the object     
+                extraInfo = request.POST.get('extra')
+                print(activityType,activityName,location,extraInfo)
                 return redirect('/gamekeeper/treasurehunt/create', context=contextVars)
-
             else:
                 form = QRCreationForm()
             return render(request,"gamekeeper/treasurehunt/create.html",context=contextVars)
@@ -116,7 +115,7 @@ def link_qr(request):
         if form.is_valid():
             name = request.POST.get('treasure_hunt_name')
             points = request.POST.get('bonus_points')
-            activities=[]
+            activities = []
             for i in range(1,int(request.POST.get('extra_field_count'))+1):
                 activities.append(request.POST.get('extra_field_{index}'.format(index=i)))
         return render(request,"gamekeeper/treasurehunt/link.html")

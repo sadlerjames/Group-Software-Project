@@ -1,3 +1,4 @@
+console.log("Loaded 1");
 // $(document).ready(function() {
 //     let form_count = Number($("[name=extra_field_count]").val());
 
@@ -25,16 +26,23 @@
 //         }
 //     });*/
 // });
-$(document).ready(function(){
-    $("#activity_selection").change(function(){
-        $(this).find("option:selected").each(function(){
-            var optionValue = $(this).attr("value");
-            if(optionValue){
-                $(".option").not("." + optionValue).hide();
-                $("." + optionValue).show();
-            } else{
-                $(".option").hide();
-            }
-        });
-    }).change();
+// $(document).ready(function(){
+//     $("#activity_selection").change(function(){
+//         $(this).find("option:selected").each(function(){
+//             var optionValue = $(this).attr("value");
+//             if(optionValue){
+//                 $(".option").not("." + optionValue).hide();
+//                 $("." + optionValue).show();
+//             } else{
+//                 $(".option").hide();
+//             }
+//         });
+//     }).change();
+// });
+$(document).ready(function() {
+    console.log("Loaded");
+    function giveHidden(value) {
+        console.log("WORKS");
+        document.querySelector("#hidden_activity_type input").value = value;
+    };
 });
