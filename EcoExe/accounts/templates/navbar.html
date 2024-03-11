@@ -30,9 +30,6 @@
             <h2>
                 <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
             </h2>
-            <!-- <h2>
-                <a href="{% url 'profile' %}" style="text-decoration: none;">Profile: <i>{{user.username}}</i></a>
-            </h2> -->
             <h2>
                 <a href="{% url 'logout' %}" style="text-decoration: none;">Sign Out</a>
             </h2>
@@ -43,7 +40,7 @@
     <!-- above is for desktop, below is the mobile view -->
     <div class="mobile-menu background-secondary" style="display: none;">
         <a href="{% url 'profile' %}" style="text-decoration: none;">Profile: <i>{{user.username}}</i></a>
-        <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
+        <a href="{% url 'privacy' %}" style="text-decoration: none;">Privacy Policy</a>
         <a href="{% url 'logout' %}">Sign Out</a>
     </div>
     
