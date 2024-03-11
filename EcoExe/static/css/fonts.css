@@ -42,7 +42,7 @@ h6 {
     font-weight: lighter;
 }
 
-p, ul, label {
+p, ul, ol, label {
     color: #ffffff;
     font-size: medium;
     font-weight: normal;
@@ -55,4 +55,8 @@ p1 {
     margin-bottom: 1em;
     margin-right: 1em;
     display: inline-block;
+}
+
+.white-subheading {
+    color: #ffffff
 }

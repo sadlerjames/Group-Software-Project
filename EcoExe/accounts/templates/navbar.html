@@ -32,10 +32,7 @@
                 src="{{ user.avatar.url }}"
             />
             <h2>
-                <a href="{% url 'profile' %}" style="text-decoration: none;">Profile: {{user.username}}</a>
-            </h2>
-            <h2>
-                <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
+                <a href="{% url 'profile' %}" style="text-decoration: none;">Profile: <i>{{user.username}}</i></a>
             </h2>
             <h2>
                 <a href="{% url 'logout' %}" style="text-decoration: none;">Sign Out</a>

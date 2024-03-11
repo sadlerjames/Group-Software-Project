@@ -1,21 +1,28 @@
 <!-- Authored by Jack Hales -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body>
-    <h1>Leaderboard</h1>
+{% extends "base_points.html" %}
 
+{% block title %}Leaderboard{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static '/points/js/leaderboard.js' %}"></script>
+{% endblock %}
+
+{% block index %}
+    <script>
+        var username = "{{ user.username }}";
+    </script>
+    <h1>EcoExe Leaderboard</h1>
+    <h3 class="white-subheading">View how well you're doing compared to others.</h3>
+    <br>
     <div id="ajax-response">
+        <label for="leaderboard-options">Filter by activity:</label>
         <select id="leaderboard-options" class="dropdown">
             <option leaderboard="overall">Overall Leaderboard</option>
         </select>
-    
+        <br>
+        <label for="filter-options">Filter by time:</label>
         <select id="filter-options" class="dropdown">
             <option filter="all-time">All-Time</option>
             <option filter="past-year">Past Year</option>
@@ -23,104 +30,23 @@
             <option filter="past-week">Past Week</option>
             <option filter="past-day">Past Day</option>
         </select>
-
-        <table id="points-table" border="1">
-            <thead>
-                <tr>
-                    <th>Player Name</th>
-                    <th>Points</th>
-                </tr>
-            </thead>
-            <tbody id="points-table-body">
-                <!-- Points will be displayed here -->
-            </tbody>
-        </table>
+        <br>
+        <div id="table-container">
+            <table id="points-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player Name</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody id="points-table-body">
+                    <!-- Points will be displayed here -->
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <p id="user-rank"></p>
     </div>
-
-    <script>
-        $(document).ready(function(){
-            // Fetch options from server and populate dropdown
-            $.ajax({
-                url: '/points/fetch_options',
-                type: 'GET',
-                dataType: 'json',
-                success: function(options) {
-                var dropdown = $('#leaderboard-options');
-                // Iterate through each option and append to dropdown
-                $.each(options, function(index, value) {
-                    dropdown.append($('<option>').text('Quiz: ' + value.quiz_name).attr('leaderboard', value.quiz_id));
-                });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                    $('#ajax-response').html('Error occurred while fetching options.');
-                }
-            });
-
-            // Event listener for dropdown change
-            $('.dropdown').change(function(){
-                var option = $('#leaderboard-options').find('option:selected').attr('leaderboard');
-                var filter_option = $('#filter-options').find('option:selected').attr('filter');
-                if(option && filter_option) {
-                    $.ajax({
-                        url: '/points/get_points',
-                        data: { 
-                            "quiz_id": option,
-                            "filter": filter_option
-                        },
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            // Clear existing table rows
-                            $('#points-table-body').empty();
-                            // Iterate through each user and append to table
-                            $.each(data, function(index, point) {
-                                $('#points-table-body').append(
-                                    '<tr>' +
-                                    '<td>' + point.username + '</td>' +
-                                    '<td>' + point.points + '</td>' +
-                                    '</tr>'
-                                );
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Failed to fetch points data:', status, error);
-                        }
-                    });
-                }
-            });
-            });
-
-        // Perform AJAX request on page load to fetch points data from server for first dropdown option
-        var option = $('#leaderboard-options').find('option:selected').attr('leaderboard');
-        var filter_option = $('#filter-options').find('option:selected').attr('filter');
-            if(option && filter_option) {
-                $.ajax({
-                    url: '/points/get_points',
-                    data: { 
-                        "quiz_id": option,
-                        "filter": filter_option
-                    },
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        // Clear existing table rows
-                        $('#points-table-body').empty();
-                        // Iterate through each user and append to table
-                        $.each(data, function(index, point) {
-                            $('#points-table-body').append(
-                                '<tr>' +
-                                '<td>' + point.username + '</td>' +
-                                '<td>' + point.points + '</td>' +
-                                '</tr>'
-                            );
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Failed to fetch points data:', status, error);
-                    }
-                });
-            }
-    </script>
-</body>
-</html>
+    <a href="/gamekeeper/dashboard">Back to dashboard</a>
+{% endblock %}
