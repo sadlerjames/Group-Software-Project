@@ -50,6 +50,7 @@ class TreasureHuntCreationForm(forms.Form):
         self.fields['extra_field_count'].initial = extra_fields #initialise the form with extra fields
 
         #add in the extra fields for added questions and answers
-        for i in range(1,int(extra_fields)):
+        for i in range(1,int(extra_fields)+1):
             self.fields['extra_field_{index}'.format(index=i)] = \
                 forms.CharField()
+        print(self.fields)

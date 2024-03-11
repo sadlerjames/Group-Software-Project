@@ -40,9 +40,10 @@ def login_view(request):
 def creation_view(request):
     if getattr(request.user,'is_gamekeeper'):
         if request.method == 'POST':
+            print(request.POST.get)
             #get the number of questions from the post request
             form = QuizCreationForm(request.POST,extra= request.POST.get('extra_field_count'))
-
+            print(form.errors)
             if form.is_valid():
                 quizName = request.POST.get('quiz_name')
                 quizPoints = request.POST.get('number_of_points')
@@ -112,15 +113,13 @@ def create_qr(request):
 @csrf_protect
 def link_qr(request):
     if request.method == 'POST':
-        print("POST")
         #get the number of questions from the post request
         form = TreasureHuntCreationForm(request.POST,extra= request.POST.get('extra_field_count'))
-        print("extra is",request.POST.get('extra_field_count'))
         if form.is_valid():
             name = request.POST.get('treasure_hunt_name')
             points = request.POST.get('bonus_points')
             activities=[]
-            for i in range(request.POST.get('extra_field_count')):
+            for i in range(1,int(request.POST.get('extra_field_count'))+1):
                 activities.append(request.POST.get('extra_field_{index}'.format(index=i)))
         return render(request,"gamekeeper/treasurehunt/link.html")
     else:

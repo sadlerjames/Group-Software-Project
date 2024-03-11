@@ -22,8 +22,8 @@ $(document).ready(function() {
         questionContainer.addClass('question-container');
 
         //add a question input box to the DOM
-        let question = $('<p>Question ' + question_count + ': <input type ="text"/></p>');
-        question.attr('name','extra_field_'+form_count);
+        let question = $('<p>Question ' + question_count + ': <input type ="text" name="extra_field_' + form_count + '" /></p>');
+        //question.attr('name','extra_field_'+form_count);
         $("[name=extra_field_count]").val(form_count);
         questionContainer.append(question);
         
@@ -32,11 +32,11 @@ $(document).ready(function() {
             form_count ++;
             let element;
             if (i==1) {
-                element = $('<p1>Correct Answer: <input type ="text"/></p1> ');
+                element = $('<p1>Correct Answer: <input type ="text" name="extra_field_' + form_count + '"/></p1> ');
             } else {
-                element = $('<p1>Answer: <input type ="text"/></p1> ');
+                element = $('<p1>Answer: <input type ="text" name="extra_field_' + form_count + '"/></p1> ');
             }
-            element.attr('name','extra_field_'+form_count);
+            //let qr = $('<p>QR ' + qr_count + ': <input type="input" name="extra_field_' + qr_count + '" value="Hello"/></p>');
             $("[name=extra_field_count]").val(form_count);
             questionContainer.append(element);
         }
