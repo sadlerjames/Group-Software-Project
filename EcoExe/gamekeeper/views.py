@@ -40,10 +40,8 @@ def login_view(request):
 def creation_view(request):
     if getattr(request.user,'is_gamekeeper'):
         if request.method == 'POST':
-            print(request.POST.get)
             #get the number of questions from the post request
             form = QuizCreationForm(request.POST,extra= request.POST.get('extra_field_count'))
-            print(form.errors)
             if form.is_valid():
                 quizName = request.POST.get('quiz_name')
                 quizPoints = request.POST.get('number_of_points')
