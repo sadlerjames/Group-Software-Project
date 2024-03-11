@@ -95,7 +95,7 @@ def create_qr(request):
                 activityName = request.POST.get('qr_name')
                 location = request.POST.get('location')
                 extraInfo = request.POST.get('extra')
-                print(activityType,activityName,location,extraInfo)
+                #save this to the database
                 return redirect('/gamekeeper/treasurehunt/create', context=contextVars)
             else:
                 form = QRCreationForm()
