@@ -43,6 +43,18 @@
     {{ form.password2 }}
     {{ form.password2.errors }}
   </p>
+
+  <p>
+    <label for="terms">I have read and agree to the <a href="/terms" target="_blank">Terms & Conditions</a>:</label>
+    {{ form.terms }}
+    {{ form.terms.errors }}
+  </p>
+
+  <p>
+    <label for="privacy">I have read and agree to the <a href="/privacy" target="_blank">Privacy Policy</a>:</label>
+    {{ form.privacy }}
+    {{ form.privacy.errors }}
+  </p>
   
   <p>
     <button type="submit">Register</button>

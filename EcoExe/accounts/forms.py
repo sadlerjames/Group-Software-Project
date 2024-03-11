@@ -69,6 +69,9 @@ class SignUpForm(UserCreationForm):
         )
     )
 
+    terms = forms.BooleanField(required = True)
+    privacy = forms.BooleanField(required = True)
+
     class Meta:
         model = User
         fields = ('username','email', 'first_name', 'last_name', 'password1','password2')
