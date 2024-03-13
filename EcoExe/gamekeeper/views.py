@@ -6,9 +6,13 @@ from django.contrib.auth import authenticate,login,logout
 from accounts.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
-from .forms import QuizCreationForm,QRCreationForm,TreasureHuntCreationForm
+from .forms import QuizCreationForm,QRCreationForm,TreasureHuntCreationForm,SetDailyForm
 from quiz.templatetags.quiz import Quiz
+from .models import DailyQuizzes
+from quiz.models import Quizzes
+from quiz.templatetags import quiz
 import os
+import datetime
 
 
 # Create your views here.
@@ -83,9 +87,19 @@ def logoutview(request):
 @csrf_protect
 def create_qr(request):
     if getattr(request.user,'is_gamekeeper'):
-        #list files from the quizzes and pass them to the create.html as a context variable
         contextVars = {}
-        contextVars['quiz_files'] = os.listdir(path="./quiz/templatetags/quizzes")
+        # Fetch all quizzes from database
+        options = Quizzes.objects.values_list('id', flat=True)
+        # Iterate through each quiz object and store the id and name
+        data = []
+        for option in options:
+            data.append({
+                'quiz_id': option,
+                'quiz_name': quiz.load(option).getName(),
+            })
+        # Add to contextVars
+        contextVars['quiz_files'] = list(data)
+        
         contextVars['form'] = ""
         if request.method == 'POST':
             form = QRCreationForm(request.POST)
@@ -121,3 +135,71 @@ def link_qr(request):
         return render(request,"gamekeeper/treasurehunt/link.html")
     else:
         return render(request,"gamekeeper/treasurehunt/link.html")
+
+@login_required(login_url = '/gamekeeper/login')
+def set_daily(request):
+    if getattr(request.user,'is_gamekeeper'):
+        contextVars = {}
+        # Fetch all quizzes from database
+        options = Quizzes.objects.values_list('id', flat=True)
+        # Iterate through each quiz object and store the id and name
+        data = []
+        for option in options:
+            data.append({
+                'quiz_id': option,
+                'quiz_name': quiz.load(option).getName(),
+            })
+        # Add to contextVars
+        contextVars['quiz_files'] = list(data)
+
+        # Fetch all daily quizzes from database
+        dailyQuizzes = DailyQuizzes.objects.all()
+        # Iterate through each daily quiz object and store the date, ID and name
+        # Only show present/future daily quizzes
+        timeNow = datetime.date.today()
+        data = []
+        for option in dailyQuizzes:
+            if option.date >= timeNow:
+                data.append({
+                    'date': option.date,
+                    'quiz_id': option.quiz_id.id,
+                    'quiz_name': quiz.load(option.quiz_id.id).getName(),
+                })
+        # Add to contextVars
+        contextVars['daily_quizzes'] = list(data)
+        contextVars['form'] = ""
+
+        # POST request for form
+        if request.method == 'POST':
+            form = SetDailyForm(request.POST)
+            contextVars['form'] = form
+            if form.is_valid():
+                date = request.POST.get('date')
+                quizID = request.POST.get('quiz')
+                quizID = int(quizID)
+                
+                # Get quiz object for chosen quiz
+                options = Quizzes.objects.values_list('id', flat=True)
+                for option in options:
+                    if (quiz.load(option).getId() == quizID):
+                        quizObj = Quizzes.objects.get(pk=quizID)
+
+                # Save this to the database
+                db = DailyQuizzes(date=date, quiz_id=quizObj)
+                db.save()
+                return redirect('/gamekeeper/quiz/set_daily', context=contextVars)
+            else:
+                form = SetDailyForm()
+            return render(request,"gamekeeper/quiz/set_daily.html",context=contextVars)
+        else:
+            form = SetDailyForm()
+            return render(request,"gamekeeper/quiz/set_daily.html",context=contextVars)
+    else:
+        return redirect('/account/dashboard')
+
+@login_required(login_url = '/gamekeeper/login')
+def drop_row(request, id):
+    if request.method == 'POST':
+        DailyQuizzes.objects.filter(date=id).delete()
+    
+    return redirect('/gamekeeper/quiz/set_daily')

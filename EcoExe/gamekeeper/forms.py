@@ -53,3 +53,7 @@ class TreasureHuntCreationForm(forms.Form):
         for i in range(1,int(extra_fields)+1):
             self.fields['extra_field_{index}'.format(index=i)] = \
                 forms.CharField()
+
+class SetDailyForm(forms.Form):
+    quiz = forms.CharField()
+    date = forms.CharField()
