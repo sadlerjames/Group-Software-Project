@@ -29,9 +29,8 @@ function getLocation() {
 }
 
 function showPosition(position) {
-  var long  = position.coords.latitude;
-  var lat = position.coords.longitude;
-  console.log(long);
+  var lat  = position.coords.latitude;
+  var long = position.coords.longitude;
 
   fetch("/treasurehunt/validate/", {
     method: "POST", 
