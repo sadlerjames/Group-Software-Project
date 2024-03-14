@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from .views import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('privacy/', views.privacy, name='privacy'),
+    path('terms/', views.terms, name='terms'),
     path('admin/', admin.site.urls),
     path('quiz/', include('quiz.urls')),
     path('gamekeeper/', include('gamekeeper.urls')),
@@ -30,4 +33,7 @@ urlpatterns = [
     path('points/', include('points.urls')),
     path('sortit/', include('sortit.urls')),
     path('treasurehunt/', include('treasurehunt.urls')),
-]
+] 
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

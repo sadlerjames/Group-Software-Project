@@ -1,5 +1,32 @@
-<!-- Authored by Sam Arrowsmith -->
-{% extends "navbar.html" %}
-{% block content %}
-    <h1>User profile page</h1>
-{% endblock content %}
+<!-- Authored by James Sadler -->
+{% extends "base_accounts.html" %}
+{% block title %}Profile{% endblock %}
+
+{% block form %}
+    <h1>Update Profile</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label class="">Username:</label>
+            {{ user_form.username }}
+        <br>
+        <label class="">Email:</label>
+            {{ user_form.email }}
+
+        <br>
+        <label class="">Change Avatar:</label>
+            {{ user_form.avatar }}
+
+        <br>
+        <label class="">Bio:</label> 
+            {{ user_form.bio }}
+        <br>
+
+        
+
+        <a href="#">Change Password</a>
+        <br><br>
+        <button type="submit" class="btn btn-dark btn-lg">Update Changes</button>
+        <!--<button type="reset" class="btn btn-dark btn-lg">Reset</button>-->
+    </form>
+{% endblock form %}

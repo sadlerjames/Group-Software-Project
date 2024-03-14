@@ -69,6 +69,39 @@ class SignUpForm(UserCreationForm):
         )
     )
 
+    terms = forms.BooleanField(required = True)
+    privacy = forms.BooleanField(required = True)
+
     class Meta:
         model = User
         fields = ('username','email', 'first_name', 'last_name', 'password1','password2')
+
+class UpdateUserForm(forms.ModelForm):
+    username = forms.CharField(
+        widget = forms.TextInput(
+            attrs={
+                "class":"form-control"
+            }
+        )
+    )
+
+    email = forms.CharField(
+        widget = forms.EmailInput(
+            attrs={
+                "class":"form-control"
+            }
+        )
+    )
+
+
+    avatar = forms.ImageField(
+        widget=forms.FileInput(
+            attrs={
+                "class": "form-control-file"
+            }
+        )
+    )
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'avatar')

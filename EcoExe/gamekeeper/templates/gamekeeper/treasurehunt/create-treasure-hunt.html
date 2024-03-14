@@ -1,0 +1,39 @@
+<!-- Authored by George Piper, James Sadler -->
+{% extends "base_gamekeeper.html" %}
+
+{% block title %}Create a QR Code{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static '/gamekeeper/js/create-treasure-hunt.js' %}"></script>
+{% endblock %}
+
+{% block index %}
+    <h1>Create a treasure hunt!</h1>
+    <h3>Add activities in the order you would like to be completed</h3>
+    <p>Info about creating a treasure hunt</p>
+    <br>
+
+    <form method = "post">
+        {% csrf_token %}
+        <label for="treasure_hunt_name">Name of treasure hunt:</label>
+        <input name = "treasure_hunt_name">
+        <br>
+        <label for="bonus_points" type = "number">Number of bonus points:</label>
+        <input name = "bonus_points">
+
+        <label for="avatar">Choose a photo for treasure hunt:</label>
+        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
+  
+        <div id="activities">
+            {{ form.as_p }}
+        </div>
+  
+
+        <input type="hidden" name="extra_field_count" value="0">
+        <button type="button" id="add-another">Add Activity</button>
+        <input type="submit" class="button" value="Submit"/>
+    </form>
+
+    <a href="/gamekeeper/dashboard">Back to dashboard</a>
+{% endblock %}

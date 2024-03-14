@@ -73,7 +73,54 @@
   text-decoration: none;
 }
 
+#create-quiz-submit {
+  margin-left: 1rem;
+}
+
 label, input {
   margin-top: 0;
   margin-bottom: 1rem;
+}
+
+table, th, td {
+  border: 2px solid;
+  border-color: #ffffff;
+  padding: 0.5rem;
+}
+
+th {
+  background-color: #003c3c;
+  color: #ffffff;
+}
+
+tr:nth-child(even) {
+  background-color: #00c896aa;
+  color: #ffffff;
+}
+
+tr:nth-child(odd) {
+  background-color: #00dca5cc;
+  color: #ffffff;
+}
+
+#table-container {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.text {
+  color: #ffffff;
+  border: 0px transparent solid;
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+.text:hover {
+  color:#003c3c;
+  text-decoration:underline
+}
+
+#drop-row {
+  margin: 0;
 }

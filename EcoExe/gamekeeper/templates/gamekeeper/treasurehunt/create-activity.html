@@ -1,0 +1,66 @@
+<!--Authored by George Piper, James Sadler and Jack Hales-->
+{% extends "base_gamekeeper.html" %}
+
+{% block title %}Create a QR Code{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static '/gamekeeper/js/create-activity.js' %}"></script>
+{% endblock %}
+
+{% block index %}
+    <h1>Create an Activity</h1>
+    <h3>These activities can be used to compose a treasure hunt!</h3>
+    <br>
+
+    <label for="activity_selection">Choose activity type:</label>
+    <select id="activity_selection" name = "activity_selection" onChange="giveHidden(this.value)">
+        <option value="quiz">Quiz</option>
+        <option value="trivia">Trivia</option>
+    </select>
+
+    <div class="quiz option">
+        <p><b>Some info about creating a quiz</b></p>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="activity_type" value="" id="hidden_quiz_activity_type"/>
+            <label for="qr_name">Name of activity:</label>
+            <input id = "qr_name" name = "qr_name">
+            <br>
+
+            <label for="location">Coordinates:</label>
+            <input id = "location" name = "location">
+            <br>
+
+            <label for="quiz">Select a quiz:</label>
+            <select id = "quiz" name = "extra">
+                {% load filter%}
+                {% for x in quiz_files %}
+                    <option value={{x}}>{{x|getName}}</option>
+                {% endfor %}
+            </select>
+            <br>
+
+            <input type="submit" class="button" value="Submit"/>
+        </form>
+    </div>
+
+    <div class="trivia option">
+        <p><b>Some info about creating a trivia</b></p>
+        <form method = "post">
+            {% csrf_token %} 
+            <input type="hidden" name="activity_type" value="" id="hidden_trivia_activity_type"/>
+            <label for="qr_name">Name of activity:</label>
+            <input id = "qr_name" name = "qr_name">
+            <br>
+            <label for="location">Coordinates:</label>
+            <input id = "location" name = "location">
+            <br>
+            <label for="trivia">Enter a fun fact:</label>
+            <input id = "trivia" name = "extra">
+            <br>
+            <input type="submit" class="button" value="Submit"/>
+        </form>
+    </div>
+    <a href="/gamekeeper/dashboard">Back to dashboard</a>
+{% endblock %}

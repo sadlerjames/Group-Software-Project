@@ -6,9 +6,14 @@ from django.contrib.auth import authenticate,login,logout
 from accounts.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
-from .forms import QuizCreationForm,QRCreationForm,TreasureHuntCreationForm
+from .forms import QuizCreationForm,QRCreationForm,TreasureHuntCreationForm,SetDailyForm
 from quiz.templatetags.quiz import Quiz
-import os
+from .models import DailyQuizzes
+from quiz.models import Quizzes
+from quiz.templatetags import quiz
+import datetime
+import segno
+from PIL import Image  
 
 
 # Create your views here.
@@ -44,7 +49,7 @@ def creation_view(request):
             form = QuizCreationForm(request.POST,extra= request.POST.get('extra_field_count'))
             if form.is_valid():
                 quizName = request.POST.get('quiz_name')
-                quizPoints = request.POST.get('number_of_points')
+                quizPoints = request.POST.get('points_per_question')
                 formCount = int(request.POST.get('extra_field_count'))
 
                 #cycle through the forms and split them into questions and answers
@@ -81,44 +86,137 @@ def logoutview(request):
 
 @login_required(login_url = '/gamekeeper/login')
 @csrf_protect
-def create_qr(request):
+def create_activity(request):
     if getattr(request.user,'is_gamekeeper'):
-        #list files from the quizzes and pass them to the create.html as a context variable
         contextVars = {}
-        contextVars['quiz_files'] = os.listdir(path="./quiz/templatetags/quizzes")
-        contextVars['form'] = ""
+        # Fetch all quizzes from database
+        options = Quizzes.objects.values_list('id', flat=True)
+        # Iterate through each quiz object and store the id and name
+        data = []
+        for option in options:
+            data.append({
+                'quiz_id': option,
+                'quiz_name': quiz.load(option).getName(),
+            })
+        # Add to contextVars
+        contextVars['quiz_files'] = list(data)
 
+        contextVars['form'] = ""
         if request.method == 'POST':
             form = QRCreationForm(request.POST)
             contextVars['form'] = form
             if form.is_valid():
-                qrName = request.POST.get('qr_name')
+                activityType = request.POST.get('activity_type')
+                activityName = request.POST.get('qr_name')
                 location = request.POST.get('location')
-                extraInfo = request.POST.get('extra') 
-                #save the activity to the object     
+                extraInfo = request.POST.get('extra')
+                #save this to the database
                 return redirect('/gamekeeper/treasurehunt/create', context=contextVars)
-
             else:
                 form = QRCreationForm()
-            return render(request,"gamekeeper/treasurehunt/create.html",context=contextVars)
+            return render(request,"gamekeeper/treasurehunt/create-activity.html",context=contextVars)
         else:
             form = QRCreationForm()
-            return render(request,"gamekeeper/treasurehunt/create.html",context=contextVars)
+            return render(request,"gamekeeper/treasurehunt/create-activity.html",context=contextVars)
     else:
         return redirect('/account/dashboard')
     
 @login_required(login_url = '/gamekeeper/login')
 @csrf_protect
-def link_qr(request):
+def create_treasure(request):
     if request.method == 'POST':
         #get the number of questions from the post request
         form = TreasureHuntCreationForm(request.POST,extra= request.POST.get('extra_field_count'))
         if form.is_valid():
             name = request.POST.get('treasure_hunt_name')
             points = request.POST.get('bonus_points')
-            activities=[]
             for i in range(1,int(request.POST.get('extra_field_count'))+1):
-                activities.append(request.POST.get('extra_field_{index}'.format(index=i)))
-        return render(request,"gamekeeper/treasurehunt/link.html")
+                activity = request.POST.get('extra_field_{index}'.format(index=i))
+                #create a qr code for the activity
+                qr = segno.make_qr(activity)
+                qr.save("gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i))
+            makePDF(name,request.POST.get('extra_field_count'))
+        return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")
     else:
-        return render(request,"gamekeeper/treasurehunt/link.html")
+        return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")
+
+@login_required(login_url = '/gamekeeper/login')
+def set_daily(request):
+    if getattr(request.user,'is_gamekeeper'):
+        contextVars = {}
+        # Fetch all quizzes from database
+        options = Quizzes.objects.values_list('id', flat=True)
+        # Iterate through each quiz object and store the id and name
+        data = []
+        for option in options:
+            data.append({
+                'quiz_id': option,
+                'quiz_name': quiz.load(option).getName(),
+            })
+        # Add to contextVars
+        contextVars['quiz_files'] = list(data)
+
+        # Fetch all daily quizzes from database
+        dailyQuizzes = DailyQuizzes.objects.all()
+        # Iterate through each daily quiz object and store the date, ID and name
+        # Only show present/future daily quizzes
+        timeNow = datetime.date.today()
+        data = []
+        for option in dailyQuizzes:
+            if option.date >= timeNow:
+                data.append({
+                    'date': option.date,
+                    'quiz_id': option.quiz_id.id,
+                    'quiz_name': quiz.load(option.quiz_id.id).getName(),
+                    'time_limit': option.time_limit
+                })
+        # Add to contextVars
+        contextVars['daily_quizzes'] = list(data)
+        contextVars['form'] = ""
+
+        # POST request for form
+        if request.method == 'POST':
+            form = SetDailyForm(request.POST)
+            contextVars['form'] = form
+            if form.is_valid():
+                date = request.POST.get('date')
+                quizID = request.POST.get('quiz')
+                quizID = int(quizID)
+                time = request.POST.get('time')
+                time = int(time)
+                
+                # Get quiz object for chosen quiz
+                options = Quizzes.objects.values_list('id', flat=True)
+                for option in options:
+                    if (quiz.load(option).getId() == quizID):
+                        quizObj = Quizzes.objects.get(pk=quizID)
+
+                # Save this to the database
+                db = DailyQuizzes(date=date, quiz_id=quizObj, time_limit=time)
+                db.save()
+                return redirect('/gamekeeper/quiz/set_daily', context=contextVars)
+            else:
+                form = SetDailyForm()
+            return render(request,"gamekeeper/quiz/set_daily.html",context=contextVars)
+        else:
+            form = SetDailyForm()
+            return render(request,"gamekeeper/quiz/set_daily.html",context=contextVars)
+    else:
+        return redirect('/account/dashboard')
+
+@login_required(login_url = '/gamekeeper/login')
+def drop_row(request, id):
+    if request.method == 'POST':
+        DailyQuizzes.objects.filter(date=id).delete()
+    
+    return redirect('/gamekeeper/quiz/set_daily')
+
+def makePDF(name,extra):
+    images = []
+    for i in range(1,int(extra)+1):
+        images.append(Image.open("gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i)))
+
+    pdf_path = "media/pdfs/{name}.pdf".format(name=name)
+    
+    images[0].save(
+    pdf_path, "PDF" ,resolution=100.0, save_all=True, append_images=images[1:])

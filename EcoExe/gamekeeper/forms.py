@@ -17,11 +17,10 @@ class LoginForm(forms.Form):
             }
         )
     )
-    
-    
+
 class QuizCreationForm(forms.Form):
     quiz_name = forms.CharField()
-    number_of_points = forms.IntegerField()
+    points_per_question = forms.IntegerField()
     extra_field_count = forms.CharField(widget = forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
@@ -53,4 +52,7 @@ class TreasureHuntCreationForm(forms.Form):
         for i in range(1,int(extra_fields)+1):
             self.fields['extra_field_{index}'.format(index=i)] = \
                 forms.CharField()
-        print(self.fields)
+
+class SetDailyForm(forms.Form):
+    quiz = forms.CharField()
+    date = forms.CharField()

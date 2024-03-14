@@ -5,7 +5,8 @@ from django.urls import reverse_lazy
 from django.views import generic
 from .forms import LoginForm, SignUpForm
 from django.contrib.auth.views import PasswordChangeView
-from .forms import CustomPasswordChangeForm
+from .forms import CustomPasswordChangeForm, UpdateUserForm
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.decorators import login_required
@@ -27,10 +28,7 @@ class PasswordChangeDoneView(TemplateView):
 @login_required()    
 def dashboard(request):
     return render(request, "dashboard.html")
-    
-def userprofile(request):
-    return render(request, "profile.html")
-   
+       
 #process the POST request and create the user 
 def signup(request):
     #if the user is already signed in take them to dashboard
@@ -82,6 +80,23 @@ def logoutview(request):
     logout(request)
     return redirect('/accounts/login')
 
-@login_required()  
+
+@login_required
 def userprofile(request):
-    return render(request, "profile.html")
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
+        
+        if user_form.is_valid():
+            user_form.save()
+            # messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='profile')
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+
+    return render(request, 'profile.html', {'user_form': user_form})
+
+
+class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'registration/update-password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('users-home')

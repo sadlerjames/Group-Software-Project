@@ -16,17 +16,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, register_converter
 from . import views
 from .views import *
+from gamekeeper.converters import DateConverter
+
+register_converter(DateConverter, 'date')
 
 urlpatterns = [
     path('', views.dashboard,  name='dashboard'),
     path('login/', views.login_view,  name='login'),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('quiz/create/', views.creation_view, name="create"),
-    path('treasurehunt/create/', views.create_qr, name="create_qr"),
-    path('treasurehunt/link/', views.link_qr, name="link_qr"),
+    path('quiz/set_daily/', views.set_daily, name="set_daily"),
+    path('quiz/drop_row/<date:id>/', views.drop_row, name="drop_row"),
+    path('treasurehunt/create_activity/', views.create_activity, name="create_activity"),
+    path('treasurehunt/create/', views.create_treasure, name="create_treasure"),
     path('logout/', views.logoutview, name='logout'),
 ]
 
