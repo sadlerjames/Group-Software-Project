@@ -15,15 +15,13 @@ class User(AbstractUser):
     def save(self):
         super().save()
 
-        img = Image.open(self.avatar.path) # Open image
+        # Open image
+        img = Image.open(self.avatar.path) 
 
         # resize image
         if img.height > 300 or img.width > 300:
             output_size = (300, 300)
-            img.thumbnail(output_size) # Resize image
-            img.save(self.avatar.path) # Save it again and override the larger image
-            print("resized")
-
-        print("saved")
+            img.thumbnail(output_size) 
+            img.save(self.avatar.path)
 
    

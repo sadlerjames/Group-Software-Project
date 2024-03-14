@@ -93,6 +93,7 @@ class UpdateUserForm(forms.ModelForm):
         )
     )
 
+
     avatar = forms.ImageField(
         widget=forms.FileInput(
             attrs={

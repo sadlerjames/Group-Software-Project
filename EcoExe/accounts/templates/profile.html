@@ -1,6 +1,8 @@
+{% extends "base_accounts.html" %}
+{% block title %}Profile{% endblock %}
 
-{% block content %}
-    <h1>User profile page</h1>
+{% block form %}
+    <h1>Update Profile</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
@@ -15,14 +17,15 @@
             {{ user_form.avatar }}
 
         <br>
-        <label class="">Bio:</label> {{ user_form.bio }}
+        <label class="">Bio:</label> 
+            {{ user_form.bio }}
         <br>
 
         
 
         <a href="#">Change Password</a>
         <br><br>
-        <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
-        <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+        <button type="submit" class="btn btn-dark btn-lg">Update Changes</button>
+        <!--<button type="reset" class="btn btn-dark btn-lg">Reset</button>-->
     </form>
-{% endblock content %}
+{% endblock form %}
