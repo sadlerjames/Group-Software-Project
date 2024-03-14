@@ -30,8 +30,8 @@ urlpatterns = [
     path('quiz/create/', views.creation_view, name="create"),
     path('quiz/set_daily/', views.set_daily, name="set_daily"),
     path('quiz/drop_row/<date:id>/', views.drop_row, name="drop_row"),
-    path('treasurehunt/create/', views.create_qr, name="create_qr"),
-    path('treasurehunt/link/', views.link_qr, name="link_qr"),
+    path('treasurehunt/create_activity/', views.create_activity, name="create_activity"),
+    path('treasurehunt/create/', views.create_treasure, name="create_treasure"),
     path('logout/', views.logoutview, name='logout'),
 ]
 

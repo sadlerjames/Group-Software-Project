@@ -85,7 +85,7 @@ def logoutview(request):
 
 @login_required(login_url = '/gamekeeper/login')
 @csrf_protect
-def create_qr(request):
+def create_activity(request):
     if getattr(request.user,'is_gamekeeper'):
         contextVars = {}
         # Fetch all quizzes from database
@@ -113,16 +113,16 @@ def create_qr(request):
                 return redirect('/gamekeeper/treasurehunt/create', context=contextVars)
             else:
                 form = QRCreationForm()
-            return render(request,"gamekeeper/treasurehunt/create.html",context=contextVars)
+            return render(request,"gamekeeper/treasurehunt/create-activity.html",context=contextVars)
         else:
             form = QRCreationForm()
-            return render(request,"gamekeeper/treasurehunt/create.html",context=contextVars)
+            return render(request,"gamekeeper/treasurehunt/create-activity.html",context=contextVars)
     else:
         return redirect('/account/dashboard')
     
 @login_required(login_url = '/gamekeeper/login')
 @csrf_protect
-def link_qr(request):
+def create_treasure(request):
     if request.method == 'POST':
         #get the number of questions from the post request
         form = TreasureHuntCreationForm(request.POST,extra= request.POST.get('extra_field_count'))
@@ -132,9 +132,9 @@ def link_qr(request):
             activities = []
             for i in range(1,int(request.POST.get('extra_field_count'))+1):
                 activities.append(request.POST.get('extra_field_{index}'.format(index=i)))
-        return render(request,"gamekeeper/treasurehunt/link.html")
+        return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")
     else:
-        return render(request,"gamekeeper/treasurehunt/link.html")
+        return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")
 
 @login_required(login_url = '/gamekeeper/login')
 def set_daily(request):

@@ -5,4 +5,4 @@ register = template.Library()
 
 @register.filter
 def getName(x):
-    return load(x[:-5]).getName()
+    return load(x['quiz_id']).getName()
