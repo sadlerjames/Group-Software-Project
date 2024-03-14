@@ -17,11 +17,10 @@ class LoginForm(forms.Form):
             }
         )
     )
-    
-    
+
 class QuizCreationForm(forms.Form):
     quiz_name = forms.CharField()
-    number_of_points = forms.IntegerField()
+    points_per_question = forms.IntegerField()
     extra_field_count = forms.CharField(widget = forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):

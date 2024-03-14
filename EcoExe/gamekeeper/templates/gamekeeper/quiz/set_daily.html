@@ -14,7 +14,7 @@
 <form method="post">
     {% csrf_token %}
     <label for="quiz">Quiz:</label>
-    <select id="quiz" name="quiz">
+    <select id="quiz" name="quiz" required>
         {% load filter %}
         {% for x in quiz_files %}
             <option value={{x.quiz_id}}>{{x.quiz_name}}</option>
@@ -22,7 +22,10 @@
     </select>
     <br>
     <label for="date">Date:</label>
-    <input type="date" id="date" name="date">
+    <input type="date" id="date" name="date" required>
+    <br>
+    <label for="time">Time Limit (seconds):</label>
+    <input type="number" id="time" name="time" min="10" required>
     <br>
     <input type="submit" class="button" value="Submit"/>
 </form>
@@ -34,6 +37,7 @@
             <th>Date</th>
             <th>Quiz ID</th>
             <th>Quiz Name</th>
+            <th>Time Limit (seconds)</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -43,6 +47,7 @@
             <td>{{ row.date }}</td>
             <td>{{ row.quiz_id }}</td>
             <td>{{ row.quiz_name }}</td>
+            <td>{{ row.time_limit }}</td>
             <td>
                 <form method="post" action="{% url 'drop_row' id=row.date %}" id="drop-row">
                     {% csrf_token %}

@@ -48,7 +48,7 @@ def creation_view(request):
             form = QuizCreationForm(request.POST,extra= request.POST.get('extra_field_count'))
             if form.is_valid():
                 quizName = request.POST.get('quiz_name')
-                quizPoints = request.POST.get('number_of_points')
+                quizPoints = request.POST.get('points_per_question')
                 formCount = int(request.POST.get('extra_field_count'))
 
                 #cycle through the forms and split them into questions and answers
@@ -99,7 +99,7 @@ def create_qr(request):
             })
         # Add to contextVars
         contextVars['quiz_files'] = list(data)
-        
+
         contextVars['form'] = ""
         if request.method == 'POST':
             form = QRCreationForm(request.POST)
@@ -164,6 +164,7 @@ def set_daily(request):
                     'date': option.date,
                     'quiz_id': option.quiz_id.id,
                     'quiz_name': quiz.load(option.quiz_id.id).getName(),
+                    'time_limit': option.time_limit
                 })
         # Add to contextVars
         contextVars['daily_quizzes'] = list(data)
@@ -177,6 +178,8 @@ def set_daily(request):
                 date = request.POST.get('date')
                 quizID = request.POST.get('quiz')
                 quizID = int(quizID)
+                time = request.POST.get('time')
+                time = int(time)
                 
                 # Get quiz object for chosen quiz
                 options = Quizzes.objects.values_list('id', flat=True)
@@ -185,7 +188,7 @@ def set_daily(request):
                         quizObj = Quizzes.objects.get(pk=quizID)
 
                 # Save this to the database
-                db = DailyQuizzes(date=date, quiz_id=quizObj)
+                db = DailyQuizzes(date=date, quiz_id=quizObj, time_limit=time)
                 db.save()
                 return redirect('/gamekeeper/quiz/set_daily', context=contextVars)
             else:

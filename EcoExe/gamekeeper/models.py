@@ -6,3 +6,4 @@ from django.db import models
 class DailyQuizzes(models.Model):
     date = models.DateField(primary_key=True)
     quiz_id = models.ForeignKey("quiz.Quizzes", related_name="daily_quiz_id", on_delete=models.SET_NULL, null=True)
+    time_limit = models.IntegerField(default=30)
