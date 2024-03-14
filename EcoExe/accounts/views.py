@@ -6,6 +6,7 @@ from django.views import generic
 from .forms import LoginForm, SignUpForm
 from django.contrib.auth.views import PasswordChangeView
 from .forms import CustomPasswordChangeForm, UpdateUserForm
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.decorators import login_required
@@ -93,3 +94,9 @@ def userprofile(request):
         user_form = UpdateUserForm(instance=request.user)
 
     return render(request, 'profile.html', {'user_form': user_form})
+
+
+class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'registration/update-password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('users-home')
