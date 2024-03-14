@@ -1,7 +1,7 @@
 
 {% block content %}
     <h1>User profile page</h1>
-    <form method="post" >
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         <label class="">Username:</label>
@@ -12,10 +12,11 @@
 
         <br>
         <label class="">Change Avatar:</label>
-            {{ profile_form.avatar }}
+            {{ user_form.avatar }}
 
         <br>
-        <label class="">Bio:</label> {{ profile_form.bio }}
+        <label class="">Bio:</label> {{ user_form.bio }}
+        <br>
 
         
 
