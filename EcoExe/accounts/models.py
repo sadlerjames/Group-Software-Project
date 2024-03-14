@@ -12,16 +12,16 @@ class User(AbstractUser):
     bio = models.TextField(blank=True, null=True)
 
     # Override the save method of the model
-    def save(self):
-        super().save()
+    # def save(self):
+    #     super().save()
 
-        # Open image
-        img = Image.open(self.avatar.path) 
+    #     # Open image
+    #     img = Image.open(self.avatar.path) 
 
-        # resize image
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size) 
-            img.save(self.avatar.path)
+    #     # resize image
+    #     if img.height > 300 or img.width > 300:
+    #         output_size = (300, 300)
+    #         img.thumbnail(output_size) 
+    #         img.save(self.avatar.path)
 
    
