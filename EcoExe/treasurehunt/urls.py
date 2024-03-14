@@ -21,4 +21,5 @@ from .views import *
 
 urlpatterns = [
     path('scan/', views.scan, name='scan'),
+    path('validate/',views.validate,name='validate');
 ]
