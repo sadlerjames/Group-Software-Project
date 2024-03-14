@@ -8,7 +8,7 @@ $(document).ready(function() {
         activity++;
 
         // add a question input box to the DOM
-        let option = $('<p>Activity ' + activity + ': <select name="extra_field_' + activity + '"></select></p>');
+        let option = $('<p>Activity ' + activity + ': <select name="extra_field_' + activity + '"><option>Hello</option></select></p>');
         $("[name=extra_field_count]").val(activity);
         $('#activities').append(option);
     });

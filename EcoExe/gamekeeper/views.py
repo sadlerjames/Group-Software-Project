@@ -11,8 +11,9 @@ from quiz.templatetags.quiz import Quiz
 from .models import DailyQuizzes
 from quiz.models import Quizzes
 from quiz.templatetags import quiz
-import os
 import datetime
+import segno
+from PIL import Image  
 
 
 # Create your views here.
@@ -129,9 +130,12 @@ def create_treasure(request):
         if form.is_valid():
             name = request.POST.get('treasure_hunt_name')
             points = request.POST.get('bonus_points')
-            activities = []
             for i in range(1,int(request.POST.get('extra_field_count'))+1):
-                activities.append(request.POST.get('extra_field_{index}'.format(index=i)))
+                activity = request.POST.get('extra_field_{index}'.format(index=i))
+                #create a qr code for the activity
+                qr = segno.make_qr(activity)
+                qr.save("gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i))
+            makePDF(name,request.POST.get('extra_field_count'))
         return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")
     else:
         return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")
@@ -206,3 +210,13 @@ def drop_row(request, id):
         DailyQuizzes.objects.filter(date=id).delete()
     
     return redirect('/gamekeeper/quiz/set_daily')
+
+def makePDF(name,extra):
+    images = []
+    for i in range(1,int(extra)+1):
+        images.append(Image.open("gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i)))
+
+    pdf_path = "media/pdfs/{name}.pdf".format(name=name)
+    
+    images[0].save(
+    pdf_path, "PDF" ,resolution=100.0, save_all=True, append_images=images[1:])
