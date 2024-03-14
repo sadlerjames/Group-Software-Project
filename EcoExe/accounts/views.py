@@ -84,9 +84,8 @@ def logoutview(request):
 def userprofile(request):
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
-        print(user_form)
+        
         if user_form.is_valid():
-            print("valid")
             user_form.save()
             # messages.success(request, 'Your profile is updated successfully')
             return redirect(to='profile')
