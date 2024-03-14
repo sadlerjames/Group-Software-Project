@@ -20,3 +20,11 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+'''
+from treasurehunt import treasure
+a=treasure.Treasure.getTreasure(id=1)
+print("AAAA"+a.getImage())
+#treasure.Treasure.addStage(1,stage_no=2)
+#print("AA")
+'''
