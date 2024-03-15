@@ -23,15 +23,7 @@ if __name__ == '__main__':
 
 '''
 from treasurehunt import treasure
-<<<<<<< HEAD
 #treasure.Treasure.addActivity("TOM","12,12","Quiz","1",100)
 print(".")
 treasure.Treasure.getActivities()
 '''
-=======
-a=treasure.Treasure.getTreasure(id=1)
-print("AAAA"+a.getImage())
-#treasure.Treasure.addStage(1,stage_no=2)
-#print("AA")
-'''
->>>>>>> aeaa74d99ce36db995297d3c93dc6463a24ec436
