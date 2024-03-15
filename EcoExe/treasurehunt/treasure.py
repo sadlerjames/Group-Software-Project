@@ -66,6 +66,8 @@ class Treasure:
             new_dict[name] = item
         return new_dict
 
+    
+
 #a=Treasure('Polo1',256)
 #a.addStage(1)
 #print("1231231231232POLOPOPOPOOPLPOKPOASKDPOASKASPDKASDOKAASKDPAKDSP")
