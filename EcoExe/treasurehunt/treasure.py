@@ -1,5 +1,6 @@
 #Authored by Finn Ashby
 from treasurehunt import models
+from django.forms.models import model_to_dict
 '''
 (STATIC METHOD) Treasure.getTreasure(id,name)    returns a Treasure object given eiter id or name
 
@@ -51,6 +52,20 @@ class Treasure:
     def getImage(self):
         return models.TreasureHunt.objects.get(hunt_id=self.id).image
         
+    def addActivity(name,location,activity_type,activity_info,points):
+        a=models.Activities.objects.create(type=activity_type,name=name,info=activity_info,location=location)
+        return a.act_id
+    
+    def getActivities():
+        #{i.title: i.specs for i in models.Activities.objects.all()}
+        a=(models.Activities.objects.values())
+        #print(a[1])
+        new_dict = {}
+        for item in a:
+            name = item['act_id']
+            new_dict[name] = item
+        return new_dict
+
     
 
 #a=Treasure('Polo1',256)
