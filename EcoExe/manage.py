@@ -20,3 +20,9 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+from treasurehunt import treasure
+#treasure.Treasure.addActivity("TOM","12,12","Quiz","1",100)
+print(".")
+treasure.Treasure.getActivities()
