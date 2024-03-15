@@ -5,7 +5,7 @@ import os
 from .. import models
 from django.db.utils import IntegrityError
 cwd = os.getcwd()
-#yprint(cwd)
+print("SDSD"+cwd)
 ##create quiz
 ##open existing quiz
 ##add questions and answers to quiz
@@ -146,6 +146,5 @@ def load(id):
 #a=Quiz(quizName="One",questions=["It’s acceptable to toss used automotive oil in with regular residential trash.","Unplugging your printer when not in use reduces energy waste and potentially saves about how much annually"],noPoints=666,answers=[["False","True"],["$130","$12","$60"]],loading=False)
 #a=load(31)
 #print(a.getAnswer())
-#print(a.id)
-
+#print(a.id) 
 

@@ -18,6 +18,7 @@ class TreasureHunt(models.Model):
     def __str__(self):
         return f"Treasure Hunt {self.hunt_id}"
 
+<<<<<<< HEAD
 class Activities(models.Model):
     act_id=models.AutoField(primary_key=True)
     type=models.TextField()
@@ -29,6 +30,12 @@ class Stage(models.Model):
     hunt = models.ForeignKey(TreasureHunt, on_delete=models.CASCADE)
     order = models.PositiveIntegerField()
     activity_id=models.ForeignKey(Activities,on_delete=models.CASCADE,default=1)
+=======
+class Stage(models.Model):
+    hunt = models.ForeignKey(TreasureHunt, on_delete=models.CASCADE)
+    order = models.PositiveIntegerField()
+    activity_type = models.CharField(max_length=100)
+>>>>>>> aeaa74d99ce36db995297d3c93dc6463a24ec436
     no_points = models.IntegerField()
     information = models.TextField()
 
@@ -37,10 +44,13 @@ class Stage(models.Model):
 
     def __str__(self):
         return f"Slot {self.order} of Treasure Hunt {self.hunt.hunt_id}"
+<<<<<<< HEAD
     
 
 
     
+=======
+>>>>>>> aeaa74d99ce36db995297d3c93dc6463a24ec436
 
 class UserTreasure(models.Model):
     hunt = models.ForeignKey(TreasureHunt, on_delete=models.CASCADE)
