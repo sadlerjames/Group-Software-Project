@@ -1,7 +1,12 @@
+#Authored by Finn Ashby
+from django.db import models
+#from treasurehunt import treasure
+# Create your models here.
 from django.db import models
 
-# Create your models here.
-#Authored by Finn Ashby
+from django import template
+
+from django.db import models
 
 class TreasureHunt(models.Model):
     hunt_id = models.AutoField(primary_key=True)
@@ -40,7 +45,7 @@ class Stage(models.Model):
 class UserTreasure(models.Model):
     hunt = models.ForeignKey(TreasureHunt, on_delete=models.CASCADE)
     player = models.CharField(max_length=100)
-    stage_completed = models.BooleanField(default=False)
+    stage_completed = models.IntegerField(default=False)
     no_points = models.IntegerField()
 
     class Meta:

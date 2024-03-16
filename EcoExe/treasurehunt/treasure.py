@@ -66,7 +66,21 @@ class Treasure:
             new_dict[name] = item
         return new_dict
 
+    def getStageNo(player_name,hunt_id):
+        try:
+            a=models.UserTreasure.objects.get(player=player_name,hunt=hunt_id)
+            return a.stage_completed
+        except models.UserTreasure.DoesNotExist:
+            return 0
     
+    def incrementStage(player_name,hunt_id,points=0):
+        try:
+            a=models.UserTreasure.objects.get(player=player_name,hunt=hunt_id)
+            a.stage_completed+=1
+            a.no_points+=points
+        except models.UserTreasure.DoesNotExist:
+            models.UserTreasure.objects.create(player=player_name,hunt=hunt_id,points=0,stage_complted=1)
+
 
 #a=Treasure('Polo1',256)
 #a.addStage(1)
