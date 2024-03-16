@@ -46,7 +46,8 @@ class Treasure:
         return models.Stage.objects.get(hunt=self.id,order=stage_no).information
     
     def getStageActivity(self,stage_no):
-        return models.Stage.objects.get(hunt=self.id,order=stage_no).activity_type
+        a = models.Stage.objects.get(hunt=self.id,order=stage_no)
+        return a.activity_id.act_id
 
 
     def getImage(self):

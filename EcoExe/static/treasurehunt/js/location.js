@@ -16,7 +16,6 @@ function getCookie(name) {
 }
 
 const csrfToken = getCookie('csrftoken');
-console.log(csrfToken);
 
 
 function getLocation() {
@@ -41,7 +40,23 @@ function showPosition(position) {
     body: JSON.stringify({ 
       longitude:long, 
       latitude:lat})
-  }).catch(error => {
-      console.error('Error:', error);
-  });
+  }).then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json(); // Parse response body as JSON
+})
+.then(data => {
+    // Check if the response indicates a redirect
+    if (data.redirect) {
+        // Redirect to the new URL
+        window.location.href = data.redirect+'?extra='+encodeURIComponent(data.extra);
+    } else {
+        // Handle other response data if needed
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+
 }
