@@ -13,7 +13,10 @@ from quiz.models import Quizzes
 from quiz.templatetags import quiz
 import datetime
 import segno
-from PIL import Image  
+from PIL import Image
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+
 
 
 # Create your views here.
@@ -134,7 +137,7 @@ def create_treasure(request):
                 activity = request.POST.get('extra_field_{index}'.format(index=i))
                 #create a qr code for the activity
                 qr = segno.make_qr(activity)
-                qr.save("gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i))
+                qr.save("gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i), scale=13)
             makePDF(name,request.POST.get('extra_field_count'))
         return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")
     else:
@@ -214,9 +217,34 @@ def drop_row(request, id):
 def makePDF(name,extra):
     images = []
     for i in range(1,int(extra)+1):
-        images.append(Image.open("gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i)))
+        path = "gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i)
+        images.append([Image.open(path), path, i])
 
     pdf_path = "media/pdfs/{name}.pdf".format(name=name)
+
+    c = canvas.Canvas(pdf_path, pagesize=A4)
+    width, height = A4
+
+    for img in images:
+        image = img[0]
+        # Resize the image to fit within the A4 page
+        image.thumbnail((width, height))
+
+        # Calculate the position to center the image on the page
+        x = (width - image.width) / 2
+        y = (height - image.height) / 2
+
+        title = "Slot " + str(img[2])
+
+        c.setFont("Helvetica-Bold", 22)  # Set font and size for the title
+        c.drawCentredString(width / 2, height - 50, title)
+
+        # Draw the image on the page
+        c.drawImage(img[1], x, y, width=image.width, height=image.height)
+
+        # Add a new page for the next image
+        c.showPage()
+
+    # Save the PDF
+    c.save()
     
-    images[0].save(
-    pdf_path, "PDF" ,resolution=100.0, save_all=True, append_images=images[1:])
