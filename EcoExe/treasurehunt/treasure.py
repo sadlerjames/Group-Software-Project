@@ -37,8 +37,8 @@ class Treasure:
             return Treasure(a.name,a.points,creating=False,id=a.hunt_id)
         raise NotImplementedError("Please talk to finn if this prints")
             
-    def addStage(self,stage_no,type='quiz',info='1',no_points=10):
-        models.Stage.objects.create(hunt=models.TreasureHunt.objects.get(hunt_id=self.id),order=stage_no,activity_type=type,information=info,no_points=no_points)
+    def addStage(self,stage_no,activity_id='1',info='1',no_points=10):
+        models.Stage.objects.create(hunt=models.TreasureHunt.objects.get(hunt_id=self.id),order=stage_no,activity_id=models.Activities.objects.get(act_id=activity_id),information=info,no_points=no_points)
     def getStagePoints(self,stage_no):
         return models.Stage.objects.get(hunt=self.id,order=stage_no).no_points
     
@@ -52,8 +52,8 @@ class Treasure:
     def getImage(self):
         return models.TreasureHunt.objects.get(hunt_id=self.id).image
         
-    def addActivity(name,location,activity_type,activity_info,points):
-        a=models.Activities.objects.create(type=activity_type,name=name,info=activity_info,location=location)
+    def addActivity(name,location,activity_type,activity_info,points,location_name):
+        a=models.Activities.objects.create(type=activity_type,name=name,info=activity_info,location=location,location_name=location_name)
         return a.act_id
     
     def getActivities():
@@ -68,18 +68,18 @@ class Treasure:
 
     def getStageNo(player_name,hunt_id):
         try:
-            a=models.UserTreasure.objects.get(player=player_name,hunt=hunt_id)
+            a=models.UserTreasure.objects.get(player=player_name,hunt=models.TreasureHunt.objects.get(hunt_id=hunt_id))
             return a.stage_completed
         except models.UserTreasure.DoesNotExist:
             return 0
     
     def incrementStage(player_name,hunt_id,points=0):
         try:
-            a=models.UserTreasure.objects.get(player=player_name,hunt=hunt_id)
+            a=models.UserTreasure.objects.get(player=player_name,hunt=models.TreasureHunt.objects.get(hunt_id=hunt_id))
             a.stage_completed+=1
             a.no_points+=points
         except models.UserTreasure.DoesNotExist:
-            models.UserTreasure.objects.create(player=player_name,hunt=hunt_id,points=0,stage_complted=1)
+            models.UserTreasure.objects.create(player=player_name,hunt=models.TreasureHunt.objects.get(hunt_id=hunt_id),no_points=0,stage_completed=1)
 
 
 #a=Treasure('Polo1',256)
