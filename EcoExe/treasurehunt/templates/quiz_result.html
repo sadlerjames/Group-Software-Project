@@ -1,0 +1,26 @@
+<!-- Authored by Sam Arrowsmith and Jack Hales -->
+
+{% extends "base_quiz.html" %}
+
+{% block title %}Daily Quiz{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static '/quiz/js/daily_quiz.js' %}"></script>
+{% endblock %}
+
+{% block index %}
+<h1>Daily Quiz</h1>
+<h3>Well done for completing the quiz, here's a breakdown of how you did:</h3>
+<br>
+<div id="results">
+    <p><strong>Correct Answers:</strong> {{correct}}</p>
+    <p><strong>Incorrect Answers:</strong> {{wrong}}</p>
+    <p><strong>Percent:</strong> {{percent}}%</p>
+    <p><strong>Score:</strong> {{score}}</p>
+    <p><strong>Time Remaining:</strong> {{time}} seconds</p>
+    <p><strong>Final Score (Score + Time Remaining):</strong> {{final_score}}</p>
+</div>
+<br>
+<a href="/accounts/dashboard">Continue</a>
+{% endblock %}

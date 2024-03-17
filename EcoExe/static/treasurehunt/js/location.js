@@ -50,7 +50,7 @@ function showPosition(position) {
     // Check if the response indicates a redirect
     if (data.redirect) {
         // Redirect to the new URL
-        window.location.href = data.redirect+'?extra='+encodeURIComponent(data.extra);
+        window.location.href = data.redirect+'?extra='+encodeURIComponent(data.extra)+'&hunt='+encodeURIComponent(data.hunt);
     } else {
         // Handle other response data if needed
     }

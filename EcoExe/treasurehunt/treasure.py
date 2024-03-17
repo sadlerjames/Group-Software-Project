@@ -79,6 +79,7 @@ class Treasure:
             a=models.UserTreasure.objects.get(player=player_name,hunt=models.TreasureHunt.objects.get(hunt_id=hunt_id))
             a.stage_completed+=1
             a.no_points+=points
+            a.save()
         except models.UserTreasure.DoesNotExist:
             models.UserTreasure.objects.create(player=player_name,hunt=models.TreasureHunt.objects.get(hunt_id=hunt_id),no_points=0,stage_completed=1)
 
