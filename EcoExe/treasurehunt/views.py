@@ -17,6 +17,9 @@ from treasurehunt.models import Stage
 def scan(request):
     return render(request, "scan.html")
 
+def wrong(request):
+    return render(request,"wrong.html",{'location':request.GET.get('extra')})
+
 def quiz(request):
     if request.method == "POST":
         # Load quiz and get questions and points per question
@@ -86,7 +89,6 @@ def quiz(request):
                 activity = Treasure.getActivities()[activityID]
                 return render(request,"next.html",{'location':activity['location_name']})
             except Stage.DoesNotExist: #if the user has finished the treasure hunt, there is no next stage
-                print("caught")
                 return render(request,"finish.html")
         return render(request, "quiz_result.html", context)
     
@@ -144,7 +146,7 @@ def validate(request):
         if request.method == 'POST':
             #read these in from the qr code
             huntID = 1
-            stage = 2
+            stage = 1
             data = json.loads(request.body.decode('utf-8'))
             longitude = data['longitude']
             latitude = data['latitude']
@@ -168,9 +170,11 @@ def validate(request):
                     return JsonResponse({'redirect':'/treasurehunt/quiz','extra':extra,'hunt':huntID})
                 #show the user the location of the next stage
             else:
-                print("No")
-                #verify the user is on the correct stage
                 #show a message about being on the wrong stage
+                hunt = Treasure.getTreasure(id=huntID)
+                activityID = hunt.getStageActivity(stage)
+                activity = Treasure.getActivities()[activityID]
+                return JsonResponse({'redirect':'/treasurehunt/wrong','extra':activity['location_name']})
             return render(request,"scan.html")
     else:
         return redirect(request,"/accounts/login.html")
