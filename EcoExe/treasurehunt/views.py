@@ -69,8 +69,8 @@ def quiz(request):
         except:
             pass
 
-        if(score > 2): #the player has passed
-            activityFinished(request)
+        if(percent > 50): #the player has passed
+            return activityFinished(request)
         else:
             return render(request,"fail.html")
 
@@ -79,7 +79,7 @@ def quiz(request):
     else:
         hunt = request.GET.get('hunt')
         quizID = request.GET.get('extra')
-        quiz = load(quizID)
+        quiz = load(int(quizID))
         context = {}
         time_limit = 30
 
@@ -128,15 +128,15 @@ def trivia(request):
         hunt = request.GET.get('hunt')
         return render(request,"trivia.html",{'fact':request.GET.get('extra'),'hunt':hunt})
     else:
-        activityFinished(request)
+        return activityFinished(request)
 
 
 def validate(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             #read these in from the qr code
-            huntID = 1
-            stage = 1
+            huntID = 3
+            stage = 2
             data = json.loads(request.body.decode('utf-8'))
             longitude = data['longitude']
             latitude = data['latitude']
@@ -156,9 +156,10 @@ def validate(request):
                 activityID = hunt.getStageActivity(stage)
                 activity = Treasure.getActivities()[activityID]
                 extra =  activity['info']
-                if(activity['type'] == "Quiz"):
+                if(activity['type'] == "quiz"):
+                    print("QUIXZZZZZZZZZZZZZ")
                     return JsonResponse({'redirect':'/treasurehunt/quiz','extra':extra,'hunt':huntID})
-                elif(activity['type'] == "Trivia"):
+                elif(activity['type'] == "trivia"):
                     return JsonResponse({'redirect':'/treasurehunt/trivia','extra':extra,'hunt':huntID})
                 #show the user the location of the next stage
             else:

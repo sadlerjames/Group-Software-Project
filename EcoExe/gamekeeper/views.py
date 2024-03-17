@@ -16,6 +16,7 @@ import segno
 from PIL import Image
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
+from treasurehunt.treasure import Treasure
 
 
 
@@ -106,6 +107,7 @@ def create_activity(request):
 
         contextVars['form'] = ""
         if request.method == 'POST':
+            print(request.POST)
             form = QRCreationForm(request.POST)
             contextVars['form'] = form
             if form.is_valid():
@@ -113,6 +115,9 @@ def create_activity(request):
                 activityName = request.POST.get('qr_name')
                 location = request.POST.get('location')
                 extraInfo = request.POST.get('extra')
+                points = request.POST.get('points')
+                locationName = request.POST.get('location_name')
+                Treasure.addActivity(activityName,location,activityType,extraInfo,points,locationName)
                 #save this to the database
                 return redirect('/gamekeeper/treasurehunt/create', context=contextVars)
             else:
@@ -120,6 +125,7 @@ def create_activity(request):
             return render(request,"gamekeeper/treasurehunt/create-activity.html",context=contextVars)
         else:
             form = QRCreationForm()
+            print(contextVars)
             return render(request,"gamekeeper/treasurehunt/create-activity.html",context=contextVars)
     else:
         return redirect('/account/dashboard')

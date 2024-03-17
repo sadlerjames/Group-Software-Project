@@ -1,5 +1,6 @@
 <h1>Fun fact: {{fact}}</h1>
-<form>
+<form method = "post">
+    {%csrf_token%}
     <input id='hunt' type = 'hidden' name="hunt" value={{hunt}}>
     <button type="submit" id="submit">Continue</button>
 </form>

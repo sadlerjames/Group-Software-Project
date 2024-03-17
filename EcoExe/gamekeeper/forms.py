@@ -36,6 +36,8 @@ class QuizCreationForm(forms.Form):
 class QRCreationForm(forms.Form):
     qr_name = forms.CharField()
     location = forms.CharField()
+    location_name = forms.CharField()
+    points = forms.IntegerField()
     extra = forms.CharField(required=False)
 
 class TreasureHuntCreationForm(forms.Form):
