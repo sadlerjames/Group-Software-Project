@@ -12,21 +12,15 @@
         <br>
         <label class="">Email:</label>
             {{ user_form.email }}
-
         <br>
         <label class="">Change Avatar:</label>
             {{ user_form.avatar }}
-
         <br>
-        <label class="">Bio:</label> 
-            {{ user_form.bio }}
-        <br>
-
-        
-
-        <a href="#">Change Password</a>
-        <br><br>
-        <button type="submit" class="btn btn-dark btn-lg">Update Changes</button>
-        <!--<button type="reset" class="btn btn-dark btn-lg">Reset</button>-->
+        <button type="submit">Save Changes</button>
     </form>
+    <a href="/accounts/password_change">Change password</a>
+    <br>
+    <a href="/accounts/delete_account">Delete account</a>
+    <br><br>
+    <a href="/accounts/dashboard">Back to dashboard</a>
 {% endblock form %}

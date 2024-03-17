@@ -30,6 +30,8 @@ urlpatterns = [
     path('password_change/done/', PasswordChangeDoneView.as_view(), name='password_change_done'),
     path('logout/', views.logoutview, name='logout'),
     path('profile/', views.userprofile, name='profile'),
-    path('update-password/', UpdatePasswordView.as_view(), name='password_update')
+    path('update-password/', UpdatePasswordView.as_view(), name='password_update'),
+    path('delete_account/', views.delete_account, name='delete_account'),
+    path('delete_account_success/', views.delete_account_success, name='delete_account_success')
 ]
 

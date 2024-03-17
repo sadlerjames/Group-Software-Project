@@ -1,0 +1,12 @@
+<!-- Authored by Jack Hales -->
+
+{% extends "base_accounts.html" %}
+
+{% block title %}Account Deleted Successfully{% endblock %}
+
+{% block form %}
+<h1>Account Deleted Successfully</h1>
+<br>
+<p>Your account has been successfully deleted.</p>
+<p>If you'd like to create a new account, you can <a href="{% url 'signup' %}">register here</a>.</p>
+{% endblock %}

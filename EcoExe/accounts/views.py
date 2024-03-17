@@ -24,7 +24,6 @@ class CustomPasswordChangeView(PasswordChangeView):
 class PasswordChangeDoneView(TemplateView):
     template_name = 'registration/password_change_done.html'
 
-
 @login_required()    
 def dashboard(request):
     return render(request, "dashboard.html")
@@ -100,3 +99,17 @@ class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = 'registration/update-password.html'
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('users-home')
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        # Delete the user account
+        request.user.delete()
+        # Log out the user
+        logout(request)
+        # Redirect to a success page or any other page
+        return redirect('/accounts/delete_account_success')
+    return render(request, 'registration/delete_account_confirmation.html')
+
+def delete_account_success(request):
+    return render(request, 'registration/delete_account_success.html')
