@@ -1,3 +1,12 @@
-<h1>Activity complete!</h1>
+<!-- Authored by George Piper and Jack Hales -->
+
+{% extends "base_treasurehunt.html" %}
+
+{% block title %}Activity Complete{% endblock %}
+
+{% block index %}
+<h1>Activity Complete!</h1>
 <h3>Please go to {{location}}</h3>
+<br>
 <a href="/accounts/dashboard">Back to dashboard</a>
+{% endblock %}
