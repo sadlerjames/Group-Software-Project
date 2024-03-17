@@ -69,28 +69,11 @@ def quiz(request):
         except:
             pass
 
-        # Set context for results page
-        context = {
-            'score': score,
-            'time': time_remaining,
-            'correct': correct,
-            'wrong': wrong,
-            'percent': percent,
-            'final_score': final_score
-        }
-
         if(score > 2): #the player has passed
-            huntID = request.POST.get('hunt')
-            Treasure.incrementStage(request.user.username,huntID)
-            try: #if the user has not finished the treasure hunt
-                stage = Treasure.getStageNo(request.user.username,huntID) + 1 #get the next stage
-                hunt = Treasure.getTreasure(id=huntID)
-                activityID = hunt.getStageActivity(stage)
-                activity = Treasure.getActivities()[activityID]
-                return render(request,"next.html",{'location':activity['location_name']})
-            except Stage.DoesNotExist: #if the user has finished the treasure hunt, there is no next stage
-                return render(request,"finish.html")
-        return render(request, "quiz_result.html", context)
+            activityFinished(request)
+        else:
+            return render(request,"fail.html")
+
     
     # User is loading quiz
     else:
@@ -140,6 +123,13 @@ def quiz(request):
         }
         return render(request, "quiz.html", context)
 
+def trivia(request):
+    if request.method == 'GET':
+        hunt = request.GET.get('hunt')
+        return render(request,"trivia.html",{'fact':request.GET.get('extra'),'hunt':hunt})
+    else:
+        activityFinished(request)
+
 
 def validate(request):
     if request.user.is_authenticated:
@@ -168,6 +158,8 @@ def validate(request):
                 extra =  activity['info']
                 if(activity['type'] == "Quiz"):
                     return JsonResponse({'redirect':'/treasurehunt/quiz','extra':extra,'hunt':huntID})
+                elif(activity['type'] == "Trivia"):
+                    return JsonResponse({'redirect':'/treasurehunt/trivia','extra':extra,'hunt':huntID})
                 #show the user the location of the next stage
             else:
                 #show a message about being on the wrong stage
@@ -178,3 +170,15 @@ def validate(request):
             return render(request,"scan.html")
     else:
         return redirect(request,"/accounts/login.html")
+    
+def activityFinished(request):
+    huntID = request.POST.get('hunt')
+    Treasure.incrementStage(request.user.username,huntID)
+    try: #if the user has not finished the treasure hunt
+        stage = Treasure.getStageNo(request.user.username,huntID) + 1 #get the next stage
+        hunt = Treasure.getTreasure(id=huntID)
+        activityID = hunt.getStageActivity(stage)
+        activity = Treasure.getActivities()[activityID]
+        return render(request,"next.html",{'location':activity['location_name']})
+    except Stage.DoesNotExist: #if the user has finished the treasure hunt, there is no next stage
+        return render(request,"finish.html")
