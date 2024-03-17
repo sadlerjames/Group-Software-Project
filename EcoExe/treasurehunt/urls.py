@@ -23,4 +23,5 @@ urlpatterns = [
     path('scan/', views.scan, name='scan'),
     path('validate/',views.validate,name='validate'),
     path('quiz/',views.quiz,name="quiz"),
+    path('wrong/',views.wrong,name="wrong"),
 ]
