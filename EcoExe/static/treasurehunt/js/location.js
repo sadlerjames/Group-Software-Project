@@ -18,16 +18,19 @@ function getCookie(name) {
 const csrfToken = getCookie('csrftoken');
 
 
-function getLocation() {
+function getLocation(extra) {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-
+    // Pass data to showPosition using a closure
+    navigator.geolocation.getCurrentPosition(function(position) {
+      showPosition(position, extra);
+    });
   } else { 
     x.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
 
-function showPosition(position) {
+function showPosition(position, extra) {
+  // Now you have access to both position and data
   var lat  = position.coords.latitude;
   var long = position.coords.longitude;
 
@@ -39,7 +42,8 @@ function showPosition(position) {
     },
     body: JSON.stringify({ 
       longitude:long, 
-      latitude:lat})
+      latitude:lat,
+      extra:extra})
   }).then(response => {
     if (!response.ok) {
         throw new Error('Network response was not ok');

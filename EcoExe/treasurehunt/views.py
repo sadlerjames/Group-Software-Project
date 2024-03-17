@@ -135,9 +135,10 @@ def validate(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             #read these in from the qr code
-            huntID = 3
-            stage = 2
+            huntID = 1
+            stage = 1
             data = json.loads(request.body.decode('utf-8'))
+            print (data['extra']['getdata'])
             longitude = data['longitude']
             latitude = data['latitude']
             x =  -3.5146264011643513 #need to be based on the qr code coordinates
