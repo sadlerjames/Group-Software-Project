@@ -1,4 +1,19 @@
 @import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  /* background-color: #2196F3; */
+  padding: 10px;
+}
+.grid-item {
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
 body {
   background: repeating-linear-gradient(0deg, rgba(0, 88, 245 ,1) 100%, rgba(176,255,176,1) 100%);
   margin: 0;
