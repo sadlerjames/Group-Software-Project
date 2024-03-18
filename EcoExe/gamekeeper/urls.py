@@ -32,6 +32,7 @@ urlpatterns = [
     path('quiz/drop_row/<date:id>/', views.drop_row, name="drop_row"),
     path('treasurehunt/create_activity/', views.create_activity, name="create_activity"),
     path('treasurehunt/create/', views.create_treasure, name="create_treasure"),
+    path('treasurehunt/get_activities/', views.get_activities, name="get_activities"),
     path('logout/', views.logoutview, name='logout'),
 ]
 

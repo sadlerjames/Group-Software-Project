@@ -17,6 +17,7 @@ from PIL import Image
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from treasurehunt.treasure import Treasure
+from django.http import JsonResponse
 
 
 
@@ -254,3 +255,6 @@ def makePDF(name,extra):
     # Save the PDF
     c.save()
     
+
+def get_activities(request):
+    return JsonResponse(Treasure.getActivities())
