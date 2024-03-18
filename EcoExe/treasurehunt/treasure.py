@@ -95,6 +95,7 @@ class Treasure:
                 stage=[entry.hunt.hunt_id,stage]
                 stages.append(stage)
             except models.Stage.DoesNotExist:
+                stages.append(entry.hunt.hunt_id,-1)
                 continue
         return stages
 
