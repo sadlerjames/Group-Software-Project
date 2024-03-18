@@ -107,7 +107,7 @@ function moveObjects() {
               }
           }
       }
-      bannerText.textContent = "Catch the rubbish before it falls in the quay! \nPoints: " + points + "\nLives: " + lives;
+      bannerText.innerHTML = "Catch the rubbish before it falls in the quay!<br>Points: " + points + " Lives: " + lives;
       image.style.top = pos + 'vh';
       image.style.opacity = 100;
     });
@@ -118,8 +118,6 @@ function moveObjects() {
     btnExit.style.display = "block";
   }
 }
-
-
 
 function startGame(){
     points = 0;

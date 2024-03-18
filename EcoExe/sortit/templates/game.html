@@ -15,6 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Fill mobile view -->
 
+        <link rel="stylesheet" href="{% static 'css/fonts.css' %}" />
         <link rel="stylesheet" href="{% static 'sortit/css/sortit.css' %}" />
     </head>
     <body>
@@ -23,7 +24,7 @@
           <div class="row">
             <div class="col-xs-12 text-center front stop-overflow" id="banner" >
               <h1 id="banner-info">
-                Catch the rubbish before it falls in the quay! 
+                Catch the rubbish before it falls in the quay!<br>
                 Points: 0
                 Lives: 3
               </h1>
@@ -31,8 +32,7 @@
           </div>
 
           <button id="btnStart">Start Game</button>
-          <a href=""><button id="btnExit"  >Return to dashboard</button></a>
-          <!-- NEEDS TO LINK TO DASHBOARD -->
+          <a href="/accounts/dashboard"><button id="btnExit">Return to dashboard</button></a>
 
           <div id="game">
             <img src="{% static 'sortit/images/banana.png' %}" class="trash" style="top:0vh; left:0vw; opacity: 100;">
@@ -40,7 +40,7 @@
             <img src="{% static 'sortit/images/banana.png' %}" class="trash" style="top:0vh; left:0vw; opacity: 100;">
             <img src="{% static 'sortit/images/banana.png' %}" class="trash" style="top:0vh; left:0vw; opacity: 100;">
             
-              <img src="{% static 'sortit/images/bin.png' %}" id="bin">
+            <img src="{% static 'sortit/images/bin.png' %}" id="bin">
             <div class="row stop-overflow">
               <div class="wave-container stop-overflow" id="deathzone" >
                   <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
