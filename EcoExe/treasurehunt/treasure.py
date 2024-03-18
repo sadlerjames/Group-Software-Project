@@ -85,7 +85,7 @@ class Treasure:
     
     def getUserStages(player_name):
         entries = models.UserTreasure.objects.filter(player=player_name)
-        stages=[[]]
+        stages=[]
         stage=[]
         for entry in entries:
             try:
