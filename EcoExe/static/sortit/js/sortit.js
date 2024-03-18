@@ -2,65 +2,60 @@ function getPosAsNum(str) {
   return(str.split("v")[0]);
 }
 
+function getRandomInt(min, max) { 
+  min = Math.ceil(min); 
+  max = Math.floor(max); 
+  return Math.floor(Math.random() * (max - min + 1)) + min; 
+} 
+
 var images = Array.from(document.querySelectorAll('.trash'));
 
-images.forEach(
-  (image) => 
-  {
-      image.addEventListener('click', function() {
-          if(image.classList.contains("being-held")){
-              image.classList.remove("being-held");
-          }
-          else{
-              image.classList.add("being-held");
-          }
-  })
-}
-);
 
-
-document.addEventListener('mousemove', function(event) {
-  images.forEach(function(image) {
-    if (image.classList.contains("being-held")) {
-      image.style.left = event.clientX + 'px';
-      image.style.top = event.clientY + 'px';
-    }
-    else{
-      
-    }
-  });
+document.addEventListener('mousemove', (e) => {
+  const object = document.getElementById('bin');
+  object.style.left = e.offsetX + 'px';
 });
 
+document.addEventListener('touchstart', function(e) {
+  const object = document.getElementById('bin');
+  initialX = e.touches[0].clientX - object.offsetLeft;
+});
 
-// Iterate over each image and move them down
-for (var i = 0; i < images.length; i++) {
+document.addEventListener('touchmove', function(e) {
+  e.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
   
-  console.log("hello");
-  var image = images[i];
+  currentX = e.touches[0].clientX - initialX;
+
+  // Update the position of the DOM object
+  const object = document.getElementById('bin');
+  object.style.left = currentX + 'px';
   
-  var position = 0;
-  // Set interval to move the image down every 100 milliseconds
-  setInterval(function() {
-      var pos = getPosAsNum(image.style.top);
-      if(image.classList.contains("being-held")){
-          //need to make the image follow the mouse pointer
-      }
-      else{
-          if(pos >= 90){
-              //image.classList.add("hidden");
-              position = 0;
-              image.style.top = 0 + 'vh'; //reset image's position
-              //image.classList.remove("hidden");
-          }
-          else{
-              position += 0.5; // Adjust this value to control the speed of the movement
-              image.style.top = position + 'vh';
-          }
-          
-      }
+}, { passive: false });
 
-      
-      //console.log(position);
-}, 100);
 
+// Define a function to update the positions of the objects
+function moveObjects() {
+  
+  images.forEach(function(image) {
+    console.log(image);
+    // Perform the movement calculation for each object
+    console.log(image.style.top);
+    var pos = getPosAsNum(image.style.top);
+    var position;
+
+    if(pos >= 90){
+        position = 0; //reset image's position
+        var newX = getRandomInt(1, 10); 
+        image.style.left = newX + 'vw' //randomly set the x position
+    }
+    else{
+        position += 1; // Adjust this value to control the speed of the movement
+    }
+    image.style.top = position + 'vh';
+  });
 }
+
+// Call the moveObjects function at regular intervals to update the positions
+setInterval(moveObjects, 1000); // Adjust the interval as needed (100 milliseconds)
+
+
