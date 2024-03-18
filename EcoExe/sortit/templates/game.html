@@ -23,48 +23,61 @@
           <div class="row">
             <div class="col-xs-12 text-center front stop-overflow" id="banner" >
               <h1 id="banner-info">
-                Catch the rubbish before it falls in the sea! Points: 0
+                Catch the rubbish before it falls in the quay! 
+                Points: 0
+                Lives: 3
               </h1>
             </div>
           </div>
 
+          <button id="btnStart">Start Game</button>
+          <button id="btnExit" href="">Return to dashboard</button>
+          <!-- NEEDS TO LINK TO DASHBOARD -->
 
-          <img src="{% static 'sortit/images/banana.jpg' %}" class="trash" style="top:0vh; left:0vw;">
-          <img src="{% static 'sortit/images/banana.jpg' %}" class="trash" style="top:0vh; left:0vw;">
-          <img src="{% static 'sortit/images/banana.jpg' %}" class="trash" style="top:0vh; left:0vw;">
-          <img src="{% static 'sortit/images/banana.jpg' %}" class="trash" style="top:0vh; left:0vw;">
-          
-            <img src="{% static 'sortit/images/greenbin.jpg' %}" id="bin">
-          <div class="row stop-overflow">
-            <div class="wave-container stop-overflow" id="deathzone" >
-                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                <defs>
-                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                </defs>
-                <g class="parallax">
-                <use xlink:href="#gentle-wave" x="20" y="0" fill="rgba(100,100,255,0.7" />
-                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(100,100,255,0.5)" />
-                <use xlink:href="#gentle-wave" x="20" y="4" fill="rgba(0,150,255,0.4)" />
-                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(100,100,255,1.4)" />
-                <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(100,100,255,0.3)" />
-                <use xlink:href="#gentle-wave" x="42" y="6" fill="rgba(100,100,255,0.9)" />
-                <use xlink:href="#gentle-wave" x="48" y="7" fill="#0044f5" />
-                </g>
-                </svg>
+          <div id="game">
+            <img src="{% static 'sortit/images/banana.jpg' %}" class="trash" style="top:0vh; left:0vw;">
+            <img src="{% static 'sortit/images/banana.jpg' %}" class="trash" style="top:0vh; left:0vw;">
+            <img src="{% static 'sortit/images/banana.jpg' %}" class="trash" style="top:0vh; left:0vw;">
+            <img src="{% static 'sortit/images/banana.jpg' %}" class="trash" style="top:0vh; left:0vw;">
             
-                <!--Waves Container-->
-                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                <defs>
-                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                </defs>
-                </svg>
-                <!--Waves end-->
-                <div class="water">
-                </div>
+              <img src="{% static 'sortit/images/greenbin.jpg' %}" id="bin">
+            <div class="row stop-overflow">
+              <div class="wave-container stop-overflow" id="deathzone" >
+                  <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                  <defs>
+                  <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                  </defs>
+                  <g class="parallax">
+                  <use xlink:href="#gentle-wave" x="20" y="0" fill="rgba(100,100,255,0.7" />
+                  <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(100,100,255,0.5)" />
+                  <use xlink:href="#gentle-wave" x="20" y="4" fill="rgba(0,150,255,0.4)" />
+                  <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(100,100,255,1.4)" />
+                  <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(100,100,255,0.3)" />
+                  <use xlink:href="#gentle-wave" x="42" y="6" fill="rgba(100,100,255,0.9)" />
+                  <use xlink:href="#gentle-wave" x="20" y="1" fill="rgba(100,100,255,0.7" />
+                  <use xlink:href="#gentle-wave" x="48" y="2" fill="rgba(100,100,255,0.5)" />
+                  <use xlink:href="#gentle-wave" x="20" y="5" fill="rgba(0,150,255,0.4)" />
+                  <use xlink:href="#gentle-wave" x="48" y="4" fill="rgba(100,100,255,1.4)" />
+                  <use xlink:href="#gentle-wave" x="48" y="9" fill="rgba(100,100,255,0.3)" />
+                  <use xlink:href="#gentle-wave" x="42" y="12" fill="rgba(100,100,255,0.9)" />
+                  <use xlink:href="#gentle-wave" x="48" y="7" fill="#0044f5" />
+                  </g>
+                  </svg>
+              
+                  <!--Waves Container-->
+                  <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                  <defs>
+                  <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                  </defs>
+                  </svg>
+                  <!--Waves end-->
+                  <div class="water">
+                  </div>
+              </div>
+              
             </div>
-            
           </div>
         </div>
         <script src="{% static 'sortit/js/sortit.js' %}">
