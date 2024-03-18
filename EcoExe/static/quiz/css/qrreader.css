@@ -1,59 +1,19 @@
-body {
-	display: flex;
-	justify-content: center;
-	margin: 0;
-	padding: 0;
-	height: 100vh;
-	box-sizing: border-box;
-	text-align: center;
-	background: rgb(128 0 0 / 66%);
-}
-
-.container {
-	width: 100%;
-	max-width: 500px;
-	margin: 5px;
-}
-
-.container h1 {
-	color: #ffffff;
-}
-
 .section {
-	background-color: #0000ff;
-	padding: 50px 30px;
-	border: 1.5px solid #b2b2b2;
+	background-color: #003c3c;
+	border: 1.5px solid #ffffff;
 	border-radius: 0.25em;
 	box-shadow: 0 20px 25px rgba(0,0,0,0.25);
 }
 
 #reader {
 	padding: 20px !important;
-	border: 1.5px solid #b2b2b2 !important;
-	border-radius: 8px;
+	border: 1.5px solid #ffffff !important;
+	border-radius: 0.25em;
 }
 
 #reader img[alt='Camera based scan'] {
 	width: 100px !important;
 	height: 100px !important;
-}
-
-button {
-	padding: 10px 20px;
-	border: 1px solid #b2b2b2;
-	outline: none;
-	border-radius: 0.25em;
-	color: white;
-	font-size: 15px;
-	cursor: pointer;
-	margin-top: 15px;
-	margin-bottom: 10px;
-	background-color: #008000ad;
-	transition: 0.3s background-color;
-}
-
-button:hover {
-	background-color: #008000;
 }
 
 #html5-qrcode-anchor-scan-type-change {
@@ -63,6 +23,6 @@ button:hover {
 
 video {
 	width: 100% !important;
-	border: 1px solid #b2b2b2 !important;
+	border: 1px solid #ffffff !important;
 	border-radius: 0.25em;
 }
