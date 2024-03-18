@@ -98,6 +98,17 @@ class Treasure:
                 stages.append([entry.hunt.hunt_id,-1])
                 continue
         return stages
+        
+    #returns a list of  treasure hunt objects a player hasnt done given the user id
+    def getNewHunts(user_name):
+        hunts=models.TreasureHunt.objects.all()
+        newHunts=[]
+        for hunt in hunts:
+            try:
+                models.UserTreasure.objects.get(player=user_name,hunt_id=hunt.hunt_id)
+            except models.UserTreasure.DoesNotExist:
+                newHunts.append(Treasure.getTreasure(id=hunt.hunt_id))
+        return newHunts
 
 #a=Treasure('Polo1',256)
 #a.addStage(1)
