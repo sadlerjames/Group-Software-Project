@@ -7,7 +7,7 @@
 {% block scripts %}
     {% load static %}
 	<script src="https://unpkg.com/html5-qrcode" type='text/javascript'></script>
-	<script src="{% static '/treasurehunt/js/qr_scanner.js' %}"></script>
+	<script src="{% static '/treasurehunt/js/qr_scanner.js' %}">
         const validateURL = "{% url 'validate' %}/";
     </script>
 	<link rel="stylesheet" href="{% static 'quiz/css/qrreader.css' %}"/>

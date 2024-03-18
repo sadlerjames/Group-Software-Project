@@ -148,7 +148,7 @@ def create_treasure(request):
 
 
                 #create a qr code for the activity
-                url = "http://127.0.0.1:8000/treasurehunt/validate/?huntID={hunt_id}&stage_id={stage_id}".format(hunt_id = treasure.getId(), stage_id = i)
+                url = "/treasurehunt/validate/?huntID={hunt_id}&stage_id={stage_id}".format(hunt_id = treasure.getId(), stage_id = i)
                 qr = segno.make(url)
                 qr.save("gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i), scale=13)
                 treasure.addStage(i, activity_ID)

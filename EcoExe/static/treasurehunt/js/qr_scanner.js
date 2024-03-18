@@ -4,6 +4,9 @@ $(document).ready(function() {
     if(!responseReceived) {
         function qrCodeSuccessCallback(decodedText,decodedResult) {
             if(!responseReceived) {
+                var domain = window.location.protocol + '//' + window.location.host;
+                var fullUrl = domain + decodedText;
+                
                 responseReceived = true;
                     var csrftoken = jQuery('[name=csrfmiddlewaretoken]').val();
             
@@ -23,9 +26,9 @@ $(document).ready(function() {
                     }
                 });
                     console.log("errored after");
-                    // console.log(decodedText);
-                    window.location.href = decodedText;
-                    // getLocation({'getdata': JSON.stringify(decodedText)});
+                    // console.log(fullUrl);
+                    window.location.href = fullUrl;
+                    // getLocation({'getdata': JSON.stringify(fullUrl)});
             }
         }
     }
