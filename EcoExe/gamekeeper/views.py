@@ -17,6 +17,7 @@ from PIL import Image
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from treasurehunt.treasure import Treasure
+from django.http import JsonResponse
 
 
 
@@ -135,15 +136,23 @@ def create_activity(request):
 def create_treasure(request):
     if request.method == 'POST':
         #get the number of questions from the post request
-        form = TreasureHuntCreationForm(request.POST,extra= request.POST.get('extra_field_count'))
+        form = TreasureHuntCreationForm(request.POST, extra= request.POST.get('extra_field_count'))
         if form.is_valid():
             name = request.POST.get('treasure_hunt_name')
             points = request.POST.get('bonus_points')
+
+            treasure = Treasure(name, points)
+
             for i in range(1,int(request.POST.get('extra_field_count'))+1):
-                activity = request.POST.get('extra_field_{index}'.format(index=i))
+                activity_ID = request.POST.get('extra_field_{index}'.format(index=i))
+
+
                 #create a qr code for the activity
-                qr = segno.make_qr(activity)
+                url = "http://127.0.0.1:8000/treasurehunt/validate/?huntID={hunt_id}&stage_id={stage_id}".format(hunt_id = treasure.getId(), stage_id = i)
+                qr = segno.make(url)
                 qr.save("gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i), scale=13)
+                treasure.addStage(i, activity_ID)
+
             makePDF(name,request.POST.get('extra_field_count'))
         return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")
     else:
@@ -254,3 +263,6 @@ def makePDF(name,extra):
     # Save the PDF
     c.save()
     
+
+def get_activities(request):
+    return JsonResponse(Treasure.getActivities())

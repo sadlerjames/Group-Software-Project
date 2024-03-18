@@ -49,18 +49,18 @@ function showPosition(position, extra) {
         throw new Error('Network response was not ok');
     }
     return response.json(); // Parse response body as JSON
-})
-.then(data => {
-    // Check if the response indicates a redirect
-    if (data.redirect) {
-        // Redirect to the new URL
-        window.location.href = data.redirect+'?extra='+encodeURIComponent(data.extra)+'&hunt='+encodeURIComponent(data.hunt);
-    } else {
-        // Handle other response data if needed
-    }
-})
-.catch(error => {
-    console.error('Error:', error);
-});
+  })
+  .then(data => {
+      // Check if the response indicates a redirect
+      if (data.redirect) {
+          // Redirect to the new URL
+          window.location.href = data.redirect+'?extra='+encodeURIComponent(data.extra)+'&hunt='+encodeURIComponent(data.hunt);
+      } else {
+          // Handle other response data if needed
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
 
 }
