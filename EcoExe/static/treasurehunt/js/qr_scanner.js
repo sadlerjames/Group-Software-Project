@@ -41,14 +41,14 @@ $(document).ready(function() {
     }
 
     const config = {
-        fps:10,
-        qrbox: qrboxFunction
+        fps: 10,
+        qrbox: qrboxFunction,
+        aspectRatio: 1
     };
 
     reader.start({facingMode: "environment"},config,qrCodeSuccessCallback).catch(err => {alert(err);});
 
-
-    reader.stop().catch(err => {
+    /*reader.stop().catch(err => {
         alert('stop failed');
-    });
+    });*/
 });

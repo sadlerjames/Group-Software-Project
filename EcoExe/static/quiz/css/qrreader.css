@@ -1,28 +1,12 @@
-.section {
-	background-color: #003c3c;
-	border: 1.5px solid #ffffff;
-	border-radius: 0.25em;
-	box-shadow: 0 20px 25px rgba(0,0,0,0.25);
+#reader video {
+	box-shadow: 0 1vh 2vh 1vh rgba(0,0,0,0.25);
+	width: 45vh !important;
+	height: 45vh !important;
+	max-width: 80vw !important;
+	max-height: 80vw !important;
 }
 
-#reader {
-	padding: 20px !important;
-	border: 1.5px solid #ffffff !important;
-	border-radius: 0.25em;
-}
-
-#reader img[alt='Camera based scan'] {
-	width: 100px !important;
-	height: 100px !important;
-}
-
-#html5-qrcode-anchor-scan-type-change {
-	text-decoration: none !important;
-	color: #1d9bf0;
-}
-
-video {
-	width: 100% !important;
-	border: 1px solid #ffffff !important;
+#qr-shaded-region {
+	box-shadow: 0px 0px 0px 0.5vh #ffffff;
 	border-radius: 0.25em;
 }
