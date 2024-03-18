@@ -10,7 +10,6 @@ function getRandomInt(min, max) {
 
 var images = Array.from(document.querySelectorAll('.trash'));
 
-
 document.addEventListener('mousemove', (e) => {
   const object = document.getElementById('bin');
   object.style.left = e.offsetX + 'px';
@@ -33,29 +32,33 @@ document.addEventListener('touchmove', function(e) {
 }, { passive: false });
 
 
+
 // Define a function to update the positions of the objects
 function moveObjects() {
-  
   images.forEach(function(image) {
-    console.log(image);
-    // Perform the movement calculation for each object
-    console.log(image.style.top);
-    var pos = getPosAsNum(image.style.top);
-    var position;
+
+    var pos;
+    if(image.style.top == ""){
+      pos = 0;
+    }
+    else{
+      var pos = Number(getPosAsNum(image.style.top));
+    }
+    
 
     if(pos >= 90){
-        position = 0; //reset image's position
-        var newX = getRandomInt(1, 10); 
+        pos = 0; //reset image's position
+        var newX = getRandomInt(20, 90); 
         image.style.left = newX + 'vw' //randomly set the x position
     }
     else{
-        position += 1; // Adjust this value to control the speed of the movement
+        pos += (getRandomInt(1,10)) / 2.5; // Adjust this value to control the speed of the movement
     }
-    image.style.top = position + 'vh';
+    image.style.top = pos + 'vh';
   });
 }
 
 // Call the moveObjects function at regular intervals to update the positions
-setInterval(moveObjects, 1000); // Adjust the interval as needed (100 milliseconds)
+setInterval(moveObjects, 100); // Adjust the interval as needed (100 milliseconds)
 
 
