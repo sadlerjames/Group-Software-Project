@@ -82,7 +82,21 @@ class Treasure:
             a.save()
         except models.UserTreasure.DoesNotExist:
             models.UserTreasure.objects.create(player=player_name,hunt=models.TreasureHunt.objects.get(hunt_id=hunt_id),no_points=0,stage_completed=1)
-
+    
+    def getUserStages(player_name):
+        entries = models.UserTreasure.objects.filter(player=player_name)
+        stages=[[]]
+        stage=[]
+        for entry in entries:
+            try:
+                stage = Treasure.getStageNo(player_name,entry.hunt.hunt_id) + 1 #get the next stage
+                hunt = Treasure.getTreasure(id=entry.hunt.hunt_id)
+                activityID = hunt.getStageActivity(stage)
+                stage=[entry.hunt.hunt_id,stage]
+                stages.append(stage)
+            except models.Stage.DoesNotExist:
+                continue
+        return stages
 
 #a=Treasure('Polo1',256)
 #a.addStage(1)
