@@ -21,9 +21,9 @@ class Treasure:
     def getId(self):
         return self.id
     def getName(self):
-        return self.id
+        return self.name
     def getPoints(self):
-        return self.id
+        return self.points
     
 
     def getTreasure(id=None,name=None):

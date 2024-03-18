@@ -1,0 +1,30 @@
+<!-- Authored by James Sadler -->
+
+{% extends "base_treasurehunt.html" %}
+
+{% block title %}Treasure Hunts{% endblock %}
+
+{% block index %}
+{%load filter%}
+<h1>Treasure Hunts</h1>
+{%if unfinished|length%}
+<h3>You are currently taking part in the following treasure hunts:</h3>
+<br>
+{%endif%}
+{%for x in unfinished%}
+<p>Treasure hunt:{{x|getName}} stage:{{x|getStage}}</p>
+{%endfor%}
+{%if finished|length%}
+<h3>You have completed the following treasure hunts:</h3>
+{%endif%}
+{%for x in finished%}
+<p>{{x|getName}}</p>
+{%endfor%}
+
+
+<a href="/treasurehunt/scan">Scan</a>
+<br>
+<a href="/accounts/dashboard">Back to dashboard</a>
+
+
+{% endblock %}

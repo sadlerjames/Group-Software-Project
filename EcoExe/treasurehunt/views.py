@@ -202,3 +202,14 @@ def activityFinished(request):
     
 def validatePage(request):
     return render(request,"validate.html")
+
+def status(request):
+    hunts = Treasure.getUserStages(request.user.username)
+    finished = []
+    unfinished = []
+    for hunt in hunts:
+        if hunt[1] == -1:
+            finished.append(hunt)
+        else:
+            unfinished.append(hunt)
+    return render(request,"status.html",context={'finished':finished,'unfinished':unfinished})

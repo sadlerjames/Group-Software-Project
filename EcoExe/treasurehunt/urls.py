@@ -20,6 +20,7 @@ from . import views
 from .views import *
 
 urlpatterns = [
+    path('status/',views.status,name="status"),
     path('scan/', views.scan, name='scan'),
     path('verify/',views.verify,name='validate'),
     path('validate/',views.validatePage,name='validate'),
