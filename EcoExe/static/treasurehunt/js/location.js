@@ -1,5 +1,7 @@
 const x = document.getElementById("demo");
 
+getLocation({'getdata': window.location.href});
+
 
 function getCookie(name) {
   const cookies = document.cookie.split(';');
@@ -19,6 +21,7 @@ const csrfToken = getCookie('csrftoken');
 
 
 function getLocation(extra) {
+  console.log(extra);
   if (navigator.geolocation) {
     // Pass data to showPosition using a closure
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -33,8 +36,9 @@ function showPosition(position, extra) {
   // Now you have access to both position and data
   var lat  = position.coords.latitude;
   var long = position.coords.longitude;
-
-  fetch("/treasurehunt/validate/", {
+  console.log("about to post");
+  console.log(extra["getdata"]);
+  fetch("/treasurehunt/verify/", {
     method: "POST", 
     headers: {
       "X-CSRFToken": csrfToken,
@@ -43,7 +47,7 @@ function showPosition(position, extra) {
     body: JSON.stringify({ 
       longitude:long, 
       latitude:lat,
-      extra:extra})
+      extra:extra["getdata"]})
   }).then(response => {
     if (!response.ok) {
         throw new Error('Network response was not ok');

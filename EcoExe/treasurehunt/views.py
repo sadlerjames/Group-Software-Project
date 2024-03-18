@@ -10,6 +10,7 @@ from django.utils import timezone
 from points.models import DailyPoints
 from django.core.exceptions import ObjectDoesNotExist
 from treasurehunt.models import Stage
+from urllib.parse import urlparse, parse_qs
 
 
 # Create your views here.
@@ -131,14 +132,28 @@ def trivia(request):
         return activityFinished(request)
 
 
-def validate(request):
+def verify(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            #read these in from the qr code
-            huntID = 1
-            stage = 1
+
             data = json.loads(request.body.decode('utf-8'))
-            print (data['extra']['getdata'])
+            print(data)
+
+            url = data['extra']         
+
+            # Parse the URL
+            parsed_url = urlparse(url)
+
+            # Extract query parameters
+            query_params = parse_qs(parsed_url.query)
+
+            # Get huntID and stage_id from the query parameters
+            huntID = query_params.get('huntID', [None])[0]
+            stage = query_params.get('stage_id', [None])[0]
+
+            print(huntID)
+            print(stage)
+
             longitude = data['longitude']
             latitude = data['latitude']
             x =  -3.5146264011643513 #need to be based on the qr code coordinates
@@ -151,7 +166,7 @@ def validate(request):
             #PUT BACK IN LOCATION CHECK
             name =  request.user.username
             #name = "Kamal" #hardcoded for testing
-            if Treasure.getStageNo(player_name=name,hunt_id=huntID) == stage-1:
+            if Treasure.getStageNo(player_name=name,hunt_id=huntID) == int(stage)-1:
                 #render the activity
                 hunt = Treasure.getTreasure(id=huntID)
                 activityID = hunt.getStageActivity(stage)
@@ -184,3 +199,6 @@ def activityFinished(request):
         return render(request,"next.html",{'location':activity['location_name']})
     except Stage.DoesNotExist: #if the user has finished the treasure hunt, there is no next stage
         return render(request,"finish.html")
+    
+def validatePage(request):
+    return render(request,"validate.html")

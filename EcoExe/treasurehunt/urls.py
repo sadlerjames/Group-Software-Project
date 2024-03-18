@@ -21,7 +21,8 @@ from .views import *
 
 urlpatterns = [
     path('scan/', views.scan, name='scan'),
-    path('validate/',views.validate,name='validate'),
+    path('verify/',views.verify,name='validate'),
+    path('validate/',views.validatePage,name='validate'),
     path('quiz/',views.quiz,name="quiz"),
     path('trivia/',views.trivia,name="trivia"),
     path('wrong/',views.wrong,name="wrong"),

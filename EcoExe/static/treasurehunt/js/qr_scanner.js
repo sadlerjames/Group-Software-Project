@@ -22,63 +22,10 @@ $(document).ready(function() {
                         }
                     }
                 });
-                        getLocation({'getdata': JSON.stringify(decodedText)});
-                        // const readerdiv = document.getElementById('reader');
-                        // const questiondiv = document.getElementById('questiondiv');
-                        // let score = 0;
-                        // readerdiv.hidden = true;
-                        // questiondiv.hidden = false;
-                        
-                        // const question = document.createElement('h2');
-                        // const answerlist = document.createElement('ul');
-                        
-                        // function* getQuestion(quiz, question_index) { // generator 
-                        // 	while(question_index < quiz['questions'].length) {
-                        // 		question.appendChild(document.createTextNode(quiz['questions'][question_index]));
-                        // 		questiondiv.appendChild(question);
-                        // 		//console.log(question_index);
-                                
-                        // 		for(var i in quiz['answers'][question_index]) {
-                        // 			let answernode = document.createElement('li');
-                        // 			let answerbutton = document.createElement('input');
-                        // 			answerlist.appendChild(answernode);
-                        // 			answerbutton.type='button';
-                        // 			answerbutton.value=quiz['answers'][question_index][i]; // adds choice to button
-                                    
-                        // 			if(i == quiz['correct'][question_index]) { // checks if index of correct answer is the same as the correct choice
-                        // 				answerbutton.onclick = function() {
-                        // 					alert('correct');
-                        // 					answerlist.innerHTML = ''; // clears list
-                        // 					question.innerHTML = ''; // clears question
-                        // 					answered = true;
-                        // 					question_iterator.next();
-                        // 					//console.log(question_iterator.next().value); // goes to next question
-                        // 				}
-                        // 			} else {
-                        // 				answerbutton.onclick = function() {
-                        // 					alert('faillllll');
-                        // 					answerlist.innerHTML = ''; // clears list
-                        // 					question.innerHTML = ''; // clears question
-                        // 					answered = true;
-                        // 					question_iterator.next();
-                        // 					//console.log(question_iterator.next().value); // goes to next question
-                        // 				}
-                        // 			}
-                        // 			answernode.appendChild(answerbutton);
-                        // 		}
-
-                        // 		questiondiv.appendChild(answerlist);
-                        // 		yield question_index;
-                        // 		question_index++;
-                        // 	}
-                        // }
-                        
-                        //var question_iterator = getQuestion(res, 0);
-                        
-                        //question_iterator.next();
-                        //console.log(question_iterator.next().value);
-                        //console.log(question_iterator.next().value);
-                
+                    console.log("errored after");
+                    // console.log(decodedText);
+                    window.location.href = decodedText;
+                    // getLocation({'getdata': JSON.stringify(decodedText)});
             }
         }
     }
