@@ -27,6 +27,7 @@ function areElementsTouching(element1, element2) {
 var btnStart = document.getElementById("btnStart");
 var gameScreen = document.getElementById("game");
 var btnExit = document.getElementById("btnExit");
+var speedThreshold = 10;
 
 // Add a click event listener to the button
 btnStart.addEventListener("click", function() {
@@ -82,6 +83,7 @@ function moveObjects() {
   
       if(pos >= 90){
           //trash got to the sea, notify user 
+          image.style.opacity = 0;
           lives -= 1;
           pos = 0; //reset image's position
           var newX = getRandomInt(20, 90); 
@@ -89,7 +91,7 @@ function moveObjects() {
       }
       else{
   
-          pos += (getRandomInt(1,10)) / 2.5; // Adjust this value to control the speed of the movement
+          pos += (getRandomInt(1,speedThreshold)) / 2.5; // Adjust this value to control the speed of the movement
           if(areElementsTouching(image, bin)){
               if(points == 0){
                 points += 10;
@@ -100,10 +102,14 @@ function moveObjects() {
               pos = 0; //reset image's position
               var newX = getRandomInt(20, 90); 
               image.style.left = newX + 'vw' //randomly set the x position
+              if(points > 100){
+                speedThreshold += 0.2;
+              }
           }
       }
       bannerText.textContent = "Catch the rubbish before it falls in the quay! \nPoints: " + points + "\nLives: " + lives;
       image.style.top = pos + 'vh';
+      image.style.opacity = 100;
     });
   }
   else{
