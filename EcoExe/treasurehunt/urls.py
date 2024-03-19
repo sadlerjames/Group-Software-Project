@@ -22,10 +22,12 @@ from .views import *
 urlpatterns = [
     path('status/',views.status,name="status"),
     path('scan/', views.scan, name='scan'),
-    path('verify/',views.verify,name='validate'),
+    path('verify/',views.verify,name='verify'),
     path('validate/',views.validatePage,name='validate'),
     path('quiz/',views.quiz,name="quiz"),
     path('trivia/',views.trivia,name="trivia"),
     path('wrong/',views.wrong,name="wrong"),
     path('next_locations/',views.getPins,name="next_locations"),
+    path('wronglocation/',views.wronglocation,name="wronglocation"),
+    path('finish',views.finish,name="finish"),
 ]

@@ -32,7 +32,11 @@
           </div>
 
           <button id="btnStart">Start Game</button>
-          <a href="/accounts/dashboard"><button id="btnExit">Return to dashboard</button></a>
+          <form method = "post">
+            {%csrf_token%}
+            <input id='hunt' type = 'hidden' name="hunt" value={{hunt}}>
+            <button type="submit" id="btnExit">Continue</button>
+          </form>
 
           <div id="game">
             <audio loop src="{% static 'sortit/audio/background_loop.mp3' %}" id="background-loop"></audio>
