@@ -174,27 +174,23 @@ def verify(request):
                     #show a message about being on the wrong stage
                     try:
                         hunt = Treasure.getTreasure(id=huntID)
+                        print(Treasure.getStageNo(request.user.username,huntID))
                         if Treasure.getStageNo(request.user.username,huntID) == 0:
                             activityID = hunt.getStageActivity(1)
                             activity = Treasure.getActivities()[activityID]
-                            return JsonResponse({'redirect':'/treasurehunt/wrong','extra':activity['location_name']})
-                        activityID = hunt.getStageActivity(Treasure.getStageNo(request.user.username,huntID))
-                        activity = Treasure.getActivities()[activityID]
+                        else:
+                            activityID = hunt.getStageActivity(Treasure.getStageNo(request.user.username,huntID)+1)
+                            activity = Treasure.getActivities()[activityID]
                         return JsonResponse({'redirect':'/treasurehunt/wrong','extra':activity['location_name']})
                     except Stage.DoesNotExist:
-                        # if Treasure.getStageNo(request.user.username,huntID) < stage:
-                        #     hunt = Treasure.getTreasure(id=huntID)
-                        #     activityID = hunt.getStageActivity(Treasure.getStageNo(request.user.username,huntID))
-                        #     activity = Treasure.getActivities()[activityID]
-                        #     return JsonResponse({'redirect':'/treasurehunt/wrong','extra':activity['location_name']})
                         return JsonResponse({'redirect':'/treasurehunt/finish'})
                 return render(request,"scan.html")
             else:
                 try:
                     hunt = Treasure.getTreasure(id=huntID)
-                    activityID = hunt.getStageActivity(int(stage)+1)
+                    activityID = hunt.getStageActivity(Treasure.getStageNo(request.user.username,huntID)+1)
                     activity = Treasure.getActivities()[activityID]
-                    JsonResponse({'redirect':'/treasurehunt/wrong'})
+                    return JsonResponse({'redirect':'/treasurehunt/wronglocation','extra':activity['location_name']})
                 except Stage.DoesNotExist:
                     return JsonResponse({'redirect':'/treasurehunt/finish'})
     else:
@@ -231,8 +227,6 @@ def status(request):
     finished = []
     unfinished = []
     unstarted = []
-
-
 
     for treasure in notStarted:
         activityID = treasure.getStageActivity(1)
