@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+
+{% load static %}
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -67,6 +69,6 @@
             </form>
         </div>
 
-        <script src="./complex.js" type="module"></script>
+        <script src="{% static ./complex.js %}./complex.js" type="module"></script>
     </body>
 </html>
