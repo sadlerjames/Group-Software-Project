@@ -154,7 +154,7 @@ def verify(request):
             print(y,longitude)
 
             circle = Circle((float(x),float(y)),radius = 0.001) #a circle centering on the qr code with about a 40m radius
-            if(True):
+            if(circle.contains_point([latitude,longitude])):
                 name =  request.user.username
                 #name = "Kamal" #hardcoded for testing
                 if Treasure.getStageNo(player_name=name,hunt_id=huntID) == int(stage)-1:
@@ -169,6 +169,8 @@ def verify(request):
                         return JsonResponse({'redirect':'/treasurehunt/trivia','extra':extra,'hunt':huntID})
                     elif(activity['type'] == "sortit"):
                         return JsonResponse({'redirect':'/sortit/game','extra':extra,'hunt':huntID})
+                    elif(activity['type'] == "pairs"):
+                        return JsonResponse({'redirect':'/pairs/game','extra':extra,'hunt':huntID})
                     #show the user the location of the next stage
                 else:
                     #show a message about being on the wrong stage

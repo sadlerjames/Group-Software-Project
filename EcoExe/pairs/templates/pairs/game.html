@@ -46,7 +46,11 @@
     <br>
     <div id="buttonDiv">
         <input id='btnStartGame' onclick='startGame()' type='button' class='button' value='Start the game'>
-        <input id='btnEndGame' onclick='' type='button' class='button' value='Continue' hidden>
+        <form method = "post">
+            {%csrf_token%}
+            <input id = "hunt" type = "hidden" name = "hunt" value = {{hunt}}>
+            <button id='btnEndGame' type='submit' class='button' hidden>Continue</button>
+        </form>
     </div>
 </div>
 {% endblock %}
