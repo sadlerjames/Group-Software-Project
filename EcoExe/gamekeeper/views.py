@@ -19,6 +19,9 @@ from reportlab.pdfgen import canvas
 from treasurehunt.treasure import Treasure
 from django.http import JsonResponse
 from django.db import IntegrityError
+import os
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 
 
 # Create your views here.
@@ -138,12 +141,18 @@ def create_activity(request):
 def create_treasure(request):
     if request.method == 'POST':
         #get the number of questions from the post request
-        form = TreasureHuntCreationForm(request.POST, extra= request.POST.get('extra_field_count'))
+        form = TreasureHuntCreationForm(request.POST, request.FILES, extra= request.POST.get('extra_field_count'))
         if form.is_valid():
             name = request.POST.get('treasure_hunt_name')
             points = request.POST.get('bonus_points')
             try: #will throw an error if treasurehunt with this name already exists
-                treasure = Treasure(name, points)
+                avatar = request.FILES['avatar']
+                fs = FileSystemStorage()
+
+                _, file_extension = os.path.splitext(avatar.name)
+                filename = fs.save('treasure_hunt/' + name + file_extension, avatar)
+
+                treasure = Treasure(name, points, img = filename)
 
                 for i in range(1,int(request.POST.get('extra_field_count'))+1):
                     activity_ID = request.POST.get('extra_field_{index}'.format(index=i))
