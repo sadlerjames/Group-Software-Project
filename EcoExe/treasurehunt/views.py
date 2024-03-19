@@ -227,14 +227,21 @@ def validatePage(request):
 
 def status(request):
     hunts = Treasure.getUserStages(request.user.username)
+    notStarted = Treasure.getNewHunts(request.user.username)
     finished = []
     unfinished = []
+    unstarted = []
+
+    for treasure in notStarted:
+        unstarted.append(treasure.getName())
+        
+    
     for hunt in hunts:
         if hunt[1] == -1:
             finished.append(hunt)
         else:
             unfinished.append(hunt)
-    return render(request,"status.html",context={'finished':finished,'unfinished':unfinished})
+    return render(request,"status.html",context={'finished':finished,'unfinished':unfinished, 'notStarted':unstarted})
 
 
 def getPins(request):

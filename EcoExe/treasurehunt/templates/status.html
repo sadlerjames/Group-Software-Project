@@ -27,6 +27,14 @@
     {%for x in finished%}
         <p><strong>Name:</strong> {{x|getTreasureName}}</p>
     {%endfor%}
+
+    {%if notStarted|length%}
+        <h3>You have not started the following treasure hunts:</h3>
+    {%endif%}
+
+    {%for x in notStarted%}
+        <p><strong>Name:</strong> {{x}}</p>
+    {%endfor%}
     
     <a href="/accounts/dashboard">Back to dashboard</a>
 
