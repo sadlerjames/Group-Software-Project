@@ -51,29 +51,31 @@ fetch("/treasurehunt/next_locations/", {
 });
 
 
-function initMap(coordinates) {
-    const map = new google.maps.Map(document.getElementById("google-maps-display"), {
-      zoom: 14.5,
-      center: {lat: 50.737273546349144, lng: -3.5351586176728236},
-    });
+async function initMap(coordinates) {
+    const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
+        "marker",
+    );
 
-    setMarkers(map, coordinates);
-  }
+    const map = new Map(document.getElementById("google-maps-display"), {
+        center: {lat: 50.737273546349144, lng: -3.5351586176728236},
+        zoom: 14,
+        mapId: "5d7ba1c59311dfdd",
+      });
 
-  function setMarkers(map, coordinates) {
     for (let i = 0; i < coordinates.length; i++) {
         let point = coordinates[i];
-    
-        new google.maps.Marker({
-          position: { lat: parseFloat(point[1]), lng: parseFloat(point[2]) },
-          map,
-        //   icon: image,
-        //   shape: shape,
-          title: point[0],
-        //   zIndex: beach[3],
+
+        const pinBackground = new PinElement({
+            background: "#FBBC04",
+        });
+
+        new AdvancedMarkerElement({
+            map,
+            position: { lat: parseFloat(point[1]), lng: parseFloat(point[2]) },
+            title: point[0],
+            content: pinBackground.element,
         });
     }
-
   }
-  
 //   window.initMap = initMap;
