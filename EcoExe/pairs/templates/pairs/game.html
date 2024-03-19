@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <!--<link rel="stylesheet" href="./navbar.css" type="text/css">-->
+        <title>Pairs Game</title>
+        <style>
+            body, body * {
+                margin: 0;
+            }
+            #divPairs {
+                height: 100vh;
+                background-color: grey;
+            }
+            #divPairs table {
+                /* aspect-ratio: 3/4; */
+                max-height: 75vh;
+                max-width: 100vw;
+            }
+            #divPairs .card {
+                min-width: 75px;
+                aspect-ratio: 9/20;
+                /* min-height: 150px; */
+                border: 1px solid black;
+                text-align: center;
+                position: relative;
+            }
+            #divPairs .card img {
+                width: 100%;
+            }
+            #divPairs > *, #divPairs .card > * {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .hidden {
+                font-size: 32px;
+                user-select: none;
+            }
+            .eyes {
+                z-index: 3;
+            }
+            .mouth {
+                z-index: 2;
+            }
+            .skin {
+                z-index: 1;
+            }
+            /* #divTest {
+                height: 100px;
+
+            } */
+        </style>
+    </head>
+    <body>
+    <?php //include("./navbar.php") ?>
+        <div id="divPairs">
+            <input id='btnStartGame' onclick='startGame()' type='button' value='Start the game'>
+            <form id='frmFinish' action='./leaderboard.php' method='POST' hidden>
+                <input id='btnPlayAgain' type='button' value='Play Again'>
+                <input id='btnSubmit' type='submit' value='Submit Score'>
+                <input type='hidden' name='score'>
+            </form>
+        </div>
+
+        <script src="./complex.js" type="module"></script>
+    </body>
+</html>
