@@ -1,5 +1,6 @@
 from django import template
 from quiz.templatetags.quiz import load
+from treasurehunt.treasure import Treasure
 
 register = template.Library()
 
@@ -10,3 +11,15 @@ def getName(x):
 @register.filter
 def getID(x):
     return x['quiz_id']
+
+@register.filter
+def getTreasureName(x):
+    return Treasure.getTreasure(x[0]).getName()
+
+@register.filter
+def getStage(x):
+    return x[1]
+
+@register.filter
+def length(x):
+    return len(x)>0

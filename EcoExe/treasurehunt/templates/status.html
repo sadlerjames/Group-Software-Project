@@ -12,7 +12,7 @@
 <br>
 {%endif%}
 {%for x in unfinished%}
-<p>Treasure hunt:{{x|getName}} stage:{{x|getStage}}</p>
+<p>Treasure hunt:{{x|getTreasureName}} stage:{{x|getStage}}</p>
 {%endfor%}
 {%if finished|length%}
 <h3>You have completed the following treasure hunts:</h3>
