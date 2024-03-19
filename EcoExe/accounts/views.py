@@ -10,6 +10,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.decorators import login_required
+from treasurehunt.treasure import Treasure
 
 class SignUp(generic.CreateView):
     form_class = SignUpForm
@@ -113,3 +114,4 @@ def delete_account(request):
 
 def delete_account_success(request):
     return render(request, 'registration/delete_account_success.html')
+

@@ -213,3 +213,22 @@ def status(request):
         else:
             unfinished.append(hunt)
     return render(request,"status.html",context={'finished':finished,'unfinished':unfinished})
+
+
+def getPins(request):
+    user = request.user.username
+    locations = {}
+    stages = Treasure.getUserStages(user)
+    i=0
+    for stage in stages:
+        try:
+            hunt = Treasure.getTreasure(stage[0])
+            activityID = hunt.getStageActivity(stage[1])
+            locations[i] = Treasure.getActivities()[activityID]['location']
+            i+=1
+            
+        except Stage.DoesNotExist: #occurs when user has not started treasure hunt
+            pass
+        
+    return JsonResponse(locations)
+    

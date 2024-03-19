@@ -27,4 +27,5 @@ urlpatterns = [
     path('quiz/',views.quiz,name="quiz"),
     path('trivia/',views.trivia,name="trivia"),
     path('wrong/',views.wrong,name="wrong"),
+    path('next_locations/',views.getPins,name="next_locations"),
 ]
