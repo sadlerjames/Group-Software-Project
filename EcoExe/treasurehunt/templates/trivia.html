@@ -1,6 +1,16 @@
-<h1>Fun fact: {{fact}}</h1>
+<!-- Authored by George Piper and Jack Hales -->
+
+{% extends "base_treasurehunt.html" %}
+
+{% block title %}Wrong QR Code{% endblock %}
+
+{% block index %}
+<h1>Fun Fact!</h1>
+<h3>{{fact}}</h3>
+<br>
 <form method = "post">
     {%csrf_token%}
     <input id='hunt' type = 'hidden' name="hunt" value={{hunt}}>
     <button type="submit" id="submit">Continue</button>
 </form>
+{% endblock %}

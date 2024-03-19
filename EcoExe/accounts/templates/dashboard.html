@@ -8,23 +8,25 @@
     {% load static %}
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL5gQ38rSDQmJqoZBWSK8ZEYFreGvO-lk&callback=initMap&v=weekly"
-      defer
-    ></script>
+      defer>
+    </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="{% static '/accounts/js/map.js' %}"></script>
 {% endblock %}
 
 {% block maincontent %}
-    <div id="treasure-hunt" onclick="location.href='/treasurehunt/status';" style="cursor: pointer;">
+    <div id="treasure-hunt">
         <div id="google-maps-display">
             <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20198.994518719537!2d-3.5138719999999997!3d50.740819949999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x486da4113c8130b1%3A0x7f3efd04b3287246!2sUniversity%20of%20Exeter!5e0!3m2!1sen!2suk!4v1710093517464!5m2!1sen!2suk" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
         </div>
-        <div id="treasure-hunt-text">
-            <h1>Treasure Hunt!</h1>
-            <p>Explore areas around campus on foot or by bicyle to find hidden QR codes.</p>
-            <p>Scan a QR code to answer a short quiz or play mini-games to earn points.</p>
-            <p>Compete with others to reach the top of the leaderboards to earn prizes!</p>
-            <p>Found a QR code? Press here to scan it and access the activity.</p>
+        <div id="treasure-hunt-text-block" onclick="location.href='/treasurehunt/status';" style="cursor: pointer;">
+            <div id="treasure-hunt-text">
+                <h1>Treasure Hunt!</h1>
+                <p>Explore areas around campus on foot or by bicyle to find hidden QR codes.</p>
+                <p>Scan a QR code to answer a short quiz or play mini-games to earn points.</p>
+                <p>Compete with others to reach the top of the leaderboards to earn prizes!</p>
+                <p>Found a QR code? Press here to scan it and access the activity.</p>
+            </div>
         </div>
     </div>
     <div id="dashboard-buttons">
