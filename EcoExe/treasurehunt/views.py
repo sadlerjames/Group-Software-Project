@@ -21,6 +21,12 @@ def scan(request):
 def wrong(request):
     return render(request,"wrong.html",{'location':request.GET.get('extra')})
 
+def wronglocation(request):
+    return render(request,"wronglocation.html",{'location':request.GET.get('extra')})
+
+def finish(request):
+    return render(request,"finish.html")
+
 def quiz(request):
     if request.method == "POST":
         # Load quiz and get questions and points per question
@@ -131,13 +137,11 @@ def trivia(request):
     else:
         return activityFinished(request)
 
-
 def verify(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
 
             data = json.loads(request.body.decode('utf-8'))
-            print(data)
 
             url = data['extra']         
 
@@ -151,42 +155,53 @@ def verify(request):
             huntID = query_params.get('huntID', [None])[0]
             stage = query_params.get('stage_id', [None])[0]
 
-            print(huntID)
-            print(stage)
-
             longitude = data['longitude']
             latitude = data['latitude']
-            x =  -3.5146264011643513 #need to be based on the qr code coordinates
-            y = 50.73719035512385
-            circle = Circle((x,y),radius = 0.001) #a circle centering on the qr code with about a 40m radius
+            
+            #get the location of the qr code
+            activitiesID = Treasure.getTreasure(huntID).getStageActivity(stage)
+            location = Treasure.getActivities()[activitiesID]['location']
+            print(location)
+            x,y = location.split(",")
+
+            circle = Circle((int(x),int(y)),radius = 0.001) #a circle centering on the qr code with about a 40m radius
             if(circle.contains_point([longitude,latitude])):
-                print("Within radius")
+                name =  request.user.username
+                #name = "Kamal" #hardcoded for testing
+                if Treasure.getStageNo(player_name=name,hunt_id=huntID) == int(stage)-1:
+                    #render the activity
+                    hunt = Treasure.getTreasure(id=huntID)
+                    activityID = hunt.getStageActivity(stage)
+                    activity = Treasure.getActivities()[activityID]
+                    extra =  activity['info']
+                    if(activity['type'] == "quiz"):
+                        print("QUIXZZZZZZZZZZZZZ")
+                        return JsonResponse({'redirect':'/treasurehunt/quiz','extra':extra,'hunt':huntID})
+                    elif(activity['type'] == "trivia"):
+                        return JsonResponse({'redirect':'/treasurehunt/trivia','extra':extra,'hunt':huntID})
+                    elif(activity['type'] == "sortit"):
+                        return JsonResponse({'redirect':'/sortit/game','extra':extra,'hunt':huntID})
+                    #show the user the location of the next stage
+                else:
+                    #show a message about being on the wrong stage
+                    try:
+                        hunt = Treasure.getTreasure(id=huntID)
+                        activityID = hunt.getStageActivity(int(stage)+1)
+                        activity = Treasure.getActivities()[activityID]
+                        return JsonResponse({'redirect':'/treasurehunt/wrong','extra':activity['location_name']})
+                    except Stage.DoesNotExist:
+                        return JsonResponse({'redirect':'/treasurehunt/finish'})
+                return render(request,"scan.html")
             else:
-                print("Not within radius")
-            #PUT BACK IN LOCATION CHECK
-            name =  request.user.username
-            #name = "Kamal" #hardcoded for testing
-            if Treasure.getStageNo(player_name=name,hunt_id=huntID) == int(stage)-1:
-                #render the activity
-                hunt = Treasure.getTreasure(id=huntID)
-                activityID = hunt.getStageActivity(stage)
-                activity = Treasure.getActivities()[activityID]
-                extra =  activity['info']
-                if(activity['type'] == "quiz"):
-                    print("QUIXZZZZZZZZZZZZZ")
-                    return JsonResponse({'redirect':'/treasurehunt/quiz','extra':extra,'hunt':huntID})
-                elif(activity['type'] == "trivia"):
-                    return JsonResponse({'redirect':'/treasurehunt/trivia','extra':extra,'hunt':huntID})
-                #show the user the location of the next stage
-            else:
-                #show a message about being on the wrong stage
-                hunt = Treasure.getTreasure(id=huntID)
-                activityID = hunt.getStageActivity(stage)
-                activity = Treasure.getActivities()[activityID]
-                return JsonResponse({'redirect':'/treasurehunt/wrong','extra':activity['location_name']})
-            return render(request,"scan.html")
+                try:
+                    hunt = Treasure.getTreasure(id=huntID)
+                    activityID = hunt.getStageActivity(int(stage)+1)
+                    activity = Treasure.getActivities()[activityID]
+                    JsonResponse({'redirect':'/treasurehunt/wrong'})
+                except Stage.DoesNotExist:
+                    return JsonResponse({'redirect':'/treasurehunt/finish'})
     else:
-        return redirect(request,"/accounts/login.html")
+        return redirect(request,"/accounts/login.html",context={'extra':activity['location_name']})
     
 def activityFinished(request):
     huntID = request.POST.get('hunt')
