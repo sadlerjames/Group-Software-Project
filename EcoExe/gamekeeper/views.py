@@ -59,6 +59,7 @@ def creation_view(request):
                 quizName = request.POST.get('quiz_name')
                 quizPoints = request.POST.get('points_per_question')
                 formCount = int(request.POST.get('extra_field_count'))
+                time = int(request.POST.get('time'))
 
                 #cycle through the forms and split them into questions and answers
                 questions = []
@@ -75,7 +76,7 @@ def creation_view(request):
                     i+=1
 
                 #call the quiz class to save the quiz to json file
-                Quiz(quizName, questions, answers,correct=[],noPoints= quizPoints,loading=False)
+                Quiz(quizName, questions, answers,correct=[],noPoints= quizPoints,loading=False,time_limit=time)
                 return redirect('/gamekeeper/quiz/create')
 
             else:

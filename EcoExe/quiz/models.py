@@ -7,6 +7,7 @@ from django import template
 class Quizzes(models.Model):
     #id=models.AutoField(primary_key=True)
     points=models.IntegerField(default=0)
+    time=models.IntegerField(default=60)
     def __str__(self):
         return self.id
 

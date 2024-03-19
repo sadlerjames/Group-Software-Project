@@ -39,7 +39,7 @@ a question cannot be added without at least one answer
 load will load a quiz given its id and return a Quiz object
 '''
 class Quiz:
-    def __init__(self,quizName,questions=[],answers=[[]],id=None,correct=[],noPoints=10,loading=False):
+    def __init__(self,quizName,questions=[],answers=[[]],id=None,correct=[],noPoints=10,loading=False,time_limit=60):
         #print(correct)
         #print(questions)
         if len(correct)!=len(questions):
@@ -68,6 +68,7 @@ class Quiz:
         self.answers=answers
         self.id=id
         self.points=noPoints
+        self.time = time_limit
         if (not loading):
             self.save()
 
@@ -76,11 +77,12 @@ class Quiz:
 
     def save(self):
         if self.id!=None:
+            print("AFSJUAIFH JA",self.time)
             myDict={'quizName':self.quizName,'questions':self.questions,'answers':self.answers,'correct':self.correct}
             with open("quiz/templatetags/quizzes/"+str(self.id)+'.json',"w") as outf:
                 json.dump(myDict,outf)
             try :
-                entry=models.Quizzes.objects.create(id=self.id,points=self.points)
+                entry=models.Quizzes.objects.create(id=self.id,points=self.points,time=self.time)
                 entry.save()
                 return
             except IntegrityError:
@@ -89,7 +91,7 @@ class Quiz:
         #print(models.Quizzes.objects.count()+10)
         #self.id=models.Quizzes.objects.count()+10
         #entry=models.Quizzes.objects.create(id=models.Quizzes.objects.count()+10,points=self.points)
-        entry=models.Quizzes.objects.create(points=self.points)
+        entry=models.Quizzes.objects.create(points=self.points,time=self.time)
         self.id=entry.pk
         
         #print("imp"+models.Quizzes.get_id(entry))
@@ -118,6 +120,9 @@ class Quiz:
 
     def getCorrect(self,q):
         return self.answers[q][self.correct[q]]
+    
+    def getTime(self):
+        return self.time
 
     def getQA(self,n=-1):
         if n==-1:
@@ -139,7 +144,8 @@ class Quiz:
 def load(id):
         with open("quiz/templatetags/quizzes/"+str(id)+'.json') as inf:
             myDict=json.load(inf)
-        return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id,myDict['correct'],loading=True))
+        time = models.Quizzes.objects.get(id=id).time
+        return (Quiz(myDict['quizName'],myDict['questions'],myDict['answers'],id,myDict['correct'],loading=True,time_limit=time))
 
 
 #print("A")

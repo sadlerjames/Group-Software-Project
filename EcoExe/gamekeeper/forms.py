@@ -24,6 +24,7 @@ class QuizCreationForm(forms.Form):
     quiz_name = forms.CharField()
     points_per_question = forms.IntegerField()
     extra_field_count = forms.CharField(widget = forms.HiddenInput())
+    time = forms.IntegerField()
 
     def __init__(self, *args, **kwargs):
         extra_fields = kwargs.pop('extra', 0) #get the extra argument passed in

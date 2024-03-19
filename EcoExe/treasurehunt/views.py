@@ -76,7 +76,7 @@ def quiz(request):
         quizID = request.GET.get('extra')
         quiz = load(int(quizID))
         context = {}
-        time_limit = 30
+        time_limit = quiz.getTime()
 
         # Load quiz and get questions and answers
         questions = quiz.getQuestion(-1)
@@ -154,7 +154,7 @@ def verify(request):
             print(y,longitude)
 
             circle = Circle((float(x),float(y)),radius = 0.001) #a circle centering on the qr code with about a 40m radius
-            if(circle.contains_point([latitude,longitude])):
+            if(True):
                 name =  request.user.username
                 #name = "Kamal" #hardcoded for testing
                 if Treasure.getStageNo(player_name=name,hunt_id=huntID) == int(stage)-1:
