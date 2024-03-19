@@ -146,6 +146,8 @@ function startGame(){
     points = 0;
     lives = 3;
     backgroundLoop.play();
+    gameOver.load();
+    lifeLost.load();
     // Call the moveObjects function at regular intervals to update the positions
     intervalID = setInterval(moveObjects, 100); // Adjust the interval as needed (100 milliseconds)
 }
