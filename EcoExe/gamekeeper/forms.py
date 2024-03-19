@@ -1,6 +1,8 @@
 #Authored by George Piper and James Sadler
 
 from django import forms
+from django.core.validators import RegexValidator
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -35,7 +37,8 @@ class QuizCreationForm(forms.Form):
             
 class QRCreationForm(forms.Form):
     qr_name = forms.CharField()
-    location = forms.CharField()
+    latitude = forms.FloatField()
+    longitude = forms.FloatField()
     location_name = forms.CharField()
     points = forms.IntegerField()
     extra = forms.CharField(required=False)
