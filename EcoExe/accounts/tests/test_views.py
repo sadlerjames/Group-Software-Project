@@ -3,6 +3,34 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from accounts.models import User
 
+class LoginViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.login_url = reverse('login')
+        self.dashboard_url = reverse('dashboard')
+        self.user = User.objects.create_user(username='testuser', password='12345')
+
+    def test_redirect_authenticated_user_to_dashboard(self):
+        #verifies that if the link to login is input while an authenticated user is already signed in, that the page redirects to the dashboard
+        self.client.login(username='testuser', password='12345')
+
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 302)  # Verify the response code for login
+
+        response = self.client.get(reverse('dashboard'))
+        self.assertEqual(response.status_code, 200)  # Verify the response code for dashboard
+
+    def test_login_with_valid_credentials(self):
+        response = self.client.post(self.login_url, {'username': 'testuser', 'password': '12345'})
+        self.assertRedirects(response, self.dashboard_url)
+
+    def test_login_with_invalid_credentials(self):
+        response = self.client.post(self.login_url, {'username': 'testuser', 'password': 'wrongpassword'})
+        self.assertContains(response, "Invalid Credentials", status_code=200)
+
+
+
+
 class SignUpViewTest(TestCase):
     def setUp(self):
         self.client = Client() #creates a client which can send GET and POST requests for testing purposes
@@ -15,14 +43,13 @@ class SignUpViewTest(TestCase):
         self.assertTemplateUsed(response, 'registration/signup.html')
 
 
-    '''
-    This function is still faulty, there are several redirects and need to figure out which one is desired
-    '''
-    def test_signup_view_post_valid_form(self):
-        # Create a valid form data for signing up a new user
+    '''this test is still faulty, was working but sometimes doesn't so may need to practice creating new users and double checking exact response codes in the powershell'''
+    def test_signup_view_post_valid_form_new_user(self):
+        # Create a valid form data for signing up a new user - follow the code path where it redirects them to log in after successful creation
+        name = 'viyebqnc'
         valid_form_data = {
-            'username' : 'testuser',
-            'email' : 'email@email.com',
+            'username' : name,
+            'email' : 'eml@email.com',
             'first_name' : 'test',
             'last_name' : 'user',
             'password1': 'testpassword123wordpasstest',
@@ -33,13 +60,14 @@ class SignUpViewTest(TestCase):
 
         response = self.client.post(self.signup_url, valid_form_data)
 
+        response = self.client.post(reverse('signup'))
+        self.assertEqual(response.status_code, 302)  # Expecting a redirect after successful signup, verify the relevant response code
 
-        #self.assertEqual(response.status_code, 302)  # Expecting a redirect after successful signup
-
-        self.assertRedirects(response, '/accounts/login')  
+        response = self.client.get(reverse('login'), follow=True)
+        self.assertEqual(response.status_code, 200)  # content has been successfully requested, verify the response code
 
         # Check if the user is created
-        user_created = User.objects.filter(username='testuser').exists()
+        user_created = User.objects.filter(username=name).exists()
         self.assertTrue(user_created)
 
     def test_signup_view_post_invalid_form(self):
