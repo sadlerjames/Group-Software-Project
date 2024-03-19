@@ -2,8 +2,10 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from accounts.models import User
+#from django.contrib.auth.models import User
+from django.contrib.auth import login, logout
 
-class LoginViewTestCase(TestCase):
+class LoginViewTest(TestCase):
     def setUp(self):
         self.client = Client()
         self.login_url = reverse('login')
@@ -28,7 +30,19 @@ class LoginViewTestCase(TestCase):
         response = self.client.post(self.login_url, {'username': 'testuser', 'password': 'wrongpassword'})
         self.assertContains(response, "Invalid Credentials", status_code=200)
 
+class DeleteAccountViewTests(TestCase):
+    def setUp(self):
+        # Create a user for testing
+        self.client = Client()
+        self.user = User.objects.create_user(username='tobedeleted', password='12345mrdeletey54321')
 
+    def test_delete_account_post(self):
+        #tests that after logging in with an account, it gets deleted and removed from the database following a POST request
+        self.client.login(username='tobedeleted', password='12345mrdeletey54321')  # Log in as the user created in setup
+        response = self.client.post(reverse('delete_account'))  # Make a POST request to delete the account
+        self.assertFalse(User.objects.filter(username='tobedeleted').exists()) # Check if the user account is deleted
+        self.assertFalse('_auth_user_id' in self.client.session) # Check if the user is logged out
+        self.assertEqual(response.status_code, 302) # assert that the page will redirect
 
 
 class SignUpViewTest(TestCase):

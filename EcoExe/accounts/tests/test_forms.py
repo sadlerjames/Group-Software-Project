@@ -67,4 +67,3 @@ class SignUpFormTestCase(TestCase):
         form = SignUpForm(data=form_data)
         self.assertTrue(form.is_valid())
         user_instance = form.save(commit=False)
-        # Add assertions to check the user instance
