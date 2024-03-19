@@ -29,6 +29,10 @@ var gameScreen = document.getElementById("game");
 var btnExit = document.getElementById("btnExit");
 var speedThreshold = 10;
 
+var backgroundLoop = document.getElementById("background-loop");
+var gameOver = document.getElementById("game-over");
+var lifeLost = document.getElementById("life-lost");
+
 // Add a click event listener to the button
 btnStart.addEventListener("click", function() {
   gameScreen.style.display = "block";
@@ -39,13 +43,19 @@ btnStart.addEventListener("click", function() {
 
 var points = 0;
 var lives = 3;
+var intervalID;
 
 var images = Array.from(document.querySelectorAll('.trash'));
 const bin = document.getElementById('bin');
 const bannerText = document.getElementById('banner-info');
 
 document.addEventListener('mousemove', (e) => {
-  bin.style.left = e.offsetX + 'px';
+  // Calculate the offset of the mouse pointer relative to the container element
+  const containerRect = document.getElementById('game').getBoundingClientRect();
+  const mouseX = e.clientX - containerRect.left;
+
+  // Set the position of the bin relative to the mouse pointer
+  bin.style.left = mouseX + 'px';
 });
 
 document.addEventListener('touchstart', function(e) {
@@ -73,25 +83,31 @@ function moveObjects() {
     images.forEach(function(image) {
 
       var pos;
+      var opacity;
+      var transition;
+
       if(image.style.top == ""){
         pos = 0;
       }
       else{
-        var pos = Number(getPositionAsNumVWH(image.style.top));
+        pos = Number(getPositionAsNumVWH(image.style.top));
       }
-      
   
       if(pos >= 90){
           //trash got to the sea, notify user 
-          image.style.opacity = 0;
+          lifeLost.play();
+          opacity = 0;
           lives -= 1;
           pos = 0; //reset image's position
+          transition = 'top 0s'
           var newX = getRandomInt(20, 90); 
           image.style.left = newX + 'vw' //randomly set the x position
       }
       else{
-  
           pos += (getRandomInt(1,speedThreshold)) / 2.5; // Adjust this value to control the speed of the movement
+          opacity = 1;
+          transition = 'top 0.2s'
+
           if(areElementsTouching(image, bin)){
               if(points == 0){
                 points += 10;
@@ -99,7 +115,9 @@ function moveObjects() {
               else{
                 points = Math.floor(points * 1.1);
               }
+              opacity = 0;
               pos = 0; //reset image's position
+              transition = 'top 0s'
               var newX = getRandomInt(20, 90); 
               image.style.left = newX + 'vw' //randomly set the x position
               if(points > 100){
@@ -109,19 +127,25 @@ function moveObjects() {
       }
       bannerText.innerHTML = "Catch the rubbish before it falls in the quay!<br>Points: " + points + " Lives: " + lives;
       image.style.top = pos + 'vh';
-      image.style.opacity = 100;
+      image.style.opacity = opacity;
+      image.style.transition = transition;
     });
   }
   else{
+    clearInterval(intervalID);
+    backgroundLoop.pause();
+    gameOver.play();
     gameScreen.style.display = "none";
     bannerText.textContent = "Game over! You scored " + points + " points - always remember to recycle properly.";
     btnExit.style.display = "block";
+
   }
 }
 
 function startGame(){
     points = 0;
     lives = 3;
+    backgroundLoop.play();
     // Call the moveObjects function at regular intervals to update the positions
-    setInterval(moveObjects, 100); // Adjust the interval as needed (100 milliseconds)
+    intervalID = setInterval(moveObjects, 100); // Adjust the interval as needed (100 milliseconds)
 }
