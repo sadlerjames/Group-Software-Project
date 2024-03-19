@@ -8,7 +8,7 @@
     {%load filter%}
     <h1>Treasure Hunts!</h1>
 
-    <h3>Found a QR Code? Click below to scan it!</h3>
+    <h3>Found a QR code? Click below to scan it!</h3>
     <a href="/treasurehunt/scan" class="button">Scan a QR Code</a>
     <br><br>
 
@@ -17,7 +17,7 @@
     {%endif%}
 
     {%for x in unfinished%}
-        <p><strong>Name:</strong> {{x|getTreasureName}} <br><strong>Stage:</strong> {{x|getStage}}</p>
+        <p><strong>Name:</strong> {{x|getTreasureName}} <br><strong>Location:</strong> {{x|getUnstartedHuntLocation}} <br><strong>Stage:</strong> {{x|getStage}}</p>
     {%endfor%}
 
     {%if finished|length%}
@@ -34,7 +34,7 @@
     {%endif%}
 
     {%for x in notStarted%}
-        <p><strong>Name:</strong> {{x|getUnstartedHuntName}} <strong>Location:</strong> {{x|getUnstartedHuntLocation}}</p>
+        <p><strong>Name:</strong> {{x|getUnstartedHuntName}} <br><strong>Location:</strong> {{x|getUnstartedHuntLocation}}</p>
     {%endfor%}
     
     <a href="/accounts/dashboard">Back to dashboard</a>
