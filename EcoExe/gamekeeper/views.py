@@ -143,6 +143,7 @@ def create_treasure(request):
     if request.method == 'POST':
         #get the number of questions from the post request
         form = TreasureHuntCreationForm(request.POST, request.FILES, extra= request.POST.get('extra_field_count'))
+        context = {}
         if form.is_valid():
             name = request.POST.get('treasure_hunt_name')
             points = request.POST.get('bonus_points')
@@ -168,7 +169,8 @@ def create_treasure(request):
             except IntegrityError:
                 return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html",context={'message':'A treasure hunt with this name already exists'})
             makePDF(name,request.POST.get('extra_field_count'))
-        return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")
+            context['pdf'] = name
+        return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html",context=context)
     else:
         return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")
 

@@ -38,4 +38,6 @@ def getUnstartedHuntName(x):
 def getUnstartedHuntLocation(x):
     return x[1]
  
-
+@register.filter
+def exists(x):
+    return x!= None
