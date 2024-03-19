@@ -146,13 +146,16 @@ def create_treasure(request):
             name = request.POST.get('treasure_hunt_name')
             points = request.POST.get('bonus_points')
             try: #will throw an error if treasurehunt with this name already exists
-                avatar = request.FILES['avatar']
-                fs = FileSystemStorage()
+                if 'avatar' in request.FILES:
+                    avatar = request.FILES['avatar']
+                    fs = FileSystemStorage()
 
-                _, file_extension = os.path.splitext(avatar.name)
-                filename = fs.save('treasure_hunt/' + name + file_extension, avatar)
+                    _, file_extension = os.path.splitext(avatar.name)
+                    filename = fs.save('treasure_hunt/' + name + file_extension, avatar)
 
-                treasure = Treasure(name, points, img = filename)
+                    treasure = Treasure(name, points, img = filename)
+                else:
+                    treasure = Treasure(name, points)
 
                 for i in range(1,int(request.POST.get('extra_field_count'))+1):
                     activity_ID = request.POST.get('extra_field_{index}'.format(index=i))
