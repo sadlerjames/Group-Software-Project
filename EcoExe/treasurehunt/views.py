@@ -224,7 +224,9 @@ def getPins(request):
         try:
             hunt = Treasure.getTreasure(stage[0])
             activityID = hunt.getStageActivity(stage[1])
-            locations[i] = Treasure.getActivities()[activityID]['location']
+            name = Treasure.getActivities()[activityID]['name']
+            location = Treasure.getActivities()[activityID]['location']
+            locations[i] = [name, location]
             i+=1
             
         except Stage.DoesNotExist: #occurs when user has not started treasure hunt
