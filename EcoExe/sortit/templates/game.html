@@ -35,6 +35,10 @@
           <a href="/accounts/dashboard"><button id="btnExit">Return to dashboard</button></a>
 
           <div id="game">
+            <audio loop src="{% static 'sortit/audio/background_loop.mp3' %}" id="background-loop"></audio>
+            <audio src="{% static 'sortit/audio/game_over.mp3' %}" id="game-over"></audio>
+            <audio src="{% static 'sortit/audio/life_lost.mp3' %}" id="life-lost"></audio>
+
             <img src="{% static 'sortit/images/banana.png' %}" class="trash" style="top:0vh; left:0vw; opacity: 100;">
             <img src="{% static 'sortit/images/banana.png' %}" class="trash" style="top:0vh; left:0vw; opacity: 100;">
             <img src="{% static 'sortit/images/banana.png' %}" class="trash" style="top:0vh; left:0vw; opacity: 100;">
@@ -66,7 +70,7 @@
                   </svg>
               
                   <!--Waves Container-->
-                  <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  <svg class="waves" id="waves-bottom" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                   viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
                   <defs>
                   <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
