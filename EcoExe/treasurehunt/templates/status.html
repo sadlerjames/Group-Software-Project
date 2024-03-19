@@ -17,7 +17,7 @@
     {%endif%}
 
     {%for x in unfinished%}
-        <p><strong>Name:</strong> {{x|getTreasureName}} <br><strong>Location:</strong> {{x|getUnstartedHuntLocation}} <br><strong>Stage:</strong> {{x|getStage}}</p>
+        <p><strong>Name:</strong> {{x|getTreasureName}} <br><strong>Location:</strong> {{x|getLocation}} <br><strong>Stage:</strong> {{x|getStage}}</p>
     {%endfor%}
 
     {%if finished|length%}

@@ -21,6 +21,12 @@ def getStage(x):
     return x[1]
 
 @register.filter
+def getLocation(x):
+    hunt = Treasure.getTreasure(x[0])
+    activityID = hunt.getStageActivity(x[1])
+    return Treasure.getActivities()[activityID]['location_name']
+
+@register.filter
 def length(x):
     return len(x)>0
 
@@ -31,5 +37,5 @@ def getUnstartedHuntName(x):
 @register.filter
 def getUnstartedHuntLocation(x):
     return x[1]
-
+ 
 

@@ -241,7 +241,7 @@ def status(request):
             unfinished.append(hunt)
     return render(request,"status.html",context={'finished':finished,'unfinished':unfinished, 'notStarted':unstarted})
 
-
+ 
 def getPins(request):
     user = request.user.username
     locations = {}
