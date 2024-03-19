@@ -58,9 +58,7 @@ class SignUpViewTest(TestCase):
             'privacy' : True
         }
 
-        response = self.client.post(self.signup_url, valid_form_data)
-
-        response = self.client.post(reverse('signup'))
+        response = self.client.post(self.signup_url, valid_form_data)   #posts the valid form data
         self.assertEqual(response.status_code, 302)  # Expecting a redirect after successful signup, verify the relevant response code
 
         response = self.client.get(reverse('login'), follow=True)
