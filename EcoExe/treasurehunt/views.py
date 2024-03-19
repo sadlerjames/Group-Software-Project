@@ -232,8 +232,12 @@ def status(request):
     unfinished = []
     unstarted = []
 
+
+
     for treasure in notStarted:
-        unstarted.append(treasure.getName())
+        activityID = treasure.getStageActivity(1)
+        location = Treasure.getActivities()[activityID]['location_name']
+        unstarted.append([treasure.getName(), location])
         
     
     for hunt in hunts:

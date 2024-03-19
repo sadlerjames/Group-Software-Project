@@ -23,3 +23,13 @@ def getStage(x):
 @register.filter
 def length(x):
     return len(x)>0
+
+@register.filter
+def getUnstartedHuntName(x):
+    return x[0]
+
+@register.filter
+def getUnstartedHuntLocation(x):
+    return x[1]
+
+

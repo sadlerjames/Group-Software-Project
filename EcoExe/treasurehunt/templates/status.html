@@ -30,10 +30,11 @@
 
     {%if notStarted|length%}
         <h3>You have not started the following treasure hunts:</h3>
+        <p>Head to the start location to find the QR code to scan to start the treasure hunt!</p>
     {%endif%}
 
     {%for x in notStarted%}
-        <p><strong>Name:</strong> {{x}}</p>
+        <p><strong>Name:</strong> {{x|getUnstartedHuntName}} <strong>Location:</strong> {{x|getUnstartedHuntLocation}}</p>
     {%endfor%}
     
     <a href="/accounts/dashboard">Back to dashboard</a>
