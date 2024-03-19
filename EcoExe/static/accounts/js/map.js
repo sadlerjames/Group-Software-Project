@@ -32,14 +32,15 @@ fetch("/treasurehunt/next_locations/", {
 
     for (var key in data) {
 
-                
-        var coordinates = data[key];
+        var name = data[key][0];
+        var coordinates = data[key][1];
         var parts = coordinates.split(',');
 
         // Extract the values into separate variables
-        var longitude = parts[1];
         var latitude = parts[0];
-        allCoordinates.push([longitude, latitude]);
+        var longitude = parts[1];
+        
+        allCoordinates.push([name, latitude, longitude]);
     }
 
     initMap(allCoordinates);
@@ -51,17 +52,28 @@ fetch("/treasurehunt/next_locations/", {
 
 
 function initMap(coordinates) {
-    const myLatLng = { lat: parseInt(coordinates[0][0]), lng: parseInt(coordinates[0][1]) };
     const map = new google.maps.Map(document.getElementById("google-maps-display"), {
-      zoom: 12,
-      center: myLatLng,
+      zoom: 14.5,
+      center: {lat: 50.737273546349144, lng: -3.5351586176728236},
     });
-  
-    new google.maps.Marker({
-      position: myLatLng,
-      map,
-      title: "Hello World!",
-    });
+
+    setMarkers(map, coordinates);
+  }
+
+  function setMarkers(map, coordinates) {
+    for (let i = 0; i < coordinates.length; i++) {
+        let point = coordinates[i];
+    
+        new google.maps.Marker({
+          position: { lat: parseFloat(point[1]), lng: parseFloat(point[2]) },
+          map,
+        //   icon: image,
+        //   shape: shape,
+          title: point[0],
+        //   zIndex: beach[3],
+        });
+    }
+
   }
   
 //   window.initMap = initMap;

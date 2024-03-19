@@ -21,6 +21,7 @@
 
     <div class="quiz option">
         <p><b>Some info about creating a quiz</b></p>
+        <p>{{message}}</p>
         <form method="post">
             {% csrf_token %}
             <input type="hidden" name="activity_type" value="" id="hidden_quiz_activity_type"/>
@@ -28,8 +29,12 @@
             <input id = "qr_name" name = "qr_name">
             <br>
 
-            <label for="location">Coordinates:</label>
-            <input id = "location" name = "location">
+            <label for="latitude">Latitude:</label>
+            <input id = "latitude" name = "latitude">
+            <br>
+
+            <label for="longitude">Longitude:</label>
+            <input id = "longitude" name = "longitude">
             <br>
 
             <label for="location_name">Name of location:</label>
