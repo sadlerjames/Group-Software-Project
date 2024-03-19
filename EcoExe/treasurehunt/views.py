@@ -208,6 +208,7 @@ def activityFinished(request):
     hunt = Treasure.getTreasure(id=huntID)
     activityID = hunt.getStageActivity(stage+1)
     points = Treasure.getActivities()[activityID]['points']
+    print(points)
 
     Treasure.incrementStage(request.user.username,huntID,points)
 
