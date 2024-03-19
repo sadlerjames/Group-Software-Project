@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'points',
     'sortit',
     'treasurehunt',
+    'pairs',
 ]
 
 MIDDLEWARE = [

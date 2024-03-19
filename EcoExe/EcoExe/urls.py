@@ -33,6 +33,7 @@ urlpatterns = [
     path('points/', include('points.urls')),
     path('sortit/', include('sortit.urls')),
     path('treasurehunt/', include('treasurehunt.urls')),
+    path('pairs/', include('pairs.urls')),
 ] 
 
 if settings.DEBUG:

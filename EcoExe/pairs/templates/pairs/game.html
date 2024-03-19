@@ -1,0 +1,52 @@
+{% extends "pairs/base_pairs.html" %}
+
+{% block title %}Pairs Game{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script>
+        var rubbishImageURL = "{% static 'pairs/assets/trash-rubbish.png' %}"
+        var recycleImageURL = "{% static 'pairs/assets/trash-recycle.png' %}"
+        var foodImageURL = "{% static 'pairs/assets/trash-food.png' %}"
+
+        var toiletRollImageURL = "{% static 'pairs/assets/toilet-roll.png' %}"
+        var plasticBagImageURL = "{% static 'pairs/assets/plastic-bag.png' %}"
+        var blueRollImageURL = "{% static 'pairs/assets/blue-roll.png' %}"
+
+        var cardboardImageURL = "{% static 'pairs/assets/cardboard.png' %}"
+        var plasticBottleImageURL = "{% static 'pairs/assets/plastic-bottle.png' %}"
+        var paperImageURL = "{% static 'pairs/assets/paper.png' %}"
+
+        var bananaImageURL = "{% static 'pairs/assets/banana.png' %}"
+        var meatImageURL = "{% static 'pairs/assets/meat.png' %}"
+        var eggplantImageURL = "{% static 'pairs/assets/eggplant.png' %}"
+    </script>
+
+    <script src="{% static 'pairs/js/complex.js' %}" type="module"></script>
+{% endblock %}
+
+{% block index %}
+<audio loop src="{% static 'pairs/audio/background_loop.mp3' %}" id="background-loop"></audio>
+<audio src="{% static 'pairs/audio/game_over.mp3' %}" id="game-over"></audio>
+<audio src="{% static 'pairs/audio/incorrect_match.mp3' %}" id="incorrect-match"></audio>
+<audio src="{% static 'pairs/audio/correct_match.mp3' %}" id="correct-match"></audio>
+
+<h1>Match up Waste!</h1>
+
+<div id="divTitle">
+    <h3>General waste goes in the black bin.</h3>
+    <h3>Recyclable waste goes in the green bin.</h3>
+    <h3>Food waste goes in the red bin.</h3>
+</div>
+
+<div id="divPairs">
+    <div id="finalScoreDiv" hidden>
+        <h3 id="finalScore"></h3>
+    </div>
+    <br>
+    <div id="buttonDiv">
+        <input id='btnStartGame' onclick='startGame()' type='button' class='button' value='Start the game'>
+        <input id='btnEndGame' onclick='' type='button' class='button' value='Continue' hidden>
+    </div>
+</div>
+{% endblock %}
