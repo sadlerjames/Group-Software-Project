@@ -70,6 +70,7 @@ text-decoration: none;
   display: none;
   position: absolute;
   right: 0;
+  z-index: 5;
 }
 
 .mobile-menu a {

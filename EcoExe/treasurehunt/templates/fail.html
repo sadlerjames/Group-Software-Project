@@ -1,2 +1,11 @@
+<!-- Authored by George Piper and Jack Hales -->
+
+{% extends "base_treasurehunt.html" %}
+
+{% block title %}Treasure Hunt Activity Failed{% endblock %}
+
+{% block index %}
 <h1>Unfortunately, you did not pass this activity. Please scan the qr code again to have another attempt</h1>
-<a href="/accounts/dashboard">Back to dashboard</a>
+<br>
+<a href="/treasurehunt/status">Back to treasure hunt dashboard</a>
+{% endblock %}
