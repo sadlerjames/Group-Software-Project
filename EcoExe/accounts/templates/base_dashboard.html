@@ -1,0 +1,22 @@
+<!-- Authored by James Sadler and Jack Hales -->
+
+{% extends "base.html" %}
+<html>
+  <head>
+    {% load static %}
+    {% block css %}
+      <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}" />
+      {% block navbar_head %}
+      {% endblock %}
+      {% block scripts %}
+      {% endblock %}
+    {% endblock %}
+    
+  </head>
+  <body>
+    {% block content %}
+    {% block navbar_body %}
+    {% endblock %}
+    {% endblock %}
+  </body>
+</html>

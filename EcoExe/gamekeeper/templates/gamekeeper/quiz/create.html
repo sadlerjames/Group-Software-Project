@@ -1,22 +1,26 @@
-<!--Authored by George Piper and James Sadler-->
-<html>
-    <head>
-        <title>Create a Quiz</title>
-        {% load static %}
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="{% static '/gamekeeper/js/create.js' %}"></script>
-    </head>
-    <body>
-        <h1>Create a Quiz</h1>  
-        <p>Please enter the correct answer first</p>
-        <form method="post">
-            {% csrf_token %}
-            <div id="forms">
-                {{ form.as_p }}
-            </div>
-            <input type="hidden" name="extra_field_count" value="0">
-            <button type="button" id="add-another">Add Question</button>
-            <input type="submit" />
-        </form>
-    </body>
-</html>
+<!--Authored by George Piper, James Sadler and Jack Hales-->
+
+{% extends "base_gamekeeper.html" %}
+
+{% block title %}Create a Quiz{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static '/gamekeeper/js/create-quiz.js' %}"></script>
+{% endblock %}
+
+{% block index %}
+<h1>Create a Quiz</h1>
+<br>
+<p>Please enter the correct answer in the first answer box.</p>
+<form method="post">
+    {% csrf_token %}
+    <div id="forms">
+        {{ form.as_p }}
+    </div>
+    <input type="hidden" name="extra_field_count" value="0">
+    <button type="button" id="add-another">Add Question</button>
+    <input type="submit" class="button" value="Submit" id="create-quiz-submit"/>
+</form>
+<a href="/gamekeeper/dashboard">Back to dashboard</a>
+{% endblock %}

@@ -1,35 +1,66 @@
 <!-- Authored by Jack Hales, George Piper, James Sadler -->
 
-{% extends "base.html" %}
+{% extends "base_accounts.html" %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}Register{% endblock %}
 
-{% block content %}
-<h2>Sign up</h2>
+{% block form %}
+<h1>Register</h1>
 <form method="post">
   {% csrf_token %}
-  <label for="id_username">Username:</label>
-  {{ form.username }}
+  <p>
+    <label for="id_username">Username:</label>
+    {{ form.username }}
+    {{ form.username.errors }}
+  </p>
 
-  <label for="id_email">Email:</label>
-  {{ form.email }}
+  <p>
+    <label for="id_email">Email:</label>
+    {{ form.email }}
+    {{ form.email.errors }}
+  </p>
 
-  <label for="id_first_name">First Name:</label>
-  {{ form.first_name }}
+  <p>
+    <label for="id_first_name">First Name:</label>
+    {{ form.first_name }}
+    {{ form.first_name.errors }}
+  </p>
 
-  <label for="id_last_name">Last Name:</label>
-  {{ form.last_name }}
+  <p>
+    <label for="id_last_name">Last Name:</label>
+    {{ form.last_name }}
+    {{ form.last_name.errors }}
+  </p>
 
-  <label for="id_last_name">Password:</label>
-  {{ form.password1 }}
+  <p>
+    <label for="id_password1">Password:</label>
+    {{ form.password1 }}
+    {{ form.password1.errors }}
+  </p>
 
-  <label for="id_last_name">Confirm Password:</label>
-  {{ form.password2 }}
-  <br>
-  {% if msg %}
-    <div class="error">{{ msg }}</div>
-  {% endif %}
-  <button type="submit">Sign Up</button>
+  <p>
+    <label for="id_password2">Confirm Password:</label>
+    {{ form.password2 }}
+    {{ form.password2.errors }}
+  </p>
+
+  <p>
+    <label for="terms">I have read and agree to the <a href="/terms" target="_blank">Terms & Conditions</a>:</label>
+    {{ form.terms }}
+    {{ form.terms.errors }}
+  </p>
+
+  <p>
+    <label for="privacy">I have read and agree to the <a href="/privacy" target="_blank">Privacy Policy</a>:</label>
+    {{ form.privacy }}
+    {{ form.privacy.errors }}
+  </p>
+  
+  <p>
+    <button type="submit">Register</button>
+  </p>
 </form>
-<a href="/">Back to homepage</a>
+<p>
+  <a href="/">Back to homepage</a>
+</p>
 {% endblock %}

@@ -1,0 +1,39 @@
+<!--Authored by Jack Hales-->
+
+{% extends "base_ecoexe.html" %}
+
+{% block title %}Terms and Conditions{% endblock %}
+
+{% block index %}
+<h1>EcoExe Terms and Conditions</h1>
+<br>
+<p>These terms and conditions (the &quot;Terms and Conditions&quot;) govern the use of <strong>EcoExe</strong> (the &quot;Site&quot;). This Site is owned and operated by EcoExe. This Site is a game. By using this Site, you indicate that you have read and understand these Terms and Conditions and agree to abide by them at all times.</p>
+<p><strong><u>Intellectual Property</u></strong><br>All content published and made available on our Site is the property of EcoExe and the Site's creators. This includes, but is not limited to images, text, logos, documents, downloadable files and anything that contributes to the composition of our Site.</p>
+<p><strong><u>Accounts</u></strong><br>When you create an account on our Site, you agree to the following:</p>
+<ol start="1" style="list-style:decimal;">
+    <li value="1">You are solely responsible for your account and the security and privacy of your account, including passwords or sensitive information attached to that account; and<br>
+    </li>
+    <li value="2">All personal information you provide to us through your account is up to date, accurate, and truthful and that you will update your personal information if it changes.<br>
+    </li>
+</ol>
+<p>We reserve the right to suspend or terminate your account if you are using our Site illegally or if you violate these Terms and Conditions.</p>
+<p><strong><u>Limitation of Liability</u></strong><br>EcoExe and our directors, officers, agents, employees, subsidiaries, and affiliates will not be liable for any actions, claims, losses, damages, liabilities and expenses including legal fees from your use of the Site.</p>
+<p><strong><u>Indemnity</u></strong><br>Except where prohibited by law, by using this Site you indemnify and hold harmless EcoExe and our directors, officers, agents, employees, subsidiaries, and affiliates from any actions, claims, losses, damages, liabilities and expenses including legal fees arising out of your use of our Site or your violation of these Terms and Conditions.</p>
+<p><strong><u>Applicable Law</u></strong><br>These Terms and Conditions are governed by the laws of the Country of England.</p>
+<p><strong><u>Severability</u></strong><br>If at any time any of the provisions set forth in these Terms and Conditions are found to be inconsistent or invalid under applicable laws, those provisions will be deemed void and will be removed from these Terms and Conditions. All other provisions will not be affected by the removal and the rest of these Terms and Conditions will still be considered valid.</p>
+<p><strong><u>Changes</u></strong><br>These Terms and Conditions may be amended from time to time in order to maintain compliance with the law and to reflect any changes to the way we operate our Site and the way we expect users to behave on our Site. We will notify users by email of changes to these Terms and Conditions or post a notice on our Site.</p>
+<p><strong><u>Contact Details</u></strong><br>Please contact us if you have any questions or concerns. Our contact details are as follows:</p>
+<ul>
+    <li value="1">gp508@exeter.ac.uk<br></li>
+    <li value="2">fa428@exeter.ac.uk<br></li>
+    <li value="3">js1544@exeter.ac.uk<br></li>
+    <li value="4">jwh221@exeter.ac.uk<br></li>
+    <li value="5">sa1013@exeter.ac.uk<br></li>
+    <li value="6">dh634@exeter.ac.uk<br></li>
+</ul>
+<p>Effective Date: 11th day of March, 2024</p>
+{% if user.is_authenticated %}
+    <a href="/gamekeeper/dashboard">Back to dashboard</a>
+{% else %}
+{% endif %}
+{% endblock %}

@@ -1,20 +1,27 @@
-<!--Authored by James Sadler-->
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>EcoExe</title>
-	</head>
-	<body>
-		<h1>Welcome to EcoExe!</h1>
-		{% if user.is_authenticated %}
-			<a href="/accounts/dashboard">dashboard</a>
-		
-		{% else %}
-			<a href="/accounts/login">Login</a>
-			<br>
-			<a href="/accounts/signup">Sign Up</a>
-			<br>
-			<a href="/gamekeeper/login">Game Keeper Login</a>
-		{% endif %}
-	</body>
-</html>
+<!--Authored by James Sadler and Jack Hales-->
+
+{% extends "base_ecoexe.html" %}
+
+{% block title %}EcoExe{% endblock %}
+
+{% block index %}
+<h1>Welcome to EcoExe!</h1>
+<h3 class="white-subheading">A web-based game to promote sustainability on campus.</h3>
+<br>
+{% if user.is_authenticated %}
+	<script>
+		window.location.href = "/accounts/dashboard";
+	</script>
+
+{% else %}
+	<p>
+		<a href="/accounts/login" class="button">Sign In</a>
+	</p>
+	<p>
+		<a href="/accounts/signup" class="button">Register</a>
+	</p>
+	<p>
+		<a href="/gamekeeper/login" class="button">Game Keeper Sign In</a>
+	</p>
+{% endif %}
+{% endblock %}

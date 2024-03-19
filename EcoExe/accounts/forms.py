@@ -5,15 +5,6 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User
 from django.contrib.auth.forms import PasswordChangeForm
 
-class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    first_name = forms.CharField(max_length=30)
-    last_name = forms.CharField(max_length=30)
-
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
-
 class CustomPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -78,6 +69,39 @@ class SignUpForm(UserCreationForm):
         )
     )
 
+    terms = forms.BooleanField(required = True)
+    privacy = forms.BooleanField(required = True)
+
     class Meta:
         model = User
         fields = ('username','email', 'first_name', 'last_name', 'password1','password2')
+
+class UpdateUserForm(forms.ModelForm):
+    username = forms.CharField(
+        widget = forms.TextInput(
+            attrs={
+                "class":"form-control"
+            }
+        )
+    )
+
+    email = forms.CharField(
+        widget = forms.EmailInput(
+            attrs={
+                "class":"form-control"
+            }
+        )
+    )
+
+
+    avatar = forms.ImageField(
+        widget=forms.FileInput(
+            attrs={
+                "class": "form-control-file"
+            }
+        )
+    )
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'avatar')

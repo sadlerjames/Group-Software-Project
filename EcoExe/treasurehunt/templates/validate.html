@@ -1,0 +1,14 @@
+<!-- Authored by James Sadler, George Piper and Jack Hales -->
+{% extends "base_treasurehunt.html" %}
+
+{% block title %}Location Check{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static '/treasurehunt/js/location.js' %}"></script>
+{% endblock %}
+
+{% block index %}
+<h1>Please allow location access!</h1>
+<h3>Please allow us to check your location for us to verify that you are at the location of the QR code.</h3>
+{% endblock %}

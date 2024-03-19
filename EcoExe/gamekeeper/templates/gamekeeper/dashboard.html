@@ -1,5 +1,25 @@
-<!--Authored by George Piper and James Sadler-->
-<html>
-    <h1>Welcome to your game keeper dashboard!</h1>
-    <a href = "/gamekeeper/quiz/create">Create a quiz</a>
-</html>
+<!--Authored by George Piper, James Sadler and Jack Hales-->
+
+{% extends "base_gamekeeper.html" %}
+
+{% block title %}Game Keeper Dashboard{% endblock %}
+
+{% block index %}
+<h1>Welcome to the Game Keeper Dashboard!</h1>
+<br>
+<p>
+    <a href="/gamekeeper/quiz/create" class="button">Create a Quiz</a>
+</p>
+<p>
+    <a href="/gamekeeper/quiz/set_daily" class="button">Set Daily Quiz</a>
+</p>
+<p>
+    <a href="/gamekeeper/treasurehunt/create_activity" class="button">Create an Activity</a>
+</p>
+<p>
+    <a href="/gamekeeper/treasurehunt/create" class="button">Create a Treasure Hunt</a>
+</p>
+<p>
+    <a href="/gamekeeper/logout" class="button">Sign Out</a>
+</p>
+{% endblock %}

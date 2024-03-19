@@ -1,13 +1,16 @@
-<!--Authored by George Piper and James Sadler-->
-{% block content %}
-<h2>Log In</h2>
+<!--Authored by Jack Hales, George Piper and James Sadler-->
+
+{% extends "base_accounts.html" %} 
+{% block title %}Sign In{% endblock %}
+{% block form %}
+<h2>Game Keeper Sign In</h2>
 <form method="post">
 {% csrf_token %}
 {{ form.as_p }}
-<button type="submit">Log In</button>
 {% if msg %}
-    <div class="error">{{ msg }}</div>
-  {% endif %}
+  <p>{{ msg }}</p>
+{% endif %}
+<button type="submit">Sign In</button>
 </form>
 <a href="/">Back to homepage</a>
 {% endblock %}

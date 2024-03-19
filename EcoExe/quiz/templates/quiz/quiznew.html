@@ -6,7 +6,7 @@
 	<head>
 		<meta charset='UTF-8'>
 		<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-		<link rel="stylesheet" href="{% static 'css/qrreader.css' %}" />
+		<link rel="stylesheet" href="{% static 'quiz/css/qrreader.css' %}" />
 	</head>
 
 	<body>
@@ -65,7 +65,7 @@
 									while(question_index < quiz['questions'].length) {
 										question.appendChild(document.createTextNode(quiz['questions'][question_index]));
 										questiondiv.appendChild(question);
-										console.log(question_index);
+										//console.log(question_index);
 										
 										for(var i in quiz['answers'][question_index]) {
 											let answernode = document.createElement('li');
@@ -80,7 +80,8 @@
 													answerlist.innerHTML = ''; // clears list
 													question.innerHTML = ''; // clears question
 													answered = true;
-													console.log(question_iterator.next().value); // goes to next question
+													question_iterator.next();
+													//console.log(question_iterator.next().value); // goes to next question
 												}
 											} else {
 												answerbutton.onclick = function() {
@@ -88,7 +89,8 @@
 													answerlist.innerHTML = ''; // clears list
 													question.innerHTML = ''; // clears question
 													answered = true;
-													console.log(question_iterator.next().value); // goes to next question
+													question_iterator.next();
+													//console.log(question_iterator.next().value); // goes to next question
 												}
 											}
 											answernode.appendChild(answerbutton);
@@ -102,7 +104,8 @@
 								
 								var question_iterator = getQuestion(res, 0);
 								
-								console.log(question_iterator.next().value);
+								question_iterator.next();
+								//console.log(question_iterator.next().value);
 								//console.log(question_iterator.next().value);
 							},
 							error: function(err) {

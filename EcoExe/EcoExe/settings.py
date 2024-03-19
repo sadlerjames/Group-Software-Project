@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-6u8v&v4_#sth$f6fm-#m_d&y1kvs4za-0kkk&4s^!omf8s-mm_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [] # for hosting server so that other devices can access website. you will need your own IP address though.
+ALLOWED_HOSTS = ['*'] # for hosting server so that other devices can access website. you will need your own IP address though.
 
 
 # Application definition
@@ -38,18 +38,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts.apps.AccountsConfig',
+    'django_extensions',
+    'accounts',
     'gamekeeper',
     'quiz',
     'EcoExe',
     'points',
+    'sortit',
+    'treasurehunt',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -60,7 +63,7 @@ ROOT_URLCONF = 'EcoExe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'static/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -141,8 +144,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Authentication 
 LOGIN_REDIRECT_URL = '/accounts/dashboard'
-LOGOUT_REDIREDT_URL = '/accounts/login'
+LOGOUT_REDIRECT_URL = '/accounts/login'
 
 AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_URL = '/accounts/login'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

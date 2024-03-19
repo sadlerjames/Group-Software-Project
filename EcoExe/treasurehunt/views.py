@@ -1,3 +1,234 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+import json
+from matplotlib.patches import Circle
+from treasurehunt.treasure import Treasure
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from quiz.templatetags.quiz import load
+from quiz.models import Quizzes
+from django.utils import timezone
+from points.models import DailyPoints
+from django.core.exceptions import ObjectDoesNotExist
+from treasurehunt.models import Stage
+from urllib.parse import urlparse, parse_qs
+
 
 # Create your views here.
+@login_required
+def scan(request):
+    return render(request, "scan.html")
+
+def wrong(request):
+    return render(request,"wrong.html",{'location':request.GET.get('extra')})
+
+def quiz(request):
+    if request.method == "POST":
+        # Load quiz and get questions and points per question
+        quiz_id = request.POST.get("quiz_id")
+        quiz_id = int(quiz_id)
+        quiz = load(quiz_id)
+        quizObj = Quizzes.objects.get(pk=quiz_id)
+        questions = quiz.getQuestion(-1)
+        pointsPerQuestion = quizObj.points
+
+        # Set default values
+        score = 0
+        wrong = 0
+        correct = 0
+        total = 0
+
+        # Get the time remaining
+        time_remaining = request.POST.get("timer")
+        time_remaining = int(time_remaining)
+
+        # Iterate through each question and get the correct answer
+        for q in questions:
+            answer = quiz.getCorrect(total)
+            total = total + 1
+
+            # Check if user answer is correct
+            if answer == request.POST.get(q):
+                score = score + pointsPerQuestion
+                correct = correct + 1
+            else:
+                wrong = wrong + 1
+        
+        # Calculate final score and percent
+        final_score = score + time_remaining
+        percent = (correct/total) * 100
+        percent = round(percent, 2)
+        if percent % 1 == 0:
+            percent = int(percent)
+        
+        # Get current date
+        timestamp = timezone.now()
+
+        # Save this to the database
+        try:
+            db = DailyPoints(points=final_score, timestamp=timestamp, quiz_id=quizObj, user_id=request.user)
+            db.save()
+        except:
+            pass
+
+        if(percent > 50): #the player has passed
+            return activityFinished(request)
+        else:
+            return render(request,"fail.html")
+
+    
+    # User is loading quiz
+    else:
+        hunt = request.GET.get('hunt')
+        quizID = request.GET.get('extra')
+        quiz = load(int(quizID))
+        context = {}
+        time_limit = 30
+
+        # Load quiz and get questions and answers
+        questions = quiz.getQuestion(-1)
+        answers = quiz.getAnswer(-1)
+
+        # Change into form required for displaying quiz
+        data = []
+        i = 0
+        for option in questions:
+            if len(answers[i]) == 2:
+                data.append({
+                    'question': option,
+                    'op1': answers[i][0],
+                    'op2': answers[i][1],
+                })
+            elif len(answers[i]) == 3:
+                data.append({
+                    'question': option,
+                    'op1': answers[i][0],
+                    'op2': answers[i][1],
+                    'op3': answers[i][2],
+                })
+            elif len(answers[i]) == 4:
+                data.append({
+                    'question': option,
+                        'op1': answers[i][0],
+                        'op2': answers[i][1],
+                        'op3': answers[i][2],
+                        'op4': answers[i][3],
+                    })
+            i = i + 1
+
+        # Set context for quiz page
+        context = {
+            'hunt' : hunt,
+            'questions': data,
+            'quiz_id': quizID,
+            'time_limit': time_limit
+        }
+        return render(request, "quiz.html", context)
+
+def trivia(request):
+    if request.method == 'GET':
+        hunt = request.GET.get('hunt')
+        return render(request,"trivia.html",{'fact':request.GET.get('extra'),'hunt':hunt})
+    else:
+        return activityFinished(request)
+
+
+def verify(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+
+            data = json.loads(request.body.decode('utf-8'))
+            print(data)
+
+            url = data['extra']         
+
+            # Parse the URL
+            parsed_url = urlparse(url)
+
+            # Extract query parameters
+            query_params = parse_qs(parsed_url.query)
+
+            # Get huntID and stage_id from the query parameters
+            huntID = query_params.get('huntID', [None])[0]
+            stage = query_params.get('stage_id', [None])[0]
+
+            print(huntID)
+            print(stage)
+
+            longitude = data['longitude']
+            latitude = data['latitude']
+            x =  -3.5146264011643513 #need to be based on the qr code coordinates
+            y = 50.73719035512385
+            circle = Circle((x,y),radius = 0.001) #a circle centering on the qr code with about a 40m radius
+            if(circle.contains_point([longitude,latitude])):
+                print("Within radius")
+            else:
+                print("Not within radius")
+            #PUT BACK IN LOCATION CHECK
+            name =  request.user.username
+            #name = "Kamal" #hardcoded for testing
+            if Treasure.getStageNo(player_name=name,hunt_id=huntID) == int(stage)-1:
+                #render the activity
+                hunt = Treasure.getTreasure(id=huntID)
+                activityID = hunt.getStageActivity(stage)
+                activity = Treasure.getActivities()[activityID]
+                extra =  activity['info']
+                if(activity['type'] == "quiz"):
+                    print("QUIXZZZZZZZZZZZZZ")
+                    return JsonResponse({'redirect':'/treasurehunt/quiz','extra':extra,'hunt':huntID})
+                elif(activity['type'] == "trivia"):
+                    return JsonResponse({'redirect':'/treasurehunt/trivia','extra':extra,'hunt':huntID})
+                #show the user the location of the next stage
+            else:
+                #show a message about being on the wrong stage
+                hunt = Treasure.getTreasure(id=huntID)
+                activityID = hunt.getStageActivity(stage)
+                activity = Treasure.getActivities()[activityID]
+                return JsonResponse({'redirect':'/treasurehunt/wrong','extra':activity['location_name']})
+            return render(request,"scan.html")
+    else:
+        return redirect(request,"/accounts/login.html")
+    
+def activityFinished(request):
+    huntID = request.POST.get('hunt')
+    Treasure.incrementStage(request.user.username,huntID)
+    try: #if the user has not finished the treasure hunt
+        stage = Treasure.getStageNo(request.user.username,huntID) + 1 #get the next stage
+        hunt = Treasure.getTreasure(id=huntID)
+        activityID = hunt.getStageActivity(stage)
+        activity = Treasure.getActivities()[activityID]
+        return render(request,"next.html",{'location':activity['location_name']})
+    except Stage.DoesNotExist: #if the user has finished the treasure hunt, there is no next stage
+        return render(request,"finish.html")
+    
+def validatePage(request):
+    return render(request,"validate.html")
+
+def status(request):
+    hunts = Treasure.getUserStages(request.user.username)
+    finished = []
+    unfinished = []
+    for hunt in hunts:
+        if hunt[1] == -1:
+            finished.append(hunt)
+        else:
+            unfinished.append(hunt)
+    return render(request,"status.html",context={'finished':finished,'unfinished':unfinished})
+
+
+def getPins(request):
+    user = request.user.username
+    locations = {}
+    stages = Treasure.getUserStages(user)
+    i=0
+    for stage in stages:
+        try:
+            hunt = Treasure.getTreasure(stage[0])
+            activityID = hunt.getStageActivity(stage[1])
+            locations[i] = Treasure.getActivities()[activityID]['location']
+            i+=1
+            
+        except Stage.DoesNotExist: #occurs when user has not started treasure hunt
+            pass
+        
+    return JsonResponse(locations)
+    

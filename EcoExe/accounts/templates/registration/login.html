@@ -1,17 +1,18 @@
 <!-- Authored by Jack Hales, George Piper, James Sadler -->
 
-{% extends "base.html" %} 
-{% block title %}Login{% endblock %}
-
-{% block content %}
-<h2>Log In</h2>
+{% extends "base_accounts.html" %} 
+{% block title %}Log In{% endblock %}
+{% block form %}
+<h1>Sign In</h1>
 <form method="post">
 {% csrf_token %}
 {{ form.as_p }}
 {% if msg %}
-    <div class="error">{{ msg }}</div>
-  {% endif %}
-<button type="submit">Log In</button>
+  <p>{{ msg }}</p>
+{% endif %}
+<button type="submit">Sign In</button>
 </form>
+<a href="/accounts/password_reset">Forgotten password?</a>
+<br><br>
 <a href="/">Back to homepage</a>
 {% endblock %}

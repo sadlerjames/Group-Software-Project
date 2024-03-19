@@ -1,108 +1,57 @@
 <!-- Authored by Sam Arrowsmith, Jack Hales -->
-<html lang="en">
-<head>
+
+{% extends "base_dashboard.html" %}
+
+{% block navbar_head %}
+
+    {% load static %}
+    <script src="{% static 'js/navbar_mobile_menu.js' %}" defer></script>
+
     {% if user.is_authenticated %}
         <!-- This 'if' block will redirect any page in the site to the login/signup if the user is not authenticated -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}{% endblock %}</title>
-        
-        <link href='https://fonts.googleapis.com/css?family=Bubblegum Sans' rel='stylesheet'>
-        <!-- Bootstrap for bubbly font-->
-
-
         <base href="/">
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'css/colours.css' %}" />
-        <!-- applying the stylesheet created for the project primarily to maintain consistent colours -->
 
-        <!-- applying bubbly font to elements of the bubble class-->
-        <style lang="css">
-            .bubble {
-                font-family: 'Bubblegum Sans';
-            }
-            
-            /*
-            Below will style the DOM elements for mobile views
-            */
-            nav .links {
-                display: flex;
-            }
-            #mobile-menu-btn {
-                display: none;
-            }
-            .mobile-menu {
-                color: white;
-                display: none;
-                position: absolute;
-                padding: 10px;
-                right: 0;
-                height: 50vh;
-                width: 40vw;
-            }
-            
-            @media (max-width: 600px) {
-                #mobile-menu-btn {
-                  display: block;
-                }
-                nav a {
-                  display: none;
-                }
-                .mobile-menu {
-                  display: none;
-                  flex-direction: column;
-                  justify-content: space-around;
-                  align-items: center;
-                }
-              }
-        </style>
-        
     {% else %}
         <meta http-equiv="refresh" content="0; URL={% url 'loginpage' %}"/>
     {% endif %}
-</head>
-<body>
+
+{% endblock %}
+
+{% block navbar_body %}
+
     {% if user.is_authenticated %}
     <!-- Nav tag encloses the desktop navbar -->
-    <nav class="bg-primary navbar">
-        <div class="container">
-            <a href="{% url 'dashboard' %}"><img src="{% static 'images/logo.png' %}"><h2>  Dashboard</h2></a>
+    <nav class="background-primary navbar">
+        <a href="{% url 'dashboard' %}" id="logo">
+            <img src="{% static 'images/logo-no-bg.png' %}" id="logo-image">
+        </a>
+        
+        <div id="links">
+            <a href="{% url 'profile' %}" id="pfp">
+                <img src="{{ user.avatar.url }}" id="pfp-image"/>
+            </a>
+            <h2>
+                <a href="{% url 'profile' %}">Profile: <i>{{user.username}}</i></a>
+            </h2>
+            <h2>
+                <a href="{% url 'logout' %}">Sign Out</a>
+            </h2>
+            <button id="mobile-menu-btn" class="background-secondary">Menu</button>
         </div>
-            <h1 class="bubble"> EcoExe </h1>
-            <h2 class="bubble">
-            <a href="{% url 'profile' %}" style="text-decoration: none;">{{user.username}}</a>
-            </h2>
-            <h2 class="bubble">
-                <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
-            </h2>
-            <button id="mobile-menu-btn" class="bg-secondary">Menu</button>
     </nav>
     <!-- above is for desktop, below is the mobile view -->
-    <div class="mobile-menu bg-secondary">
-        <a href="{% url 'profile' %}" style="text-decoration: none;">{{user.username}}</a>
-        <a href="{% url 'daily_quiz' %}" style="text-decoration: none;">Daily Quiz</a>
-        <a href="{% url 'dashboard' %}">Dashboard</a>
+    <div class="mobile-menu background-secondary" style="display: none;">
+        <a href="{% url 'profile' %}" style="text-decoration: none;">Profile: <i>{{user.username}}</i></a>
+        <a href="{% url 'terms' %}" style="text-decoration: none;">Terms and Conditions</a>
+        <a href="{% url 'privacy' %}" style="text-decoration: none;">Privacy Policy</a>
+        <a href="{% url 'logout' %}">Sign Out</a>
     </div>
-    {% block content %}
+    
+    {% block maincontent %}
     {% endblock %}
+
     {% else %}
     {% endif %}
-    <script lang="javascript" defer>
-        //this code effectively shows the menu for mobile view if a mobile is being used to access the webpage, otherwise the usual desktop view shows
-        //the menu simply has the same features but as a dropdown menu
-        var mobileMenuBtn = document.querySelector("#mobile-menu-btn");
-        console.log(mobileMenuBtn);
-        var mobileMenu = document.querySelector(".mobile-menu");
-        mobileMenuBtn.addEventListener("click", () => {
-        if (mobileMenu.style.display === "none") {
-            mobileMenu.style.display = "flex";
-            mobileMenuBtn.innerHTML = "Close";
-        } 
-        else {
-            mobileMenu.style.display = "none";
-            mobileMenuBtn.innerHTML = "Menu";
-        }
-        });
-    </script>
-</body>
-</html>
+    
+
+{% endblock %}

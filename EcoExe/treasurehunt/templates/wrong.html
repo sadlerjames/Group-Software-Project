@@ -1,0 +1,12 @@
+<!-- Authored by George Piper and Jack Hales -->
+
+{% extends "base_treasurehunt.html" %}
+
+{% block title %}Wrong QR Code{% endblock %}
+
+{% block index %}
+<h1>You have scanned the wrong QR code!</h1>
+<h3>Please go to {{location}}</h3>
+<br>
+<a href="/accounts/dashboard">Back to dashboard</a>
+{% endblock %}

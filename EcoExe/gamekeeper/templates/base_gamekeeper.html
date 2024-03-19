@@ -1,0 +1,21 @@
+<!-- Authored by James Sadler and Jack Hales -->
+
+{% extends "base.html" %}
+<html>
+  <head>
+    {% load static %}
+    {% block css %}
+      <link rel="stylesheet" href="{% static 'gamekeeper/css/gamekeeper.css' %}" />
+      {% block scripts %}
+      {% endblock %}
+    {% endblock %}
+  </head>
+  <body>
+    {% block content %}
+    <div class="index">
+      {% block index %}
+      {% endblock %}
+    </div>
+    {% endblock %}
+  </body>
+</html>

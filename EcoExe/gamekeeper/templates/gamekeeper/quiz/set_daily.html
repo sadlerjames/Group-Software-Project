@@ -1,0 +1,63 @@
+<!--Authored by George Piper, James Sadler and Jack Hales-->
+
+{% extends "base_gamekeeper.html" %}
+
+{% block title %}Set Daily Quiz{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block index %}
+<h1>Set Daily Quiz</h1>
+<h3>Please choose a quiz and a date for it to be the daily quiz.</h3>
+<br>
+<form method="post">
+    {% csrf_token %}
+    <label for="quiz">Quiz:</label>
+    <select id="quiz" name="quiz" required>
+        {% load filter %}
+        {% for x in quiz_files %}
+            <option value={{x.quiz_id}}>{{x.quiz_name}}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required>
+    <br>
+    <label for="time">Time Limit (seconds):</label>
+    <input type="number" id="time" name="time" min="10" required>
+    <br>
+    <input type="submit" class="button" value="Submit"/>
+</form>
+<h1>Present/Future Daily Quizzes</h1>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Quiz ID</th>
+            <th>Quiz Name</th>
+            <th>Time Limit (seconds)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in daily_quizzes %}
+        <tr>
+            <td>{{ row.date }}</td>
+            <td>{{ row.quiz_id }}</td>
+            <td>{{ row.quiz_name }}</td>
+            <td>{{ row.time_limit }}</td>
+            <td>
+                <form method="post" action="{% url 'drop_row' id=row.date %}" id="drop-row">
+                    {% csrf_token %}
+                    <input type="submit" class="text" value="Remove">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<a href="/gamekeeper/dashboard">Back to dashboard</a>
+{% endblock %}

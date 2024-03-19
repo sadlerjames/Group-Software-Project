@@ -1,0 +1,62 @@
+/* Authored by Jack Hales */
+
+@import url("https://fonts.googleapis.com/css?family=Outfit");
+
+* {
+    font-family: Outfit;
+}
+
+h1 {
+    color: #00dca5;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+h2 {
+    color: #00dca5;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+h3 {
+    color: #00dca5;
+    font-size: large;
+    font-weight: bold;
+}
+
+h4 {
+    color: #00dca5;
+    font-size: medium;
+    font-weight: normal;
+}
+
+h5 {
+    color: #00dca5;
+    font-size: small;
+    font-weight: lighter;
+}
+
+h6 {
+    color: #00dca5;
+    font-size: x-small;
+    font-weight: lighter;
+}
+
+p, ul, ol, label {
+    color: #ffffff;
+    font-size: medium;
+    font-weight: normal;
+}
+
+p1 {
+    color: #ffffff;
+    font-size: medium;
+    font-weight: normal;
+    margin-bottom: 1em;
+    margin-right: 1em;
+    display: inline-block;
+}
+
+.white-subheading {
+    color: #ffffff
+}

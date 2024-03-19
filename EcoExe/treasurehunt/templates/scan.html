@@ -1,0 +1,26 @@
+<!-- Authored by George Piper, Dan Harkness-Moore and Jack Hales -->
+
+{% extends "base_treasurehunt.html" %}
+
+{% block title %}HTML Geolocation{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+	<script src="https://unpkg.com/html5-qrcode" type='text/javascript'></script>
+	<script src="{% static '/treasurehunt/js/qr_scanner.js' %}">
+        const validateURL = "{% url 'validate' %}/";
+    </script>
+	<link rel="stylesheet" href="{% static 'quiz/css/qrreader.css' %}"/>
+{% endblock %}
+
+{% block index %}
+<h1>Scan a QR Code!</h1>
+<p>Use the scanner to scan a QR code you've found.</p>
+<br>
+<div class='section'>
+	<div id='reader'></div>
+	<div id='questiondiv' hidden></div>
+</div>
+<br><br>
+<a href="/accounts/dashboard">Back to dashboard</a>
+{% endblock %}

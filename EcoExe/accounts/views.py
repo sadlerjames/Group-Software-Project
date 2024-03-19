@@ -3,15 +3,17 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from .forms import CustomUserCreationForm, LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm
 from django.contrib.auth.views import PasswordChangeView
-from .forms import CustomPasswordChangeForm
+from .forms import CustomPasswordChangeForm, UpdateUserForm
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.decorators import login_required
+from treasurehunt.treasure import Treasure
 
 class SignUp(generic.CreateView):
-    form_class = CustomUserCreationForm
+    form_class = SignUpForm
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
@@ -23,14 +25,10 @@ class CustomPasswordChangeView(PasswordChangeView):
 class PasswordChangeDoneView(TemplateView):
     template_name = 'registration/password_change_done.html'
 
-
 @login_required()    
 def dashboard(request):
     return render(request, "dashboard.html")
-    
-def userprofile(request):
-    return render(request, "profile.html")
-   
+       
 #process the POST request and create the user 
 def signup(request):
     #if the user is already signed in take them to dashboard
@@ -82,6 +80,38 @@ def logoutview(request):
     logout(request)
     return redirect('/accounts/login')
 
-@login_required()  
+
+@login_required
 def userprofile(request):
-    return render(request, "profile.html")
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
+        
+        if user_form.is_valid():
+            user_form.save()
+            # messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='profile')
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+
+    return render(request, 'profile.html', {'user_form': user_form})
+
+
+class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'registration/update-password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('users-home')
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        # Delete the user account
+        request.user.delete()
+        # Log out the user
+        logout(request)
+        # Redirect to a success page or any other page
+        return redirect('/accounts/delete_account_success')
+    return render(request, 'registration/delete_account_confirmation.html')
+
+def delete_account_success(request):
+    return render(request, 'registration/delete_account_success.html')
+
