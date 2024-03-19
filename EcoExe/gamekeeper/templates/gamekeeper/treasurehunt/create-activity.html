@@ -18,6 +18,7 @@
         <option value="quiz">Quiz</option>
         <option value="trivia">Trivia</option>
         <option value = "sortit">Sort it minigame</option>
+        <option value = "pairs">Pairs minigame</option>
     </select>
 
     <div class="quiz option">
@@ -98,6 +99,38 @@
         <form method="post">
             {% csrf_token %}
             <input type="hidden" name="activity_type" value="" id="hidden_sortit_activity_type"/>
+            <label for="qr_name">Name of activity:</label>
+            <input id = "qr_name" name = "qr_name">
+            <br>
+
+            <label for="latitude">Latitude:</label>
+            <input id = "latitude" name = "latitude">
+            <br>
+
+            <label for="longitude">Longitude:</label>
+            <input id = "longitude" name = "longitude">
+            <br>
+
+            <label for="location_name">Name of location:</label>
+            <input id = "location_name" name = "location_name">
+            <br>
+
+            <label for="points">Points:</label>
+            <input id = "points" name = "points">
+            <br>
+
+            <input type = "hidden" name = "extra" value = "Extra">
+
+            <input type="submit" class="button" value="Submit"/>
+        </form>
+    </div>
+
+    <div class="pairs option">
+        <p><b>Some info about pairs</b></p>
+        <p>{{message}}</p>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="activity_type" value="" id="hidden_pairs_activity_type"/>
             <label for="qr_name">Name of activity:</label>
             <input id = "qr_name" name = "qr_name">
             <br>
