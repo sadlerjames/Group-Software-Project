@@ -5,26 +5,29 @@
 {% block title %}Treasure Hunts{% endblock %}
 
 {% block index %}
-{%load filter%}
-<h1>Treasure Hunts</h1>
-{%if unfinished|length%}
-<h3>You are currently taking part in the following treasure hunts:</h3>
-<br>
-{%endif%}
-{%for x in unfinished%}
-<p>Treasure hunt:{{x|getTreasureName}} stage:{{x|getStage}}</p>
-{%endfor%}
-{%if finished|length%}
-<h3>You have completed the following treasure hunts:</h3>
-{%endif%}
-{%for x in finished%}
-<p>{{x|getTreasureName}}</p>
-{%endfor%}
+    {%load filter%}
+    <h1>Treasure Hunts!</h1>
 
+    <h3>Found a QR Code? Click below to scan it!</h3>
+    <a href="/treasurehunt/scan" class="button">Scan a QR Code</a>
+    <br><br>
 
-<a href="/treasurehunt/scan">Scan</a>
-<br>
-<a href="/accounts/dashboard">Back to dashboard</a>
+    {%if unfinished|length%}
+        <h3>You are currently taking part in the following treasure hunts:</h3>
+    {%endif%}
 
+    {%for x in unfinished%}
+        <p><strong>Name:</strong> {{x|getTreasureName}} <br><strong>Stage:</strong> {{x|getStage}}</p>
+    {%endfor%}
+
+    {%if finished|length%}
+        <h3>You have completed the following treasure hunts:</h3>
+    {%endif%}
+
+    {%for x in finished%}
+        <p><strong>Name:</strong> {{x|getTreasureName}}</p>
+    {%endfor%}
+    
+    <a href="/accounts/dashboard">Back to dashboard</a>
 
 {% endblock %}

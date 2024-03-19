@@ -79,7 +79,14 @@ button:focus, #dashboard-buttons a:focus {
   flex: 1;
 }
 
-#treasure-hunt:hover {
+#treasure-hunt-text-block {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+#treasure-hunt-text-block:hover {
   background-color: #eeeeee;
 }
 
