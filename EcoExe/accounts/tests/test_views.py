@@ -35,6 +35,8 @@ class SignUpViewTest(TestCase):
     def setUp(self):
         self.client = Client() #creates a client which can send GET and POST requests for testing purposes
         self.signup_url = reverse('signup')  
+        self.authenticated_user = User.objects.create_user(username='test_authenticated_user', password='12345pass')   
+        #used for checking that if the signup page url is input while an authenticated user is signed in, they just get redirected to the dashboard - standard way to sign up is to log out completely
 
     def test_signup_view_get(self):
         #checks that the view used for a GET request is the signup page
@@ -43,7 +45,16 @@ class SignUpViewTest(TestCase):
         self.assertTemplateUsed(response, 'registration/signup.html')
 
 
-    '''this test is still faulty, was working but sometimes doesn't so may need to practice creating new users and double checking exact response codes in the powershell'''
+    def test_redirect_authenticated_user_to_dashboard(self):
+        #verifies that if the link to signup is input while an authenticated user is already signed in, that the page redirects to the dashboard
+        self.client.login(username='testuser', password='12345')
+        response = self.client.get(self.signup_url)
+        self.assertEqual(response.status_code, 200)  # Verify the response code after logging in and going to signup - 200 as it issuccessful
+
+        response = self.client.get(reverse('dashboard'))
+        self.assertEqual(response.status_code, 302)  # Verify the response code for dashboard - 302 for redirecting to the dashboard 
+        
+    
     def test_signup_view_post_valid_form_new_user(self):
         # Create a valid form data for signing up a new user - follow the code path where it redirects them to log in after successful creation
         name = 'viyebqnc'
