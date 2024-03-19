@@ -15,7 +15,7 @@
     <p>{{message}}</p>
     <br>
 
-    <form method = "post">
+    <form method = "post" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="treasure_hunt_name">Name of treasure hunt:</label>
         <input name = "treasure_hunt_name">

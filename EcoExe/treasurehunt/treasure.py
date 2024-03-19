@@ -8,7 +8,7 @@ a.addStage(stage_no,    (str)type,   (str)info,   (int)no_points) stage_no must 
 
 '''
 class Treasure:
-    def __init__(self,name,noPoints=10,img='/img/Default.png',creating=True,id=None):
+    def __init__(self,name,noPoints=10,img='treasure_hunt/default.png',creating=True,id=None):
         self.name=name
         self.points=noPoints
         self.img=img
