@@ -25,6 +25,7 @@ class Activities(models.Model):
     info=models.TextField()
     location=models.TextField()
     location_name=models.TextField(default="Parker moot room!")
+    points = models.IntegerField(default = 10)
 
 class Stage(models.Model):
     hunt = models.ForeignKey(TreasureHunt, on_delete=models.CASCADE)

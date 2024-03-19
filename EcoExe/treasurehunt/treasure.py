@@ -54,7 +54,7 @@ class Treasure:
         return models.TreasureHunt.objects.get(hunt_id=self.id).image
         
     def addActivity(name,location,activity_type,activity_info,points,location_name):
-        a=models.Activities.objects.create(type=activity_type,name=name,info=activity_info,location=location,location_name=location_name)
+        a=models.Activities.objects.create(type=activity_type,name=name,info=activity_info,location=location,points=points,location_name=location_name)
         return a.act_id
     
     def getActivities():
