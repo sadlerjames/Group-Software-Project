@@ -44,7 +44,7 @@ def login_view(request):
                 msg = 'Invalid Credentials'
         else:
             msg = 'Error validating form'
-    return render(request,'gamekeeper/login.html',{'form':form,'msg':msg}) #send the user back to the 
+    return render(request,'gamekeeper/login.html',{'form':form,'msg':msg}) #send the user back to the login
     
 @login_required(login_url = '/gamekeeper/login')
 def creation_view(request):
