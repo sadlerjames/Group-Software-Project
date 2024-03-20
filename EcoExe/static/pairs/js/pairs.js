@@ -26,23 +26,7 @@ function startGame() {
     divPairs.append(tblPairs);
     game.loadNextLevel();
 }
-/*
-function showCard(card) {
-	if(card !== "undefined") {
-		for(let feature of card.querySelectorAll(".skin,.mouth,.eyes"))
-			feature.hidden = false;
-		card.querySelector(".hidden").hidden = true;
-	}
-}
 
-function hideCard(card) {
-	if(card !== "undefined") {
-		for(let feature of card.querySelectorAll(".skin,.mouth,.eyes"))
-			feature.hidden = true;
-		card.querySelector(".hidden").hidden = false;
-	}
-}
-*/
 function flipCard(card, currentLevel) {
     if(Level.resetting || card.dataset.isFlipped === "true") return;
 
@@ -51,7 +35,6 @@ function flipCard(card, currentLevel) {
     if(card.dataset.type === currentLevel.flippedCards[0].dataset.type) {
         card.dataset.isFlipped = true;
 
-		//showCard(card);
         if(currentLevel.flippedCards.length == currentLevel.matchings[card.dataset.type]) {
             for(let flippedCard of currentLevel.flippedCards)
                 flippedCard.style.backgroundColor = 'gold';
@@ -63,7 +46,6 @@ function flipCard(card, currentLevel) {
     } else {
         // selected card does not follow current matching
         incorrectMatch.play();
-        //showCard(card);
         currentLevel.addMistake();
         for(let flippedCard of currentLevel.flippedCards)
             flippedCard.style.backgroundColor = "red";
@@ -94,7 +76,6 @@ async function resetCards(currentLevel) {
 
     // reset flipped cards
     for(let flippedCard of currentLevel.flippedCards) {
-        //hideCard(flippedCard);
         flippedCard.style.backgroundColor = "white";
         flippedCard.dataset.isFlipped = false;
     }
@@ -116,8 +97,6 @@ function getShape(matches) {
 }
 
 class Game {
-	static #hiddenEmoji;
-	static #hide;
     #wastageTypes = {
 		rubbish: ['toiletRollImageURL','plasticBagImageURL','blueRollImageURL'],
 		recycle: ['cardboardImageURL','plasticBottleImageURL','paperImageURL'],
@@ -201,11 +180,7 @@ class Game {
                 (accMistakes, currentMistakeCount) => accMistakes + currentMistakeCount  
             );
     }
-/*
-    get gameData() {
-        return "test";
-    }
-*/
+
     get levels() {
         return this.#levels;
     }

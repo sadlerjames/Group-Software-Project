@@ -48,7 +48,7 @@
         <input id='btnStartGame' onclick='startGame()' type='button' class='button' value='Start the game'>
         <form method = "post">
             {%csrf_token%}
-            <input id = "hunt" type = "hidden" name = "hunt" value = {{hunt}}>
+            <input id="hunt" type="hidden" name="hunt" value={{hunt}}>
             <button id='btnEndGame' type='submit' class='button' hidden>Continue</button>
         </form>
     </div>
