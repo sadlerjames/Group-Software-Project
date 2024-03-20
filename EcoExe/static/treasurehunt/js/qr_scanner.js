@@ -1,6 +1,9 @@
+// Authored by Dan Harkness-Moore, George Piper and Jack Hales
+
 $(document).ready(function() {
     const reader = new Html5Qrcode('reader');
     var responseReceived = false;
+    // QR code scanned
     if(!responseReceived) {
         function qrCodeSuccessCallback(decodedText,decodedResult) {
             if(!responseReceived) {
@@ -26,13 +29,12 @@ $(document).ready(function() {
                     }
                 });
                     console.log("errored after");
-                    // console.log(fullUrl);
                     window.location.href = fullUrl;
-                    // getLocation({'getdata': JSON.stringify(fullUrl)});
             }
         }
     }
 
+    // Set size for QR scanner
     let qrboxFunction = function(viewfinderWidth, viewfinderHeight) {
         let minEdgePercentage = 0.7; // 70%
         let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
@@ -43,12 +45,14 @@ $(document).ready(function() {
         };
     }
 
+    // Config for QR scanner
     const config = {
         fps: 10,
         qrbox: qrboxFunction,
         aspectRatio: 1
     };
 
+    // Start QR scanner
     reader.start({facingMode: "environment"},config,qrCodeSuccessCallback).catch(err => {alert(err);});
 
     /*reader.stop().catch(err => {

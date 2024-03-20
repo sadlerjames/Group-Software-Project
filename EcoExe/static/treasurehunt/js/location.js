@@ -1,3 +1,5 @@
+// Authored by George Piper and James Sadler
+
 const x = document.getElementById("demo");
 
 getLocation({'getdata': window.location.href});
