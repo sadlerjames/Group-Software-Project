@@ -32,6 +32,13 @@ def dashboard(request):
         return render(request, "gamekeeper/dashboard.html")
     else:
         return redirect('/accounts/dashboard') #send a player user to their dashboard
+    
+@login_required(login_url = '/gamekeeper/login')
+def info(request):
+    if getattr(request.user,'is_gamekeeper'): #check the user is allowed to access the webpage
+        return render(request, "gamekeeper/info.html")
+    else:
+        return redirect('/accounts/dashboard') #send a player user to their dashboard
 
 def login_view(request):
     form = LoginForm(request.POST or None)

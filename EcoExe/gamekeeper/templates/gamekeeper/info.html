@@ -1,0 +1,18 @@
+{% extends "base_gamekeeper.html" %} 
+{% block title %}Info{% endblock %}
+
+{% block index %}
+<h1>Info</h1>
+<h3>Quizzes:</h3>
+<p>Quizzes can be created in the create a quiz panel. These quizzes can then be allocated as a daily quiz or used as part of a treasure hunt</p>
+<br>
+<h3>Daily quiz:</h3>
+<p>A quiz can be allocated by using the daily quiz panel. This will allow you to allocate any quiz you have created to be the quiz of the day for all users for any day you choose</p>
+<br>
+<h3>Treasure hunts:</h3>
+<p>To create a treasure hunt, you first need to create activities. These need a human-readable location name as well as the actual coordinates, and a task for the user to do at this location.</p>#
+<br>
+<p>You can then link activities into a single treasure hunt, which will create a pdf you can print and stick up around campus for players to access</p>
+<a href="/gamekeeper/dashboard">Back to dashboard</a>
+
+{% endblock %}

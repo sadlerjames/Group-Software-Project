@@ -34,5 +34,6 @@ urlpatterns = [
     path('treasurehunt/create/', views.create_treasure, name="create_treasure"),
     path('treasurehunt/get_activities/', views.get_activities, name="get_activities"),
     path('logout/', views.logoutview, name='logout'),
+    path('info/',views.info,name="info"),
 ]
 
