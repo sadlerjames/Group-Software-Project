@@ -19,11 +19,20 @@ Including another URLconf
 from django.urls import path
 from . import views
 from .views import *
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
     path('', views.dashboard, name="dashboard"),
     path('login/', views.login_view, name="loginpage"),
+    path('reset/done/', views.password_reset_done, name="password_reset_done"),
+    path('password-reset-complete/',
+         auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
+         name='password_reset_complete'),
+    path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
+    path('password-reset-confirmed/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'),
+         name='password_reset_confirmed'),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('signup/', views.signup, name='signup'),
     path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),

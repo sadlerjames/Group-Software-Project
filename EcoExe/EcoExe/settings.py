@@ -134,9 +134,14 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# Put emails in backend
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+DEFAULT_FROM_EMAIL = 'EcoExe <support@ecoexe.me>'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.zoho.eu'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'support@ecoexe.me'
+EMAIL_HOST_PASSWORD = '9V8*pX$Xp!PAiAS8X'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
