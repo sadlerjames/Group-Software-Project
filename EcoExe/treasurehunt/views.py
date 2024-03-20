@@ -275,4 +275,27 @@ def getPins(request):
             pass
         
     return JsonResponse(locations) 
+
+
+def getNewPins(request):
+    user = request.user.username
+    locations = {}
+    hunts = Treasure.getNewHunts(user)
+    i=0
+    for hunt in hunts:
+        try:
+            activityID = hunt.getStageActivity(1)
+            name = hunt.getName()
+            activityName = Treasure.getActivities()[activityID]['name']
+            image = hunt.getImage()
+            location = Treasure.getActivities()[activityID]['location']
+            locationName = Treasure.getActivities()[activityID]['location_name']
+            #pass in the name and location of any unfinished treasure hunt
+            locations[i] = [name, location, locationName, image]
+            i+=1
+            
+        except Stage.DoesNotExist: #occurs when user has finished the treasure hunt
+            pass
+        
+    return JsonResponse(locations) 
     

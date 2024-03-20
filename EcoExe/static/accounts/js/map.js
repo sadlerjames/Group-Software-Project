@@ -14,7 +14,10 @@ function getCookie(name) {
 
 const csrfToken = getCookie('csrftoken');
 
-function getLocations(csrfToken) {
+async function getLocations(csrfToken) {
+    var allCoordinates = [];
+
+    // First HTTP request
     fetch("/treasurehunt/next_locations/", {
         headers: {
             "X-CSRFToken": csrfToken,
@@ -28,35 +31,59 @@ function getLocations(csrfToken) {
         return response.json();
     })
     .then(data => {
-        var allCoordinates = [];
-        //console.log(data);
-    
-        for (var key in data) {
-    
-            var name = data[key][0];
-            var coordinates = data[key][1];
-            var parts = coordinates.split(',');
-    
-            // Extract the values into separate variables
-            var latitude = parts[0];
-            var longitude = parts[1];
-            
-            allCoordinates.push([name, latitude, longitude, data[key][2], data[key][3]]);
-        }
-    
-        initMap(allCoordinates);
-    
+        // Process the data from the first request
+        processData(data, "first");
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
     });
+
+    // Second HTTP request
+    fetch("/treasurehunt/new_locations/", {
+        headers: {
+            "X-CSRFToken": csrfToken,
+            "Content-Type": "application/json" 
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Process the data from the second request
+        processData(data, "second");
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
+    function processData(data, source) {
+        for (var key in data) {
+            var name = data[key][0];
+            var coordinates = data[key][1];
+            var parts = coordinates.split(',');
+            var latitude = parts[0];
+            var longitude = parts[1];
+
+            allCoordinates.push({
+                name: name,
+                latitude: latitude,
+                longitude: longitude,
+                source: source,
+                info: data[key][2],
+                image: data[key][3]
+            });
+        }
+
+        initMap(allCoordinates);
+    }
 }
 
 async function initMap(coordinates) {
     const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
-        "marker",
-    );
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
 
     const map = new Map(document.getElementById("google-maps-display"), {
         center: {lat: 50.737273546349144, lng: -3.5351586176728236},
@@ -64,37 +91,47 @@ async function initMap(coordinates) {
         mapId: "5d7ba1c59311dfdd",
         streetViewControl: false,
         fullscreenControl: false,
-      });
+    });
 
-    // Create an info window to share between markers.
     const infoWindow = new InfoWindow();
 
+    // Create a separate scope for each iteration of the loop
     for (let i = 0; i < coordinates.length; i++) {
-        let point = coordinates[i];
+        (function() {
+            let point = coordinates[i];
 
-        //console.log(point);
+            let pinBackground;
+            if (point.source === "first") {
+                pinBackground = new PinElement({
+                    background: "#003c3c",
+                    borderColor: "#ffffff",
+                    glyphColor: "#00dca5",
+                });
+            } else if (point.source === "second") {
+                pinBackground = new PinElement({
+                    background: "#00dca5",
+                    borderColor: "#ffffff",
+                    glyphColor: "#003c3c",
+                });
+            }
 
-        const pinBackground = new PinElement({
-            background: "#003c3c",
-            borderColor: "#ffffff",
-            glyphColor: "#00dca5",
-        });
+            var marker = new AdvancedMarkerElement({
+                map,
+                position: { lat: parseFloat(point.latitude), lng: parseFloat(point.longitude) },
+                title: point.name,
+                content: pinBackground.element,
+            });
 
-        var marker = new AdvancedMarkerElement({
-            map,
-            position: { lat: parseFloat(point[1]), lng: parseFloat(point[2]) },
-            title: point[0],
-            content: pinBackground.element,
-        });
+            marker.addListener("click", ({ domEvent, latLng }) => {
+                const { target } = domEvent;
 
-        // Add a click listener for each marker, and set up the info window.
-        marker.addListener("click", ({ domEvent, latLng }) => {
-            const { target } = domEvent;
-
-            infoWindow.close();
-            infoWindow.setContent('<h3>' + marker.title + '</h3><br><p style="color: black;">Location: ' + point[3] + '</p><br><img src="/media/' + point[4] + '">');
-            infoWindow.open(marker.map, marker);
-        });
+                infoWindow.close();
+                infoWindow.setContent('<h3>' + marker.title + '</h3><br><p style="color: black;">Location: ' + point.info + '</p><br><img src="/media/' + point.image + '">');
+                infoWindow.open(marker.map, marker);
+            });
+        })();
     }
-  }
+}
+
+
 
