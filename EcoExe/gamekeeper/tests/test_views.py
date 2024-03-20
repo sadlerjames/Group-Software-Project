@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate,login,logout
 from accounts.models import User
 from gamekeeper.forms import LoginForm
 
-'''unfinished, tests here don't work'''
+
 class LoginViewTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -17,9 +17,6 @@ class LoginViewTest(TestCase):
         #verifies that the correct response code (200 for success) is returned when valid gamekeeper credentials are input
         response = self.client.post(self.login_url, {'username': 'validgamekeeper', 'password': 'testpasswordforgamekeeper987123'}) # Simulate a form submission
         self.assertEquals(response.status_code, 200)    #asserts that the correct code is found
-        #login(self.client, self.valid_user)
-        #self.assertRedirects(response=response, status_code=200, expected_url=self.dashboard_url)
-        #self.assertRedirects(response=response, status_code=200, self.dashboard_url)
 
      
     def test_login_with_invalid_credentials(self):

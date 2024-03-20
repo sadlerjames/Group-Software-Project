@@ -1,11 +1,7 @@
 #Authored by Finn Ashby
 from django.db import models
-#from treasurehunt import treasure
-# Create your models here.
 from django.db import models
-
 from django import template
-
 from django.db import models
 
 class TreasureHunt(models.Model):
@@ -41,9 +37,6 @@ class Stage(models.Model):
         return f"Slot {self.order} of Treasure Hunt {self.hunt.hunt_id}"
     
 
-
-    
-
 class UserTreasure(models.Model):
     hunt = models.ForeignKey(TreasureHunt, on_delete=models.CASCADE)
     player = models.CharField(max_length=100)
@@ -55,4 +48,4 @@ class UserTreasure(models.Model):
         unique_together = ('hunt', 'player')
 
     def __str__(self):
-        return f"{self.player.username}'s Progress in Treasure Hunt {self.hunt.hunt_id}"
+        return f"{self.player}'s Progress in Treasure Hunt {self.hunt.hunt_id}"

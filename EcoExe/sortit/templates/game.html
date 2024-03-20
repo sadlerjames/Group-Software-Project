@@ -35,6 +35,7 @@
           <form method = "post">
             {%csrf_token%}
             <input id='hunt' type = 'hidden' name="hunt" value={{hunt}}>
+            <input id = "score" type = "hidden" name = "score" value = "0">
             <button type="submit" id="btnExit">Continue</button>
           </form>
 

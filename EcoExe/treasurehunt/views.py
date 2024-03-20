@@ -27,6 +27,9 @@ def wronglocation(request):
 def finish(request):
     return render(request,"finish.html")
 
+def fail(request):
+    return render(request,"fail.html")
+
 def quiz(request):
     if request.method == "POST":
         # Load quiz and get questions and points per question
@@ -65,7 +68,7 @@ def quiz(request):
         if percent % 1 == 0:
             percent = int(percent)
         if(percent > 50): #the player has passed
-            return activityFinished(request)
+            return activityFinished(request,percent/100)
         else:
             return render(request,"fail.html")
 
@@ -123,7 +126,7 @@ def trivia(request):
         hunt = request.GET.get('hunt')
         return render(request,"trivia.html",{'fact':request.GET.get('extra'),'hunt':hunt})
     else:
-        return activityFinished(request)
+        return activityFinished(request,1)
 
 def verify(request):
     if request.user.is_authenticated:
@@ -156,13 +159,14 @@ def verify(request):
             circle = Circle((float(x),float(y)),radius = 0.001) #a circle centering on the qr code with about a 40m radius
             if(circle.contains_point([latitude,longitude])):
                 name =  request.user.username
-                #name = "Kamal" #hardcoded for testing
+                #check the user has scanned the qr code for the stage after the last one they completed
                 if Treasure.getStageNo(player_name=name,hunt_id=huntID) == int(stage)-1:
                     #render the activity
                     hunt = Treasure.getTreasure(id=huntID)
                     activityID = hunt.getStageActivity(stage)
                     activity = Treasure.getActivities()[activityID]
                     extra =  activity['info']
+                    #render a different page based on the activity type
                     if(activity['type'] == "quiz"):
                         return JsonResponse({'redirect':'/treasurehunt/quiz','extra':extra,'hunt':huntID})
                     elif(activity['type'] == "trivia"):
@@ -178,27 +182,32 @@ def verify(request):
                         hunt = Treasure.getTreasure(id=huntID)
                         print(Treasure.getStageNo(request.user.username,huntID))
                         if Treasure.getStageNo(request.user.username,huntID) == 0:
+                            #if the user has not started, show the location of the first page
                             activityID = hunt.getStageActivity(1)
                             activity = Treasure.getActivities()[activityID]
                         else:
+                            #or else show the next stage from them
                             activityID = hunt.getStageActivity(Treasure.getStageNo(request.user.username,huntID)+1)
                             activity = Treasure.getActivities()[activityID]
                         return JsonResponse({'redirect':'/treasurehunt/wrong','extra':activity['location_name']})
                     except Stage.DoesNotExist:
+                        #this means the next stage doesn't exist, so the treasure hunt is finished
                         return JsonResponse({'redirect':'/treasurehunt/finish'})
                 return render(request,"scan.html")
             else:
                 try:
+                    #show the user that they are in the wrong location
                     hunt = Treasure.getTreasure(id=huntID)
                     activityID = hunt.getStageActivity(Treasure.getStageNo(request.user.username,huntID)+1)
                     activity = Treasure.getActivities()[activityID]
                     return JsonResponse({'redirect':'/treasurehunt/wronglocation','extra':activity['location_name']})
                 except Stage.DoesNotExist:
+                    #this means the next stage doesn't exist, so the treasure hunt is finished
                     return JsonResponse({'redirect':'/treasurehunt/finish'})
     else:
         return redirect(request,"/accounts/login.html",context={'extra':activity['location_name']})
     
-def activityFinished(request):
+def activityFinished(request,multiplier):
     huntID = request.POST.get('hunt')
 
     #add the points to the database
@@ -206,9 +215,8 @@ def activityFinished(request):
     hunt = Treasure.getTreasure(id=huntID)
     activityID = hunt.getStageActivity(stage+1)
     points = Treasure.getActivities()[activityID]['points']
-    print(points)
 
-    Treasure.incrementStage(request.user.username,huntID,points)
+    Treasure.incrementStage(request.user.username,huntID,points*multiplier)
 
     try: #if the user has not finished the treasure hunt
         stage += 1 #get the next stage
@@ -217,7 +225,8 @@ def activityFinished(request):
         return render(request,"next.html",{'location':activity['location_name']})
     except Stage.DoesNotExist: #if the user has finished the treasure hunt, there is no next stage
         points = hunt.getPoints()
-        Treasure.incrementStage(request.user.username,huntID,points) #add the bonus points for completing the treasure hunt
+        #add the bonus points for completing the treasure hunt
+        Treasure.incrementStage(request.user.username,huntID,points*multiplier)
         return render(request,"finish.html")
     
 def validatePage(request):
@@ -255,10 +264,11 @@ def getPins(request):
             activityID = hunt.getStageActivity(stage[1])
             name = Treasure.getActivities()[activityID]['name']
             location = Treasure.getActivities()[activityID]['location']
+            #pass in the name and location of any unfinished treasure hunt
             locations[i] = [name, location]
             i+=1
             
-        except Stage.DoesNotExist: #occurs when user has not started treasure hunt
+        except Stage.DoesNotExist: #occurs when user has finished the treasure hunt
             pass
         
     return JsonResponse(locations)
