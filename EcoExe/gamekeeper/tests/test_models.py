@@ -18,7 +18,7 @@ class DailyQuizzesTest(TestCase):
         )
 
         # Retrieve the daily quiz from the database
-        saved_daily_quiz = DailyQuizzes.objects.get(date="2024-03-20")
+        saved_daily_quiz = DailyQuizzes.objects.get(date=date.today())
 
         # Check if the retrieved daily quiz matches the one created
         self.assertEqual(saved_daily_quiz.date, daily_quiz.date)
@@ -28,7 +28,7 @@ class DailyQuizzesTest(TestCase):
     def test_daily_quiz_deletion(self):
         # Create a daily quiz
         daily_quiz = DailyQuizzes.objects.create(
-            date="2024-03-20",  # Assuming today's date
+            date=date.today(),  # Assuming today's date
             quiz_id=self.quiz,
             time_limit=30
         )
@@ -38,12 +38,12 @@ class DailyQuizzesTest(TestCase):
 
         # Check if the daily quiz is deleted
         with self.assertRaises(DailyQuizzes.DoesNotExist):
-            DailyQuizzes.objects.get(date="2024-03-20")
+            DailyQuizzes.objects.get(date=date.today())
 
     def test_daily_quiz_update(self):
         # Create a daily quiz
         daily_quiz = DailyQuizzes.objects.create(
-            date="2024-03-20",  # Assuming today's date
+            date=date.today(),  # Assuming today's date
             quiz_id=self.quiz,
             time_limit=30
         )
@@ -53,7 +53,7 @@ class DailyQuizzesTest(TestCase):
         daily_quiz.save()
 
         # Retrieve the updated daily quiz from the database
-        updated_daily_quiz = DailyQuizzes.objects.get(date="2024-03-20")
+        updated_daily_quiz = DailyQuizzes.objects.get(date=date.today())
 
         # Check if the time limit is updated
         self.assertEqual(updated_daily_quiz.time_limit,45)
