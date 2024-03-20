@@ -22,7 +22,7 @@
     </select>
 
     <div class="quiz option">
-        <p><b>Some info about creating a quiz</b></p>
+        <p><b>You can use any quizzes you previously created to make an activity for a treasure hunt</b></p>
         <p>{{message}}</p>
         <form method="post">
             {% csrf_token %}
@@ -61,7 +61,7 @@
     </div>
 
     <div class="trivia option">
-        <p><b>Some info about creating a trivia</b></p>
+        <p><b>Display a fun fact about sustainability on campus as part of a treasure hunt</b></p>
         <form method = "post">
             {% csrf_token %} 
             <input type="hidden" name="activity_type" value="" id="hidden_trivia_activity_type"/>
@@ -94,7 +94,7 @@
     </div>
 
     <div class="sortit option">
-        <p><b>Some info about sortit</b></p>
+        <p><b>Display the minigame SortIt as part of a treasure hunt</b></p>
         <p>{{message}}</p>
         <form method="post">
             {% csrf_token %}
@@ -126,7 +126,7 @@
     </div>
 
     <div class="pairs option">
-        <p><b>Some info about pairs</b></p>
+        <p><b>Display the minigame pairs as part of a treasure hunt</b></p>
         <p>{{message}}</p>
         <form method="post">
             {% csrf_token %}

@@ -115,6 +115,7 @@ def create_activity(request):
             form = QRCreationForm(request.POST)
             contextVars['form'] = form
             if form.is_valid():
+                #take the information from the post request
                 activityType = request.POST.get('activity_type')
                 activityName = request.POST.get('qr_name')
                 latitude = request.POST.get('latitude')
@@ -123,16 +124,17 @@ def create_activity(request):
                 extraInfo = request.POST.get('extra')
                 points = request.POST.get('points')
                 locationName = request.POST.get('location_name')
-                Treasure.addActivity(activityName,location,activityType,extraInfo,points,locationName)
+
                 #save this to the database
+                Treasure.addActivity(activityName,location,activityType,extraInfo,points,locationName)
                 return redirect('/gamekeeper/treasurehunt/create_activity', context=contextVars)
             else:
+                #if the form is invalid, display this to the user
                 contextVars['message'] = "There was an error in your form, please try again "
                 form = QRCreationForm()
             return render(request,"gamekeeper/treasurehunt/create-activity.html",context=contextVars)
         else:
             form = QRCreationForm()
-            print(contextVars)
             return render(request,"gamekeeper/treasurehunt/create-activity.html",context=contextVars)
     else:
         return redirect('/account/dashboard')
@@ -141,7 +143,7 @@ def create_activity(request):
 @csrf_protect
 def create_treasure(request):
     if request.method == 'POST':
-        #get the number of questions from the post request
+        #get the number of activities from the post request
         form = TreasureHuntCreationForm(request.POST, request.FILES, extra= request.POST.get('extra_field_count'))
         context = {}
         if form.is_valid():
@@ -159,7 +161,7 @@ def create_treasure(request):
                 else:
                     treasure = Treasure(name, points)
 
-                for i in range(1,int(request.POST.get('extra_field_count'))+1):
+                for i in range(1,int(request.POST.get('extra_field_count'))+1): #for each activity
                     activity_ID = request.POST.get('extra_field_{index}'.format(index=i))
                     #create a qr code for the activity
                     url = "/treasurehunt/validate/?huntID={hunt_id}&stage_id={stage_id}".format(hunt_id = treasure.getId(), stage_id = i)
@@ -169,7 +171,12 @@ def create_treasure(request):
             except IntegrityError:
                 return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html",context={'message':'A treasure hunt with this name already exists'})
             makePDF(name,request.POST.get('extra_field_count'))
-            context['pdf'] = name
+            context['pdf'] = name #provide a link to the pdf on the page
+
+            # delete all the temp qr codes
+            for i in range(1,int(request.POST.get('extra_field_count'))+1): #for each activity
+                os.remove("gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i))
+
         return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html",context=context)
     else:
         return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")
