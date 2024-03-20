@@ -1,8 +1,10 @@
+//Authored by Dan
+//The base class that can have cards added to it and perform checks if the game has won
 export default class Level {
     constructor(wastageTypes) {
         this.#matchings = {};
 		this.#completedMatchings = [];
-
+//Loop through the wastages and set the index of the matchings list to be correct
         for(let wastage of Object.values(wastageTypes))
 			this.#matchings[wastage[0].alt] = wastage;
 
@@ -15,6 +17,7 @@ export default class Level {
     appendCard(card) {
         this.#flippedCards.push(card);
     }
+    
     resetFlipped() {
         this.#flippedCards.length = 0;
     }
@@ -30,15 +33,16 @@ export default class Level {
         if(typeof(resetState) === "boolean")
             Level.#resetting = resetState;
     }
-
+	
     get details() {
         return {
             levelscore: this.score,
             levelmistakes: this.mistakes
         }
     }
-
+	
     isLevelComplete() {
+	//Loop through the objecs and check if all of them are matching
         for(let matching of Object.values(this.#matchings))
             if(matching)
                 return false;
@@ -53,6 +57,7 @@ export default class Level {
     get score() {
 		return this.#score;
     }
+	//adds to the score using a formula
     addScore() {
         this.#score += (500 / (this.#mistakes > 0 ? this.#mistakes : 1));
     }
@@ -71,7 +76,6 @@ export default class Level {
     #score = 0;
     #mistakes = 0;
     #highScore;
-    //static #difficulty;
     static #resetting = false;
 }
 
