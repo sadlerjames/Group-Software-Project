@@ -22,6 +22,7 @@ from django.db import IntegrityError
 import os
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
+from pypdf import PdfMerger
 
 
 # Create your views here.
@@ -258,7 +259,7 @@ def makePDF(name,extra):
         path = "gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i)
         images.append([Image.open(path), path, i])
 
-    pdf_path = "media/pdfs/{name}.pdf".format(name=name)
+    pdf_path = "media/pdfs/{name}temp.pdf".format(name=name)
 
     c = canvas.Canvas(pdf_path, pagesize=A4)
     width, height = A4
@@ -283,8 +284,14 @@ def makePDF(name,extra):
         # Add a new page for the next image
         c.showPage()
 
-    # Save the PDF
+    merged = PdfMerger()
     c.save()
+    merged.append('gamekeeper/templatetags/basepage.pdf')
+    merged.append("media/pdfs/{name}temp.pdf".format(name=name))
+    merged.write("media/pdfs/{name}.pdf".format(name=name))
+    merged.close()
+    os.remove("media/pdfs/{name}temp.pdf".format(name=name))
+
     
 
 def get_activities(request):
