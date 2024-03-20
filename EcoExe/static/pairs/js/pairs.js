@@ -1,52 +1,62 @@
-// authored by Dan & Jack
+// Authored by Dan & Jack
 
 import Level from "./level.js";
 
 "use strict";
 
+// Get element IDs
 var backgroundLoop = document.getElementById("background-loop");
 var gameOver = document.getElementById("game-over");
 var incorrectMatch = document.getElementById("incorrect-match");
 var correctMatch = document.getElementById("correct-match");
 
+// Function to start the pairs game
 function startGame() {
+    // Get element IDs
     const game = new Game(false);
     const divPairs = document.getElementById("divPairs");
     const tblPairs = document.createElement("table");
     tblPairs.id = "tblPairs";
     
+    // Hide elements
     document.getElementById("btnStartGame").remove();
     document.getElementById("buttonDiv").hidden = true;
 	document.getElementById("ftrSources").hidden = true;
 	document.getElementById('btnSources').hidden = true;
 
+    // Play music and load sfx audio
     backgroundLoop.play();
     gameOver.load();
     incorrectMatch.load();
     correctMatch.load();
     
+    // Start game level
     divPairs.append(tblPairs);
     game.loadNextLevel();
 }
 
+// Function to flip a card
 function flipCard(card, currentLevel) {
     if(Level.resetting || card.dataset.isFlipped === "true") return;
 
     currentLevel.flippedCards.push(card);
-    // check if card is the same type as those already in flipped cards
+    // Check if card is the same type as those already in flipped cards
     if(card.dataset.type === currentLevel.flippedCards[0].dataset.type) {
         card.dataset.isFlipped = true;
 
+        // All cards are matched
         if(currentLevel.flippedCards.length == currentLevel.matchings[card.dataset.type]) {
             for(let flippedCard of currentLevel.flippedCards)
                 flippedCard.style.backgroundColor = 'gold';
+            // Play sfx
             correctMatch.play();
             currentLevel.addScore();
             currentLevel.completeMatching(card.dataset.type);
-            currentLevel.resetFlipped(); // empties currentLevel.flippedCards
+            // Empty currentLevel.flippedCards
+            currentLevel.resetFlipped(); 
         }
     } else {
-        // selected card does not follow current matching
+        // Selected card does not follow current matching
         incorrectMatch.play();
         currentLevel.addMistake();
         for(let flippedCard of currentLevel.flippedCards)
@@ -55,6 +65,7 @@ function flipCard(card, currentLevel) {
     }
 }
 
+// Function to choose which waste items to show
 function chooseWastage(matches) {
 	const keys = Object.keys(matches);
 	
@@ -63,7 +74,7 @@ function chooseWastage(matches) {
         wastage = keys[Math.floor(Math.random() * keys.length)];
     } while(matches[wastage].length == 0);
 	
-	// picks random image
+	// Picks random image
 	const random = Math.floor(Math.random() * matches[wastage].length);
 	const chosenWastage = matches[wastage][random];
 	matches[wastage].splice(random,1);
@@ -71,12 +82,13 @@ function chooseWastage(matches) {
     return chosenWastage;
 }
 
+// Function to reset cards
 async function resetCards(currentLevel) {
     Level.resetting = true;
-    // wait 3 seconds
+    // Wait 3 seconds
     await new Promise(resolve => setTimeout(resolve, 3000));
 
-    // reset flipped cards
+    // Reset flipped cards
     for(let flippedCard of currentLevel.flippedCards) {
         flippedCard.style.backgroundColor = "white";
         flippedCard.dataset.isFlipped = false;
@@ -85,6 +97,7 @@ async function resetCards(currentLevel) {
     Level.resetting = false;
 }
 
+// Function to get card shape
 function getShape(matches) {
     let totalCount = Object.values(matches).map(
         (matching) => matching.length).reduce((x,y) => x + y);
@@ -98,7 +111,10 @@ function getShape(matches) {
     return [shapeKey, shapes[shapeKey]];
 }
 
+// Game class
 class Game {
+    // Get image urls from static
+    // Urls defined in the html script section to access static files
     #wastageTypes = {
 		rubbish: ['toiletRollImageURL','plasticBagImageURL','blueRollImageURL'],
 		recycle: ['cardboardImageURL','plasticBottleImageURL','paperImageURL'],
@@ -107,6 +123,7 @@ class Game {
 	#completedMatchings;
 	#currentLevel;
 
+    // Constuctor to make board
     constructor() {
 		let level1, level2, level3;
 		let matchings1,matchings2,matchings3;
@@ -133,7 +150,7 @@ class Game {
 		foodImage.dataset.type = 'food';
 		foodImage.hidden = false;
 		
-		// select 2 random from rubbish and recycle here
+		// Select 2 random from rubbish and recycle here
 		
 		let rubbishSelection = [rubbishImage,this.#randomWastage('rubbish'),this.#randomWastage('rubbish')];
 		let recycleSelection = [recycleImage, this.#randomWastage('recycle'),this.#randomWastage('recycle')];
@@ -148,7 +165,7 @@ class Game {
 			'recycle': [...recycleSelection]
 		};
 		
-		// add food selection here
+		// Add food selection here
 		let foodSelection = [foodImage, this.#randomWastage('food'),this.#randomWastage('food')];
 		matchings2.food = foodSelection;
 		
@@ -158,7 +175,7 @@ class Game {
 			'food': [...foodSelection]
 		};
 		
-		// appends last item in arrays
+		// Appends last item in arrays
 		matchings3['rubbish'].push(this.#randomWastage('rubbish'));
 		matchings3['recycle'].push(this.#randomWastage('recycle'));
 		matchings3['food'].push(this.#randomWastage('food'));
@@ -169,6 +186,7 @@ class Game {
         this.#levels = [level1, level2, level3];
     }
 
+    // Function to get the total level score
     get totalScore() {
         return this.#levels.map(
             (level) => level.score).reduce(
@@ -176,6 +194,7 @@ class Game {
             );
     }
 
+    // Function to get the number of mistakes made
     get totalMistakes() {
         return this.#levels.map(
             (level) => level.mistakes).reduce(
@@ -183,22 +202,24 @@ class Game {
             );
     }
 
+    // Function to get the game levels
     get levels() {
         return this.#levels;
     }
 
+    // Load the next level
     loadNextLevel() {
 		let level = this.#levels[this.#currentLevel];
         let tblPairs = document.getElementById("tblPairs");
         let shape = getShape(level.matchings);
         let typeCount = level.matchings['rubbish'].length;
 		
-        // clear table for upcoming level
+        // Clear table for upcoming level
         Object.values(tblPairs.getElementsByTagName("tr")).forEach(
             (child) => child.remove());
 		
 		
-        // generate table
+        // Generate table
         for(let i = 0; i < shape[0]; i++) {
             const row = tblPairs.insertRow();
             for(let j = 0; j < shape[1]; j++) {
@@ -209,11 +230,16 @@ class Game {
                 card.dataset.isFlipped = false;
 				card.dataset.type = wastage.dataset.type;
 				
+                // Card click listener
                 card.onclick = () => {
                     flipCard(card, level);
                     if(level.isLevelComplete()) {
+                        // Check if game is complete
                         if(this.#isGameComplete) {
+                            // Hide game table
                             tblPairs.hidden = true;
+
+                            // Get elements and show/hide as necessary
                             var finalScoreDiv = document.getElementById("finalScoreDiv");
                             var finalScore = document.getElementById("finalScore");
                             var btnEndGame = document.getElementById("btnEndGame");
@@ -222,9 +248,13 @@ class Game {
                             finalScoreDiv.hidden = false;
                             finalScore.hidden = false;
                             btnEndGame.hidden = false;
+
+                            // Get and display score
                             var data = JSON.parse(this.#json);
                             finalScore.innerHTML = "Score: " + data.totalscore;
                             document.getElementById("score").value = data.totalscore;
+
+                            // Stop background music and play game complete sfx
                             backgroundLoop.pause();
                             gameOver.play();
                         } else {
@@ -243,6 +273,7 @@ class Game {
 		this.#currentLevel++;
     }
 
+    // Used to switch type of waste
 	#randomWastage(wastageType) {
 		const selectedWastage = new Image();
 		let random;
@@ -274,7 +305,7 @@ class Game {
 		return selectedWastage;
 	}
 
-	// provides level individual details like score for level and number of mistakes made
+	// Provides level individual details like score for level and number of mistakes made
     get #getLevelDetails() {
         const detailsMap = this.#levels.map((level) => level.details) 
         const details = {}
@@ -284,7 +315,7 @@ class Game {
         return details;
     }
 
-	// if the three levels have been completed, end the game
+	// If the three levels have been completed, end the game
     get #isGameComplete() {
         return this.#currentLevel === 3;
     }
@@ -300,4 +331,5 @@ class Game {
     #levels;
 }
 
+// Start the game
 window.startGame = startGame;
