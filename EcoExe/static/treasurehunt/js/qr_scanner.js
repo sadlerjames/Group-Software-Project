@@ -7,8 +7,7 @@ $(document).ready(function() {
     if(!responseReceived) {
         function qrCodeSuccessCallback(decodedText,decodedResult) {
             if(!responseReceived) {
-                var domain = window.location.protocol + '//' + window.location.host;
-                var fullUrl = domain + decodedText;
+                var fullUrl = decodedText;
                 
                 responseReceived = true;
                     var csrftoken = jQuery('[name=csrfmiddlewaretoken]').val();

@@ -1,3 +1,4 @@
+#Authored by George Piper
 from django.test import TestCase
 from gamekeeper.models import DailyQuizzes
 from quiz.models import Quizzes  # Assuming this is your quiz model

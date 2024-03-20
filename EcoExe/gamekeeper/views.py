@@ -200,7 +200,7 @@ def create_treasure(request):
                     activity_ID = request.POST.get('extra_field_{index}'.format(index=i))
                     
                     #create a qr code for the activity
-                    url = "/treasurehunt/validate/?huntID={hunt_id}&stage_id={stage_id}".format(hunt_id = treasure.getId(), stage_id = i)
+                    url = "https://www.ecoexe.me/treasurehunt/validate/?huntID={hunt_id}&stage_id={stage_id}".format(hunt_id = treasure.getId(), stage_id = i)
                     qr = segno.make(url)
 
                     #temporarily save the qr code

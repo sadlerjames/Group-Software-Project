@@ -1,3 +1,5 @@
+#Authored by George Piper
+
 from django.test import TestCase
 from django.utils import timezone
 from points.models import Points,DailyPoints
@@ -7,6 +9,11 @@ from gamekeeper.models import DailyQuizzes
 
 
 class PointsModelTest(TestCase):
+    '''
+    The tests in this class check that the fields for the points model have the correct data in them when a row with a user and quiz is inserted into the table
+    - setUpTestData establishes the row in the testing database
+    - the tests themselves check that constraints are met (i.e. unique user/quiz ids) and that the data in the row is as expected based on the data entered in the set up
+    '''
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
@@ -38,6 +45,14 @@ class PointsModelTest(TestCase):
             Points.objects.create(user_id=user, quiz_id=quiz, points=50, timestamp=timezone.now())
 
 class DailyPointsModelTest(TestCase):
+    '''
+    The tests here check that the daily points model in the database functions as expected
+    - setUpTestData establishes a row with a user, quiz and date of that respective daily quiz
+    - the tests then verify that the data was inserted correctly and that the database can be successfully queried
+    - default values are also checked
+    - uniqueness of the user and quiz ids are also tested
+    '''
+
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods

@@ -10,7 +10,7 @@
     <script async src="{% static '/accounts/js/map.js' %}"></script>
     <script
       async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL5gQ38rSDQmJqoZBWSK8ZEYFreGvO-lk&callback=getLocations&v=weekly">
+      src="https://maps.googleapis.com/maps/api/js?key={{ MAPS_API_KEY }}&callback=getLocations&v=weekly">
     </script>
 {% endblock %}
 
