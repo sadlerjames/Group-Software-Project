@@ -297,6 +297,8 @@ class Game {
                             //console.log(data);
                             //console.log(data._data.totalscore);
                             finalScore.innerHTML = "Score: " + data._data.totalscore;
+                            document.getElementById("score").value = data._data.totalscore;
+                            //window.alert(data._data.totalscore)
                             backgroundLoop.pause();
                             gameOver.play();
                         } else {

@@ -32,6 +32,8 @@ var speedThreshold = 10;
 var backgroundLoop = document.getElementById("background-loop");
 var gameOver = document.getElementById("game-over");
 var lifeLost = document.getElementById("life-lost");
+let hiddenScore = document.getElementById("score");
+console.log(hiddenScore);
 
 // Add a click event listener to the button
 btnStart.addEventListener("click", function() {
@@ -111,9 +113,11 @@ function moveObjects() {
           if(areElementsTouching(image, bin)){
               if(points == 0){
                 points += 10;
+                hiddenScore.value = points;
               }
               else{
                 points = Math.floor(points * 1.1);
+                hiddenScore.value = points;
               }
               opacity = 0;
               pos = 0; //reset image's position

@@ -7,4 +7,9 @@ def play_game(request):
         hunt = request.GET.get('hunt')
         return render(request, 'pairs/game.html',{'hunt':hunt})
     else:
-        return activityFinished(request)
+        score = int(request.POST.get('score'))
+        print(score)
+        if(score>2000):
+            return activityFinished(request,score/4000)
+        else:
+            return render(request,"/treasurehunt/fail.html")

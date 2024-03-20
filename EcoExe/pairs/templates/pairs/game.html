@@ -49,6 +49,7 @@
         <form method = "post">
             {%csrf_token%}
             <input id = "hunt" type = "hidden" name = "hunt" value = {{hunt}}>
+            <input id = "score" type = "hidden" name = "score" value = "">
             <button id='btnEndGame' type='submit' class='button' hidden>Continue</button>
         </form>
     </div>

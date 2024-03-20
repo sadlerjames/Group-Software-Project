@@ -30,4 +30,5 @@ urlpatterns = [
     path('next_locations/',views.getPins,name="next_locations"),
     path('wronglocation/',views.wronglocation,name="wronglocation"),
     path('finish',views.finish,name="finish"),
+    path('fail',views.fail,name="fail"),
 ]

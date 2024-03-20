@@ -27,6 +27,9 @@ def wronglocation(request):
 def finish(request):
     return render(request,"finish.html")
 
+def fail(request):
+    return render(request,"fail.html")
+
 def quiz(request):
     if request.method == "POST":
         # Load quiz and get questions and points per question
@@ -65,7 +68,7 @@ def quiz(request):
         if percent % 1 == 0:
             percent = int(percent)
         if(percent > 50): #the player has passed
-            return activityFinished(request)
+            return activityFinished(request,percent/100)
         else:
             return render(request,"fail.html")
 
@@ -123,7 +126,7 @@ def trivia(request):
         hunt = request.GET.get('hunt')
         return render(request,"trivia.html",{'fact':request.GET.get('extra'),'hunt':hunt})
     else:
-        return activityFinished(request)
+        return activityFinished(request,1)
 
 def verify(request):
     if request.user.is_authenticated:
@@ -198,7 +201,7 @@ def verify(request):
     else:
         return redirect(request,"/accounts/login.html",context={'extra':activity['location_name']})
     
-def activityFinished(request):
+def activityFinished(request,multiplier):
     huntID = request.POST.get('hunt')
 
     #add the points to the database
@@ -206,9 +209,8 @@ def activityFinished(request):
     hunt = Treasure.getTreasure(id=huntID)
     activityID = hunt.getStageActivity(stage+1)
     points = Treasure.getActivities()[activityID]['points']
-    print(points)
 
-    Treasure.incrementStage(request.user.username,huntID,points)
+    Treasure.incrementStage(request.user.username,huntID,points*multiplier)
 
     try: #if the user has not finished the treasure hunt
         stage += 1 #get the next stage
@@ -217,7 +219,7 @@ def activityFinished(request):
         return render(request,"next.html",{'location':activity['location_name']})
     except Stage.DoesNotExist: #if the user has finished the treasure hunt, there is no next stage
         points = hunt.getPoints()
-        Treasure.incrementStage(request.user.username,huntID,points) #add the bonus points for completing the treasure hunt
+        Treasure.incrementStage(request.user.username,huntID,points*multiplier) #add the bonus points for completing the treasure hunt
         return render(request,"finish.html")
     
 def validatePage(request):
