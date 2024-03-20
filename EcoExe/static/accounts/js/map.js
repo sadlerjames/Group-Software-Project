@@ -61,6 +61,8 @@ async function initMap(coordinates) {
         center: {lat: 50.737273546349144, lng: -3.5351586176728236},
         zoom: 14,
         mapId: "5d7ba1c59311dfdd",
+        streetViewControl: false,
+        fullscreenControl: false,
       });
 
     for (let i = 0; i < coordinates.length; i++) {
