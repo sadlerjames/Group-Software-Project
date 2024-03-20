@@ -1,11 +1,7 @@
 #Authored by Finn Ashby
 from django.db import models
-#from treasurehunt import treasure
-# Create your models here.
 from django.db import models
-
 from django import template
-
 from django.db import models
 
 class TreasureHunt(models.Model):
@@ -39,9 +35,6 @@ class Stage(models.Model):
 
     def __str__(self):
         return f"Slot {self.order} of Treasure Hunt {self.hunt.hunt_id}"
-    
-
-
     
 
 class UserTreasure(models.Model):

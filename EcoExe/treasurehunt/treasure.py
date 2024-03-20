@@ -60,7 +60,6 @@ class Treasure:
     def getActivities():
         #{i.title: i.specs for i in models.Activities.objects.all()}
         a=(models.Activities.objects.values())
-        #print(a[1])
         new_dict = {}
         for item in a:
             name = item['act_id']
@@ -112,7 +111,3 @@ class Treasure:
             except models.UserTreasure.DoesNotExist:
                 newHunts.append(Treasure.getTreasure(id=hunt.hunt_id))
         return newHunts
-
-#a=Treasure('Polo1',256)
-#a.addStage(1)
-#print("1231231231232POLOPOPOPOOPLPOKPOASKDPOASKASPDKASDOKAASKDPAKDSP")
