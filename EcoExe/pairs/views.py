@@ -7,3 +7,6 @@ def play_game(request):
         return render(request, 'pairs/game.html',{'hunt':hunt})
     else:
         return activityFinished(request)
+
+def view_sources(request):
+    return render(request, 'pairs/sources.html')
