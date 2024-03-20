@@ -28,6 +28,7 @@ urlpatterns = [
     path('trivia/',views.trivia,name="trivia"),
     path('wrong/',views.wrong,name="wrong"),
     path('next_locations/',views.getPins,name="next_locations"),
+    path('new_locations/',views.getNewPins,name="new_locations"),
     path('wronglocation/',views.wronglocation,name="wronglocation"),
     path('finish',views.finish,name="finish"),
     path('fail',views.fail,name="fail"),

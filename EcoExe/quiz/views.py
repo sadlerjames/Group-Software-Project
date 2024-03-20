@@ -1,7 +1,7 @@
 #Authored by Sam Arrowsmith, Finn Ashby, Dan Harkness-Moore, Jack Hales
 
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from django.utils import timezone
 import json
 import ast
@@ -155,4 +155,8 @@ def daily_quiz(request):
         return render(request, "daily_quiz.html", context)
     
 def daily_quiz_result(request):
+    # Throw 404 error if user tries to access URL
+    if not request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        raise Http404()
+    
     return render(request, "daily_quiz_result.html")
