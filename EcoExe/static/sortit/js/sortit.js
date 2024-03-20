@@ -1,3 +1,5 @@
+// Authored by Sam Arrows
+
 function getPositionAsNumVWH(str) {
   return Number(str.split("v")[0]);  //splits the attribute string if its stored in vh or vw
 }
