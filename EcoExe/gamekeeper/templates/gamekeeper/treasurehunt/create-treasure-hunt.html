@@ -11,12 +11,13 @@
 {% block index %}
     <h1>Create a treasure hunt!</h1>
     <h3>Add activities in the order you would like to be completed</h3>
-    <p>Info about creating a treasure hunt</p>
+    <p>On this page, you can link your activities together to create a treasure hunt!</p>
+    <p>This will give you a pdf, containing QR codes for each stage!</p>
     <p>{{message}}</p>
     <br>
     {%load filter%}
     {%if pdf|exists%}
-    <a href = "/media/pdfs/{{ pdf }}.pdf">Link to pdf containing your treasure hunt</a>
+    <a href = "/media/pdfs/{{ pdf }}.pdf" target="_blank">Link to pdf containing your treasure hunt</a>
     {%endif%}
     <p></p>
 
