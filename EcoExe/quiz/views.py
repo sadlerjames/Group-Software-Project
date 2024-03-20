@@ -102,7 +102,7 @@ def daily_quiz(request):
             
         # Default quiz and time limit if not set for today
         quiz_id = 1
-        time_limit = 30
+        time_limit = -1
 
         # Get today's daily quiz
         for option in dailyQuizzes:
@@ -116,6 +116,10 @@ def daily_quiz(request):
         quiz = load(quiz_id)
         questions = quiz.getQuestion(-1)
         answers = quiz.getAnswer(-1)
+
+        # Default time limit if not set for today
+        if time_limit == -1:
+            time_limit = 20 * len(questions)
 
         # Change into form required for displaying quiz
         data = []

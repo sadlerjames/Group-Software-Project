@@ -16,14 +16,18 @@
     <h1>EcoExe Leaderboard</h1>
     <h3 class="white-subheading">View how well you're doing compared to others.</h3>
     <br>
+    <p>Choose whether to view leaderboards for treasure hunts or specific quizzes.</p>
+    <input id="btnTreasureHunt" type="button" class="button" value="Treasure Hunts">
+    <input id="btnQuizzes" type="button" class="button" value="Quizzes">
+    <br>
     <div id="ajax-response">
         <label for="leaderboard-options">Filter by activity:</label>
         <select id="leaderboard-options" class="dropdown">
             <option leaderboard="overall">Overall Leaderboard</option>
         </select>
         <br>
-        <label for="filter-options">Filter by time:</label>
-        <select id="filter-options" class="dropdown">
+        <label for="filter-options" class="filter-options">Filter by time:</label>
+        <select id="filter-options" class="dropdown filter-options">
             <option filter="all-time">All-Time</option>
             <option filter="past-year">Past Year</option>
             <option filter="past-month">Past Month</option>
