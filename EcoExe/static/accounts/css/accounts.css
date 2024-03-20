@@ -20,7 +20,7 @@
   }
 }
 
-button, #dashboard-buttons a {
+button, #dashboard-buttons a, .button {
   align-items: center;
   appearance: none;
   background-color: #00dca5;

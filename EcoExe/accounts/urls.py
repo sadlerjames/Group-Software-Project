@@ -25,12 +25,12 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', views.dashboard, name="dashboard"),
     path('login/', views.login_view, name="loginpage"),
-    path('reset/done/', views.password_reset_done, name="password_reset_done"),
-    path('password-reset-complete/',
+    path('reset/done/',
          auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
          name='password_reset_complete'),
-    path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
-    path('password-reset-confirmed/<uidb64>/<token>/',
+    path('password_reset/', ResetPasswordView.as_view(), name='password_reset'),
+    path('password_reset/done/', views.password_reset_done, name='password_reset_done'),
+    path('password_reset_confirmed/<uidb64>/<token>/',
          auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'),
          name='password_reset_confirmed'),
     path('dashboard/', views.dashboard, name="dashboard"),
@@ -39,7 +39,6 @@ urlpatterns = [
     path('password_change/done/', PasswordChangeDoneView.as_view(), name='password_change_done'),
     path('logout/', views.logoutview, name='logout'),
     path('profile/', views.userprofile, name='profile'),
-    path('update-password/', UpdatePasswordView.as_view(), name='password_update'),
     path('delete_account/', views.delete_account, name='delete_account'),
     path('delete_account_success/', views.delete_account_success, name='delete_account_success')
 ]

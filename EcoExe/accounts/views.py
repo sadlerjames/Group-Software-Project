@@ -20,7 +20,7 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
                       "if an account exists with the email you entered. You should receive them shortly." \
                       " If you don't receive an email, " \
                       "please make sure you've entered the address you registered with, and check your spam folder."
-    success_url = reverse_lazy('dashboard')
+    success_url = reverse_lazy('password_reset_done')
 
 class SignUp(generic.CreateView):
     form_class = SignUpForm
@@ -30,15 +30,15 @@ class SignUp(generic.CreateView):
 class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = 'change_password.html'
     success_message = "Successfully Changed Your Password"
-    success_url = reverse_lazy('users-home')
+    success_url = reverse_lazy('password_change_done')
 
 class CustomPasswordChangeView(PasswordChangeView):
     form_class = CustomPasswordChangeForm
     success_url = reverse_lazy('password_change_done')
-    template_name = 'registration/password_change_form.html'
+    template_name = 'change_password.html'
 
 class PasswordChangeDoneView(TemplateView):
-    template_name = 'registration/password_change_done.html'
+    template_name = 'change_password_complete.html'
 
 @login_required()    
 def dashboard(request):
@@ -111,11 +111,6 @@ def userprofile(request):
     return render(request, 'profile.html', {'user_form': user_form})
 
 
-class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
-    template_name = 'registration/update-password.html'
-    success_message = "Successfully Changed Your Password"
-    success_url = reverse_lazy('users-home')
-
 @login_required
 def delete_account(request):
     if request.method == 'POST':
@@ -131,6 +126,6 @@ def delete_account_success(request):
     return render(request, 'registration/delete_account_success.html')
 
 def password_reset_done(request):
-    return render(request, 'password_reset_complete.html')
+    return render(request, 'password_reset_done.html')
 
 
