@@ -1,3 +1,5 @@
+#Authored by George Piper
+
 from django.shortcuts import render,redirect
 from treasurehunt.views import activityFinished
 
