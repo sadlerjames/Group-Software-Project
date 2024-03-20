@@ -78,7 +78,7 @@ async function getLocations(csrfToken) {
                 image: data[key][3]
             });
         }
-        console.log(allCoordinates);
+        //console.log(allCoordinates);
 
         initMap(allCoordinates);
     }
@@ -134,6 +134,11 @@ async function initMap(coordinates) {
             });
         })();
     }
+
+    // Close info window when clicking on the map
+    map.addListener("click", () => {
+        infoWindow.close();
+    });
 }
 
 
