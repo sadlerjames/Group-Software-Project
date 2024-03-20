@@ -2,7 +2,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from accounts.models import User
-#from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 
 class LoginViewTest(TestCase):
@@ -16,10 +15,10 @@ class LoginViewTest(TestCase):
         #verifies that if the link to login is input while an authenticated user is already signed in, that the page redirects to the dashboard
         self.client.login(username='testuser', password='12345')
 
-        response = self.client.get(reverse('login'))
+        response = self.client.get(self.login_url)
         self.assertEqual(response.status_code, 302)  # Verify the response code for login
 
-        response = self.client.get(reverse('dashboard'))
+        response = self.client.get(self.dashboard_url)
         self.assertEqual(response.status_code, 200)  # Verify the response code for dashboard
 
     def test_login_with_valid_credentials(self):
