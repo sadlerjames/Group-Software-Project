@@ -1,16 +1,15 @@
 function getCookie(name) {
-const cookies = document.cookie.split(';');
-for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    // Check if this cookie starts with the name we're looking for
-    if (cookie.startsWith(name + '=')) {
-        // Return the cookie value
-        return decodeURIComponent(cookie.substring(name.length + 1));
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Check if this cookie starts with the name we're looking for
+        if (cookie.startsWith(name + '=')) {
+            // Return the cookie value
+            return decodeURIComponent(cookie.substring(name.length + 1));
+        }
     }
-}
-// Return null if the cookie with the specified name is not found
-return null;
-
+    // Return null if the cookie with the specified name is not found
+    return null;
 }
 
 const csrfToken = getCookie('csrftoken');
@@ -30,7 +29,7 @@ function getLocations(csrfToken) {
     })
     .then(data => {
         var allCoordinates = [];
-        console.log(data);
+        //console.log(data);
     
         for (var key in data) {
     
@@ -53,8 +52,6 @@ function getLocations(csrfToken) {
     });
 }
 
-
-
 async function initMap(coordinates) {
     const { Map, InfoWindow } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
@@ -75,8 +72,7 @@ async function initMap(coordinates) {
     for (let i = 0; i < coordinates.length; i++) {
         let point = coordinates[i];
 
-        console.log(point);
-
+        //console.log(point);
 
         const pinBackground = new PinElement({
             background: "#003c3c",
@@ -101,9 +97,4 @@ async function initMap(coordinates) {
         });
     }
   }
-//   window.initMap = initMap;
-
-  window.addEventListener('load', function() {
-    getLocations(csrfToken);
-})
 

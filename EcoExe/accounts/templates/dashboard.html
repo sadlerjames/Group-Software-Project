@@ -7,9 +7,8 @@
 {% block scripts %}
     {% load static %}
     <script
-      async
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL5gQ38rSDQmJqoZBWSK8ZEYFreGvO-lk&callback=initMap&v=weekly"
-      defer>
+      async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL5gQ38rSDQmJqoZBWSK8ZEYFreGvO-lk&callback=getLocations&v=weekly">
     </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script async src="{% static '/accounts/js/map.js' %}"></script>
