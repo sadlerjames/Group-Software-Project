@@ -1,0 +1,31 @@
+<!--Authored by James Sadler-->
+
+{% extends "base_ecoexe.html" %}
+
+{% block title %}Error 404{% endblock %}
+
+{% block index %}
+<h1>Error 500</h1>
+<h3 class="white-subheading">Internal Server Error!</h3>
+<p>We apologise with this!</p>
+
+<br>
+{% if user.is_authenticated %}
+    <p>Try heading back to the dashbord!</p>    
+	<p>
+		<a href="/accounts/dashboard" class="button">dashboard</a>
+	</p>
+
+{% else %}
+    <h3 class="white-subheading">Try Signing Up/Signing In!</h3>
+	<p>
+		<a href="/accounts/login" class="button">Sign In</a>
+	</p>
+	<p>
+		<a href="/accounts/signup" class="button">Register</a>
+	</p>
+	<p>
+		<a href="/gamekeeper/login" class="button">Game Keeper Sign In</a>
+	</p>
+{% endif %}
+{% endblock %}
