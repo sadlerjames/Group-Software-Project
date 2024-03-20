@@ -9,7 +9,7 @@ class Quizzes(models.Model):
     points=models.IntegerField(default=0)
     time=models.IntegerField(default=60)
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 register=template.Library()
 @register.tag_function
