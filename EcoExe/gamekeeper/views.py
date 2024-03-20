@@ -172,6 +172,11 @@ def create_treasure(request):
                 return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html",context={'message':'A treasure hunt with this name already exists'})
             makePDF(name,request.POST.get('extra_field_count'))
             context['pdf'] = name #provide a link to the pdf on the page
+
+            # delete all the temp qr codes
+            for i in range(1,int(request.POST.get('extra_field_count'))+1): #for each activity
+                os.remove("gamekeeper/templatetags/qrcodes/{treasurename}_{index}.png".format(treasurename=name,index=i))
+
         return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html",context=context)
     else:
         return render(request,"gamekeeper/treasurehunt/create-treasure-hunt.html")

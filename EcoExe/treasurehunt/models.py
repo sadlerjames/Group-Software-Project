@@ -48,4 +48,4 @@ class UserTreasure(models.Model):
         unique_together = ('hunt', 'player')
 
     def __str__(self):
-        return f"{self.player.username}'s Progress in Treasure Hunt {self.hunt.hunt_id}"
+        return f"{self.player}'s Progress in Treasure Hunt {self.hunt.hunt_id}"

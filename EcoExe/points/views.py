@@ -11,6 +11,9 @@ from operator import itemgetter
 from .models import Points
 from quiz.models import Quizzes
 from quiz.templatetags import quiz
+from treasurehunt.models import TreasureHunt
+from treasurehunt.treasure import Treasure
+from treasurehunt.models import UserTreasure
 
 def leaderboard(request):
     return render(request, "leaderboard.html")
@@ -21,16 +24,30 @@ def fetch_options(request):
     if not request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         raise Http404()
     
-    # Fetch all quizzes from database
-    options = Quizzes.objects.values_list('id', flat=True)
-    
-    # Iterate through each quiz object and store the id and name
-    data = []
-    for option in options:
-        data.append({
-            'quiz_id': option,
-            'quiz_name': quiz.load(option).getName(),
-        })
+    # Is this for treasure hunts or quizzes?
+    leaderboard_type = request.GET.get('type')
+
+    if leaderboard_type == "treasure_hunt":
+        # Fetch all quizzes from database
+        options = TreasureHunt.objects.values_list('hunt_id', flat=True)
+        # Iterate through each quiz object and store the id and name
+        data = []
+        for option in options:
+            data.append({
+                'quiz_id': option,
+                'quiz_name': Treasure.getTreasure(option).getName(),
+            })
+            
+    elif leaderboard_type == "quiz":
+        # Fetch all quizzes from database
+        options = Quizzes.objects.values_list('id', flat=True)
+        # Iterate through each quiz object and store the id and name
+        data = []
+        for option in options:
+            data.append({
+                'quiz_id': option,
+                'quiz_name': quiz.load(option).getName(),
+            })
 
     return JsonResponse(list(data), safe=False)
 
@@ -39,22 +56,40 @@ def get_points(request):
     if not request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         raise Http404()
     
+    # Is this for treasure hunts or quizzes?
+    leaderboard_type = request.GET.get('type')
+
     # Get options from AJAX request and fetch points from the database
     quiz_id = request.GET.get('quiz_id')
     filter = request.GET.get('filter')
-    points = Points.objects.all().select_related('quiz_id', 'user_id')
+    if leaderboard_type == "treasure_hunt":
+        points = UserTreasure.objects.all()
+        print(points)
+            
+    elif leaderboard_type == "quiz":
+        points = Points.objects.all().select_related('quiz_id', 'user_id')
+    
     data = []
 
     # If points table isn't empty, convert objects into a list of dictionaries
     if points.exists():
         points_data = []
         for point in points:
-            point_dict = {
-                'username': point.user_id.username,
-                'quiz_id': point.quiz_id.id,
-                'points': point.points,
-                'timestamp': point.timestamp,
-            }
+            if leaderboard_type == "treasure_hunt":
+                point_dict = {
+                    'username': point.player,
+                    'quiz_id': point.hunt_id,
+                    'points': point.no_points,
+                    'timestamp': timezone.now(),
+                }
+            elif leaderboard_type == "quiz":
+                point_dict = {
+                    'username': point.user_id.username,
+                    'quiz_id': point.quiz_id.id,
+                    'points': point.points,
+                    'timestamp': point.timestamp,
+                }
+
             points_data.append(point_dict)
 
         # Filter out points that match the timestamp filter selected

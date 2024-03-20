@@ -1,0 +1,29 @@
+<!--Authored by James Sadler-->
+
+{% extends "base_ecoexe.html" %}
+
+{% block title %}Error 404{% endblock %}
+
+{% block index %}
+<h1>Error 404</h1>
+<h3 class="white-subheading">The page you tried to visit, doesn't exist anymore! Please try a different page!</h3>
+<br>
+{% if user.is_authenticated %}
+    <h3 class="white-subheading">Or head back to the dasboard!</h3>
+	<p>
+		<a href="/accounts/dashboard" class="button">dashboard</a>
+	</p>
+
+{% else %}
+    <h3 class="white-subheading">Or Sign Up/Sign In!</h3>
+	<p>
+		<a href="/accounts/login" class="button">Sign In</a>
+	</p>
+	<p>
+		<a href="/accounts/signup" class="button">Register</a>
+	</p>
+	<p>
+		<a href="/gamekeeper/login" class="button">Game Keeper Sign In</a>
+	</p>
+{% endif %}
+{% endblock %}
