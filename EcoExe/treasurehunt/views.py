@@ -1,3 +1,4 @@
+#Authored by George Piper
 from django.shortcuts import render,redirect
 import json
 from matplotlib.patches import Circle
@@ -173,7 +174,7 @@ def verify(request):
             print(y,longitude)
 
             circle = Circle((float(x),float(y)),radius = 0.001) #a circle centering on the qr code with about a 40m radius
-            if(True):
+            if(circle.contains_point([latitude,longitude])):
                 name =  request.user.username
                 #check the user has scanned the qr code for the stage after the last one they completed
                 if Treasure.getStageNo(player_name=name,hunt_id=huntID) == int(stage)-1:
