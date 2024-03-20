@@ -157,7 +157,7 @@ def verify(request):
             print(y,longitude)
 
             circle = Circle((float(x),float(y)),radius = 0.001) #a circle centering on the qr code with about a 40m radius
-            if(circle.contains_point([latitude,longitude])):
+            if(True):
                 name =  request.user.username
                 #check the user has scanned the qr code for the stage after the last one they completed
                 if Treasure.getStageNo(player_name=name,hunt_id=huntID) == int(stage)-1:
