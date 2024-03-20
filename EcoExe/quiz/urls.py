@@ -19,7 +19,6 @@ from . import views
 #from .views import *
 
 urlpatterns = [
-    path('quizzes/', views.quizzes, name='quizzes'),
     path('quizzes/get_quiz', views.get_quiz, name='get_quiz'),
     path('quizzes/daily', views.daily_quiz, name='daily_quiz'),
     path('quizzes/daily_result', views.daily_quiz_result, name='daily_quiz_result'),

@@ -1,4 +1,4 @@
-#Authored by Sam Arrowsmith, Finn Ashby, Dan Harkness-Moore
+#Authored by Sam Arrowsmith, Finn Ashby, Dan Harkness-Moore, Jack Hales
 
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -10,10 +10,6 @@ from gamekeeper.models import DailyQuizzes
 from quiz.models import Quizzes
 from points.models import DailyPoints
 import datetime
-
-
-def quizzes(request):
-    return render(request, 'quiz/quiznew.html')
 
 def get_quiz(request):
         # if request.method == "GET":
@@ -36,6 +32,7 @@ def daily_quiz(request):
         quizObj = Quizzes.objects.get(pk=quiz_id)
         questions = quiz.getQuestion(-1)
         pointsPerQuestion = quizObj.points
+        today = datetime.date.today()
 
         # Set default values
         score = 0
@@ -71,9 +68,10 @@ def daily_quiz(request):
 
         # Save this to the database
         try:
-            db = DailyPoints(points=final_score, timestamp=timestamp, quiz_id=quizObj, user_id=request.user)
+            db = DailyPoints(points=final_score, timestamp=timestamp, quiz_id=quizObj, user_id=request.user, date_id=today)
             db.save()
-        except:
+        except Exception as e:
+            print(e)
             pass
 
         # Set context for results page

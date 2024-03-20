@@ -21,6 +21,7 @@ class Points(models.Model):
 class DailyPoints(models.Model):
     user_id = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
     quiz_id = models.ForeignKey("quiz.Quizzes", related_name="daily_quiz_id_points", on_delete=models.SET_NULL, null=True)
+    date = models.ForeignKey("gamekeeper.DailyQuizzes", on_delete=models.SET_NULL, null = True)
     points = models.IntegerField(default=0)
     timestamp = models.DateTimeField(default=timezone.now())
 
@@ -28,5 +29,5 @@ class DailyPoints(models.Model):
     # This prevents the user having two scores for the same quiz
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['user_id', 'quiz_id'], name='composite_primary_key_2')
+            models.UniqueConstraint(fields=['user_id', 'quiz_id', 'date'], name='composite_primary_key_2')
         ]
