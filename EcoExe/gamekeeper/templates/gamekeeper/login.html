@@ -5,12 +5,12 @@
 {% block form %}
 <h2>Game Keeper Sign In</h2>
 <form method="post">
-{% csrf_token %}
-{{ form.as_p }}
-{% if msg %}
-  <p>{{ msg }}</p>
-{% endif %}
-<button type="submit">Sign In</button>
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if msg %}
+    <p>{{ msg }}</p>
+  {% endif %}
+  <button type="submit">Sign In</button>
 </form>
 <a href="/">Back to homepage</a>
 {% endblock %}

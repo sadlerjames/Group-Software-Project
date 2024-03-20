@@ -13,6 +13,7 @@
 <h1>Create a Quiz</h1>
 <br>
 <p>Please enter the correct answer in the first answer box.</p>
+
 <form method="post">
     {% csrf_token %}
     <div id="forms">
@@ -22,5 +23,6 @@
     <button type="button" id="add-another">Add Question</button>
     <input type="submit" class="button" value="Submit" id="create-quiz-submit"/>
 </form>
+
 <a href="/gamekeeper/dashboard">Back to dashboard</a>
 {% endblock %}

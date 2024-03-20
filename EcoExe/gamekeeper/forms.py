@@ -1,8 +1,6 @@
 #Authored by George Piper and James Sadler
 
 from django import forms
-from django.core.validators import RegexValidator
-
 
 class LoginForm(forms.Form):
     username = forms.CharField(
