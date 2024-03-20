@@ -105,6 +105,11 @@ button:focus, #dashboard-buttons a:focus {
   all: unset;
 }
 
+#google-maps-display img {
+  max-width: 20vw;
+  max-height: 20vw;
+}
+
 #google-maps-display iframe {
   width: 100%;
   height: 100%;
