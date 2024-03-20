@@ -1,75 +1,67 @@
 <!-- Authored by Dan Harkness-Moore -->
 
-{% extends "base.html" %}
-{% load static %}
+{% extends "pairs/base_pairs.html" %}
+
+{% block title %}Pairs Game Image Sources{% endblock %}
+
 {% block css %}
-<link rel="stylesheet" href="{% static 'pairs/css/pairs.css' %}" />
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'pairs/css/pairs.css' %}" />
+
+	<style>
+		img {
+			max-width: 10vw;
+			max-height: 10vh;
+			width: auto;
+			height: auto;
+		}
+		
+		ul {
+			width: 100%;
+			list-style: none;
+			column-count: 3;
+			padding: 0;
+			margin: 40 0 0 0;
+		}
+		
+		li {
+			padding: 10 0 40 0;
+			margin: 1 0 0 0;
+		}
+		
+		.center {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+		#list, #button {
+			display: flex;
+			justify-content: center;
+		}
+	</style>
 {% endblock %}
-{% block content %}
-<script>
-	var rubbishImageURL = "{% static 'pairs/assets/trash-rubbish.png' %}"
-	var recycleImageURL = "{% static 'pairs/assets/trash-recycle.png' %}"
-	var foodImageURL = "{% static 'pairs/assets/trash-food.png' %}"
-
-	var toiletRollImageURL = "{% static 'pairs/assets/toilet-roll.png' %}"
-	var plasticBagImageURL = "{% static 'pairs/assets/plastic-bag.png' %}"
-	var blueRollImageURL = "{% static 'pairs/assets/blue-roll.png' %}"
-
-	var cardboardImageURL = "{% static 'pairs/assets/cardboard.png' %}"
-	var plasticBottleImageURL = "{% static 'pairs/assets/plastic-bottle.png' %}"
-	var paperImageURL = "{% static 'pairs/assets/paper.png' %}"
-
-	var bananaImageURL = "{% static 'pairs/assets/banana.png' %}"
-	var meatImageURL = "{% static 'pairs/assets/meat.png' %}"
-	var eggplantImageURL = "{% static 'pairs/assets/eggplant.png' %}"
-</script>
-
-<style>
-	img {
-		height: 80;
-		width: 80;
-	}
-	
-	ul {
-		width: 100%;
-		list-style: none;
-		column-count: 3;
-		padding: 0;
-		margin: 40 0 0 0;
-	}
-	
-	li {
-		padding: 10 0 40 0;
-		margin: 1 0 0 0;
-	}
-	
-	.center {
-		margin: auto;
-		width: 75%;
-	}
-	
-	div.h2 {
-		margin: 20 0 0 0;
-		text-align: center;
-	}
-</style>
+{% block index %}
+<h1>Click an image to view its source</h1>
 <div class='center'>
-	<h2 class='center'>Click an image to view its source</h2>
-	<ul>
-		<li><a href="https://www.vecteezy.com/free-vector/objects"><img src="{% static 'pairs/assets/toilet-roll.png' %}"></a></li>
-		<li><a href="https://www.vecteezy.com/free-vector/vector"><img src="{% static 'pairs/assets/blue-roll.png' %}"></a></li>
-		<li><a href="https://www.vecteezy.com/free-vector/art"><img src="{% static 'pairs/assets/plastic-bag.png' %}"></a></li>
-		<li><a href="https://www.vecteezy.com/free-vector/cardboard"><img src="{% static 'pairs/assets/cardboard.png' %}"></a></li>
-		<li><a href="https://www.vecteezy.com/free-vector/medical"><img src="{% static 'pairs/assets/plastic-bottle.png' %}"></a></li>
-		<li><a href="https://www.vecteezy.com/free-vector/sheet"><img src="{% static 'pairs/assets/paper.png' %}"></a></li>
-		<li><a href='https://www.iconsdb.com/green-icons/trash-10-icon.html'><img id='imgBin' src="{% static 'pairs/assets/trash-rubbish.png' %}"></a></li>
-		<li><a href="https://www.vecteezy.com/free-vector/design"><img src="{% static 'pairs/assets/banana.png' %}"></a></li>
-		<li><a href="https://www.vecteezy.com/free-vector/nature"><img src="{% static 'pairs/assets/meat.png' %}"></a></li>
-		<li><a href="https://www.vecteezy.com/free-vector/eggplant"><img src="{% static 'pairs/assets/eggplant.png' %}"></a></li>
-	</ul>
-	<a href='/pairs/game/'><input type='button' class='button' style='display: block; margin: auto;' value='Return'></a>
+	<div id="list">
+		<ul>
+			<li><a href="https://www.vecteezy.com/free-vector/objects"><img src="{% static 'pairs/assets/toilet-roll.png' %}"></a></li>
+			<li><a href="https://www.vecteezy.com/free-vector/vector"><img src="{% static 'pairs/assets/blue-roll.png' %}"></a></li>
+			<li><a href="https://www.vecteezy.com/free-vector/art"><img src="{% static 'pairs/assets/plastic-bag.png' %}"></a></li>
+			<li><a href="https://www.vecteezy.com/free-vector/cardboard"><img src="{% static 'pairs/assets/cardboard.png' %}"></a></li>
+			<li><a href="https://www.vecteezy.com/free-vector/medical"><img src="{% static 'pairs/assets/plastic-bottle.png' %}"></a></li>
+			<li><a href="https://www.vecteezy.com/free-vector/sheet"><img src="{% static 'pairs/assets/paper.png' %}"></a></li>
+			<li><a href='https://www.iconsdb.com/green-icons/trash-10-icon.html'><img id='imgBin' src="{% static 'pairs/assets/trash-rubbish.png' %}"></a></li>
+			<li><a href="https://www.vecteezy.com/free-vector/design"><img src="{% static 'pairs/assets/banana.png' %}"></a></li>
+			<li><a href="https://www.vecteezy.com/free-vector/nature"><img src="{% static 'pairs/assets/meat.png' %}"></a></li>
+			<li><a href="https://www.vecteezy.com/free-vector/eggplant"><img src="{% static 'pairs/assets/eggplant.png' %}"></a></li>
+		</ul>
+	</div>
+	<div id="button">
+		<a href='/pairs/game/'><input type='button' class='button' value='Back to Game'></a>
+	</div>
 </div>
-
 
 <script>
 	var i = 0;

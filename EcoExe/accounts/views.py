@@ -12,6 +12,7 @@ from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.decorators import login_required
 from treasurehunt.treasure import Treasure
 
+# Create view for resetting password, and email that is sent to user with reset link
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'password_reset.html'
     email_template_name = 'password_reset_email.html'
@@ -22,29 +23,36 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
                       "please make sure you've entered the address you registered with, and check your spam folder."
     success_url = reverse_lazy('password_reset_done')
 
+# Create view for sign up
 class SignUp(generic.CreateView):
     form_class = SignUpForm
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
+# Create view for changing password
 class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = 'change_password.html'
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('password_change_done')
 
+# Create view for changing password
 class CustomPasswordChangeView(PasswordChangeView):
     form_class = CustomPasswordChangeForm
     success_url = reverse_lazy('password_change_done')
     template_name = 'change_password.html'
 
+# Create view for password reset email sent
 class PasswordChangeDoneView(TemplateView):
     template_name = 'change_password_complete.html'
 
+# Create view for main dashboard
+# User must be authenticated
 @login_required()    
 def dashboard(request):
     return render(request, "dashboard.html")
-       
-#process the POST request and create the user 
+
+# Create view for user registration
+# Process the POST request and create the user 
 def signup(request):
     #if the user is already signed in take them to dashboard
     if request.user.is_authenticated:
@@ -65,7 +73,8 @@ def signup(request):
             form = SignUpForm()
         return render(request,'registration/signup.html',{'form':form,'msg':msg})
 
-#process the login request and sign the user in if checks pass
+# Create view for login page
+# Process the login request and sign the user in if checks pass
 def login_view(request):
     #if the user is already signed in take them to dashboard
     if request.user.is_authenticated:
@@ -90,12 +99,15 @@ def login_view(request):
                 msg = 'Error validating form'
         return render(request,'registration/login.html',{'form':form,'msg':msg})
 
+# Create view to logout user
+# User must be authenticated
 @login_required()  
 def logoutview(request):
     logout(request)
     return redirect('/accounts/login')
 
-
+# Create view to view user profile
+# User must be authenticated
 @login_required
 def userprofile(request):
     if request.method == 'POST':
@@ -103,14 +115,14 @@ def userprofile(request):
         
         if user_form.is_valid():
             user_form.save()
-            # messages.success(request, 'Your profile is updated successfully')
             return redirect(to='profile')
     else:
         user_form = UpdateUserForm(instance=request.user)
 
     return render(request, 'profile.html', {'user_form': user_form})
 
-
+# Create view to delete user
+# User must be authenticated
 @login_required
 def delete_account(request):
     if request.method == 'POST':
@@ -122,9 +134,11 @@ def delete_account(request):
         return redirect('/accounts/delete_account_success')
     return render(request, 'registration/delete_account_confirmation.html')
 
+# Create view for confirm account deletion
 def delete_account_success(request):
     return render(request, 'registration/delete_account_success.html')
 
+# Create view to confirm password reset
 def password_reset_done(request):
     return render(request, 'password_reset_done.html')
 

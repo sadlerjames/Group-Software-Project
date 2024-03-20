@@ -4,8 +4,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from PIL import Image
 
-# Create your models here.
-
+# Custom fields for user model
 class User(AbstractUser):
     is_gamekeeper = models.BooleanField('Is game keeper', default=False)
     avatar = models.ImageField(default='default.jpg', upload_to='profile_images')

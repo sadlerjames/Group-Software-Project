@@ -61,6 +61,7 @@ async function getLocations(csrfToken) {
         console.error('There was a problem with the fetch operation:', error);
     });
 
+    // Get data needed for each pinpoint
     function processData(data, source) {
         for (var key in data) {
             var name = data[key][0];
@@ -78,16 +79,18 @@ async function getLocations(csrfToken) {
                 image: data[key][3]
             });
         }
-        console.log(allCoordinates);
 
+        // Populate map with pinpoints
         initMap(allCoordinates);
     }
 }
 
+// Load map with pinpoints
 async function initMap(coordinates) {
     const { Map, InfoWindow } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
 
+    // Map config
     const map = new Map(document.getElementById("google-maps-display"), {
         center: {lat: 50.737273546349144, lng: -3.5351586176728236},
         zoom: 14,
@@ -103,6 +106,7 @@ async function initMap(coordinates) {
         (function() {
             let point = coordinates[i];
 
+            // Setn background colour depending on whether it is a new or in progress hunt
             let pinBackground;
             if (point.source === "first") {
                 pinBackground = new PinElement({
@@ -125,6 +129,7 @@ async function initMap(coordinates) {
                 content: pinBackground.element,
             });
 
+            // Popup when clicking a pinpoint
             marker.addListener("click", ({ domEvent, latLng }) => {
                 const { target } = domEvent;
 
@@ -134,6 +139,11 @@ async function initMap(coordinates) {
             });
         })();
     }
+
+    // Close info window when clicking on the map
+    map.addListener("click", () => {
+        infoWindow.close();
+    });
 }
 
 

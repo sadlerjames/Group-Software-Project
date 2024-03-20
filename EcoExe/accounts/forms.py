@@ -5,10 +5,12 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User
 from django.contrib.auth.forms import PasswordChangeForm
 
+# Create password change form
 class CustomPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+# Create login form
 class LoginForm(forms.Form):
     username = forms.CharField(
         widget = forms.TextInput(
@@ -25,6 +27,7 @@ class LoginForm(forms.Form):
         )
     )
 
+# Create sign up form
 class SignUpForm(UserCreationForm):
     username = forms.CharField(
         widget = forms.TextInput(
@@ -76,6 +79,7 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username','email', 'first_name', 'last_name', 'password1','password2')
 
+# Create user profile update form
 class UpdateUserForm(forms.ModelForm):
     username = forms.CharField(
         widget = forms.TextInput(
