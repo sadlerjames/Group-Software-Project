@@ -7,7 +7,6 @@ def play_game(request):
         return render(request, 'pairs/game.html',{'hunt':hunt})
     else:
         score = int(request.POST.get('score'))
-        print(score)
         if(score>2000):
             return activityFinished(request,score/4000)
         else:
