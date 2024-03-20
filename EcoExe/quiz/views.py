@@ -12,14 +12,6 @@ from points.models import DailyPoints
 import datetime
 
 def get_quiz(request):
-        # if request.method == "GET":
-        #     # data = request.GET.get('getdata')
-        #     # print(data)
-        #     #print(ast.literal_eval(data))
-        #     #with open("quiz/templatetags/quizzes/"+ast.literal_eval(data)+'.json') as inf:
-        #         #question = json.load(inf)
-        #         #print(question)
-        #     return request.GET
     return request
 
 def daily_quiz(request):
