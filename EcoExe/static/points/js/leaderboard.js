@@ -2,6 +2,7 @@
 
 var leaderboardType = 'treasure_hunt'
 
+// Function to populate dropdown with treasure hunts
 function showTreasureHunts() {
     leaderboardType = 'treasure_hunt';
     var filterOptions = document.getElementsByClassName('filter-options');
@@ -12,6 +13,7 @@ function showTreasureHunts() {
     displayData();
 }
 
+// Function to populate dropdown with quizzes
 function showQuizzes() {
     leaderboardType = 'quiz';
     var filterOptions = document.getElementsByClassName('filter-options');
@@ -24,9 +26,11 @@ function showQuizzes() {
 
 // Function to display the data from the database
 function displayData() {
+    // Get selected options
     var option = $('#leaderboard-options').find('option:selected').attr('leaderboard');
     var filter_option = $('#filter-options').find('option:selected').attr('filter');
     if (option && filter_option) {
+        // Construct AJAX
         $.ajax({
             url: '/points/get_points',
             data: { 
@@ -59,6 +63,7 @@ function displayData() {
                         user_rank_set = true
                     }
                 });
+                // No data in database for this combination
                 if (is_data == false) {
                     $('#points-table-body').append(
                         '<tr>' +
@@ -81,6 +86,7 @@ function displayData() {
 
 // Function to fetch options from server and populate dropdown
 function loadOptions() {
+    // Construct AJAX
     $.ajax({
         url: '/points/fetch_options',
         type: 'GET',
