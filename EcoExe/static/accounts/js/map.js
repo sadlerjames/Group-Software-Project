@@ -76,6 +76,7 @@ async function getLocations(csrfToken) {
                 image: data[key][3]
             });
         }
+        console.log(allCoordinates);
 
         initMap(allCoordinates);
     }
