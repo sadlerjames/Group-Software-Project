@@ -224,6 +224,7 @@ class Game {
                             btnEndGame.hidden = false;
                             var data = JSON.parse(this.#json);
                             finalScore.innerHTML = "Score: " + data.totalscore;
+                            document.getElementById("score").value = data.totalscore;
                             backgroundLoop.pause();
                             gameOver.play();
                         } else {

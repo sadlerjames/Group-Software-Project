@@ -43,7 +43,7 @@ function getLocations(csrfToken) {
             
             allCoordinates.push([name, latitude, longitude, data[key][2], data[key][3]]);
         }
-    
+        console.log(allCoordinates);
         initMap(allCoordinates);
     
     })
