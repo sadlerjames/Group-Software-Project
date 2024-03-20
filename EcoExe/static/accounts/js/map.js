@@ -30,6 +30,7 @@ function getLocations(csrfToken) {
     })
     .then(data => {
         var allCoordinates = [];
+        console.log(data);
     
         for (var key in data) {
     
@@ -55,7 +56,6 @@ function getLocations(csrfToken) {
 
 
 async function initMap(coordinates) {
-    console.log("ran");
     const { Map, InfoWindow } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
         "marker",
@@ -74,6 +74,8 @@ async function initMap(coordinates) {
 
     for (let i = 0; i < coordinates.length; i++) {
         let point = coordinates[i];
+
+        console.log(point);
 
 
         const pinBackground = new PinElement({
