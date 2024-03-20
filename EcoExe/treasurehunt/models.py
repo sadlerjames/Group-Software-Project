@@ -4,6 +4,8 @@ from django.db import models
 from django import template
 from django.db import models
 
+
+#Model for the treasure hunts
 class TreasureHunt(models.Model):
     hunt_id = models.AutoField(primary_key=True)
     points = models.IntegerField()
@@ -14,6 +16,7 @@ class TreasureHunt(models.Model):
     def __str__(self):
         return f"Treasure Hunt {self.hunt_id}"
 
+#Model for the activities
 class Activities(models.Model):
     act_id=models.AutoField(primary_key=True)
     type=models.TextField()
@@ -23,6 +26,8 @@ class Activities(models.Model):
     location_name=models.TextField(default="Parker moot room!")
     points = models.IntegerField(default = 10)
 
+#Model for each stage which is linked to
+#Has a foreign key with the hunt and activity
 class Stage(models.Model):
     hunt = models.ForeignKey(TreasureHunt, on_delete=models.CASCADE)
     order = models.PositiveIntegerField()
@@ -36,7 +41,7 @@ class Stage(models.Model):
     def __str__(self):
         return f"Slot {self.order} of Treasure Hunt {self.hunt.hunt_id}"
     
-
+#Model showing how far each user has progressed in each stage they have started
 class UserTreasure(models.Model):
     hunt = models.ForeignKey(TreasureHunt, on_delete=models.CASCADE)
     player = models.CharField(max_length=100)
