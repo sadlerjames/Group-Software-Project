@@ -27,6 +27,7 @@ class UserTreasureModelTest(TestCase):
     # this tests that the user treasure is unique
     def test_unique_together_constraint(self):
         with self.assertRaises(Exception):
+            treasure_hunt = TreasureHunt.objects.create(points=100, name='Example Hunt')
             UserTreasure.objects.create(hunt=treasure_hunt, player='test_player', stage_completed=2, no_points=50)
 
 class StageModelTest(TestCase):
@@ -63,6 +64,8 @@ class StageModelTest(TestCase):
     def test_unique_together_constraint(self):
         #test that no new hunts can be made with the same data
         with self.assertRaises(Exception):
+            treasure_hunt = TreasureHunt.objects.create(points=100, name='Example Hunt')
+            activity = Activities.objects.create(type='Type1', name='Activity1', info='Info1', location='Location1')
             Stage.objects.create(hunt=treasure_hunt, order=1, activity_id=activity, no_points=50, information='Information1')
 
 class ActivitiesModelTest(TestCase):
