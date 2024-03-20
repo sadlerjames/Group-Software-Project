@@ -14,7 +14,6 @@ class Quizzes(models.Model):
 register=template.Library()
 @register.tag_function
 def getQ(a):
-    #perform some random computation
     myQ= q.load(1)
     return myQ.getQ(a)
 

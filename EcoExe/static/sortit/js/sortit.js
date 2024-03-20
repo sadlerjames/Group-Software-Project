@@ -135,7 +135,7 @@ function moveObjects() {
       image.style.transition = transition;
     });
   }
-  else{
+  else{//game is over
     clearInterval(intervalID);
     backgroundLoop.pause();
     gameOver.play();
