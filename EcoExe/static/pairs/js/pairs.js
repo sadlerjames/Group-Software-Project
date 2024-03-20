@@ -17,6 +17,8 @@ function startGame() {
     
     document.getElementById("btnStartGame").remove();
     document.getElementById("buttonDiv").hidden = true;
+	document.getElementById("ftrSources").hidden = true;
+	document.getElementById('btnSources').hidden = true;
 
     backgroundLoop.play();
     gameOver.load();
