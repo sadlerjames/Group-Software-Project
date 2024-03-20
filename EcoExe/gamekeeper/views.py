@@ -21,16 +21,18 @@ import os
 from django.core.files.storage import FileSystemStorage
 from pypdf import PdfMerger
 
-
+#Create view for Dashboard
+#Check they are gamekeeper
 @login_required(login_url = '/gamekeeper/login')
 def dashboard(request):
     #if gamekeeper take them to their dashboard
     if getattr(request.user,'is_gamekeeper'): 
         return render(request, "gamekeeper/dashboard.html")
-    #if player them them to their dashboard
+    #if player then return to their dashboard
     else:
         return redirect('/accounts/dashboard')
     
+#Create view for info
 @login_required(login_url = '/gamekeeper/login')
 def info(request):
     #if gamekeeper render info
@@ -40,6 +42,8 @@ def info(request):
         # if player user send to their dashboard
         return redirect('/accounts/dashboard')
 
+#Create view for login
+# Process the login request and sign the keeper in if checks pass
 def login_view(request):
     form = LoginForm(request.POST or None)
     msg = None
@@ -62,7 +66,8 @@ def login_view(request):
             msg = 'Error validating form'
 
     return render(request,'gamekeeper/login.html',{'form':form,'msg':msg}) #send the user back to the login
-    
+
+#Create view for quiz creation  
 @login_required(login_url = '/gamekeeper/login')
 def creation_view(request):
     if getattr(request.user,'is_gamekeeper'):
