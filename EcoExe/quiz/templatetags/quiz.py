@@ -40,11 +40,10 @@ load will load a quiz given its id and return a Quiz object
 '''
 class Quiz:
     def __init__(self,quizName,questions=[],answers=[[]],id=None,correct=[],noPoints=10,loading=False,time_limit=60):
-        #print(correct)
-        #print(questions)
+        #if there are more or less correct answers than questions
         if len(correct)!=len(questions):
             if correct==[]:
-                #print("J")
+
                 for i in range(len(questions)):
                     correct.append(0)
             else:
@@ -58,6 +57,7 @@ class Quiz:
         self.questions=questions
         #self.correct=correct
         self.correct=[]
+        ##Loop through answers and get the index of the correct one
         for i in range(len(answers)):
             #print(i)
             tempCor=answers[i][correct[i]]
@@ -69,6 +69,7 @@ class Quiz:
         self.id=id
         self.points=noPoints
         self.time = time_limit
+        #only saves if the not loading flag is set to false
         if (not loading):
             self.save()
 
@@ -77,7 +78,7 @@ class Quiz:
 
     def save(self):
         if self.id!=None:
-            print("AFSJUAIFH JA",self.time)
+            #print("AFSJUAIFH JA",self.time)
             myDict={'quizName':self.quizName,'questions':self.questions,'answers':self.answers,'correct':self.correct}
             with open("quiz/templatetags/quizzes/"+str(self.id)+'.json',"w") as outf:
                 json.dump(myDict,outf)
@@ -102,6 +103,7 @@ class Quiz:
         with open("quiz/templatetags/quizzes/"+str(self.id)+'.json',"w") as outf:
                 json.dump(myDict,outf)
 
+    #Getters and setter
     def getId(self):
         return self.id
     
@@ -129,6 +131,7 @@ class Quiz:
             return (self.questions,self.answers)
         return (self.questions[n],self.answers[n])
 
+    
     def addQA(self,q,a):
         self.questions.append(q)
 
@@ -140,7 +143,7 @@ class Quiz:
 
         self.answers.append(a)
         self.save()
-
+#Loads and returns a quiz object given its primary key by querying the database
 def load(id):
         with open("quiz/templatetags/quizzes/"+str(id)+'.json') as inf:
             myDict=json.load(inf)
