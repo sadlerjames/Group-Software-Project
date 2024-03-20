@@ -30,6 +30,13 @@ class UserTreasureModelTest(TestCase):
             UserTreasure.objects.create(hunt=treasure_hunt, player='test_player', stage_completed=2, no_points=50)
 
 class StageModelTest(TestCase):
+
+    '''
+    Tests here check that the stage model is functional by setting up a row in the table with data, 
+    checking that the data was inserted correctly, and checking uniqueness of treasure hunts by asserting
+    that an exception is raised if identical data is inserted into the table
+    '''
+
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods

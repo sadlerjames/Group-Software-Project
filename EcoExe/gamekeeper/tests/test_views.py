@@ -7,11 +7,11 @@ from gamekeeper.forms import LoginForm
 
 
 class LoginViewTest(TestCase):
+    #this class tests the login view and that it returns the correct status codes from http responses, ensuring valid users can log in and invalid users get the respective error message
     def setUp(self):
         self.client = Client()
         self.valid_user = User.objects.create_user(username='validgamekeeper', password='testpasswordforgamekeeper987123', is_gamekeeper=True)
         self.login_url = reverse('login')
-        self.dashboard_url = reverse('dashboard')
     
     def test_login_with_valid_credentials(self):
         #verifies that the correct response code (200 for success) is returned when valid gamekeeper credentials are input
