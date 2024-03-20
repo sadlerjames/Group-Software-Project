@@ -271,7 +271,7 @@ def status(request):
  
 def getPins(request):
     # Throw 404 error if user tries to access URL
-    if not request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+    if not request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         raise Http404()
     
     user = request.user.username
@@ -299,7 +299,7 @@ def getPins(request):
 
 def getNewPins(request):
     # Throw 404 error if user tries to access URL
-    if not request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+    if not request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         raise Http404()
     
     user = request.user.username

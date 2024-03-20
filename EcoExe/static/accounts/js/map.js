@@ -21,7 +21,8 @@ async function getLocations(csrfToken) {
     fetch("/treasurehunt/next_locations/", {
         headers: {
             "X-CSRFToken": csrfToken,
-            "Content-Type": "application/json" 
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest"
         }
     })
     .then(response => {
@@ -42,7 +43,8 @@ async function getLocations(csrfToken) {
     fetch("/treasurehunt/new_locations/", {
         headers: {
             "X-CSRFToken": csrfToken,
-            "Content-Type": "application/json" 
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest"
         }
     })
     .then(response => {
