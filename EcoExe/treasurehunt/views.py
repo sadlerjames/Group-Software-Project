@@ -3,7 +3,7 @@ import json
 from matplotlib.patches import Circle
 from treasurehunt.treasure import Treasure
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from quiz.templatetags.quiz import load
 from quiz.models import Quizzes
 from django.utils import timezone
@@ -254,6 +254,10 @@ def status(request):
 
  
 def getPins(request):
+    # Throw 404 error if user tries to access URL
+    if not request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        raise Http404()
+    
     user = request.user.username
     locations = {}
     stages = Treasure.getUserStages(user)
@@ -278,6 +282,10 @@ def getPins(request):
 
 
 def getNewPins(request):
+    # Throw 404 error if user tries to access URL
+    if not request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        raise Http404()
+    
     user = request.user.username
     locations = {}
     hunts = Treasure.getNewHunts(user)
