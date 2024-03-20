@@ -1,14 +1,12 @@
 export default class Level {
-    constructor(wastageTypes, difficulty) {
+    constructor(wastageTypes) {
         this.#matchings = {};
 		this.#completedMatchings = [];
 
-        for(let wastage of Object.values(wastageTypes)) {
-            //this.#matchings[emoji.emojiID] = new Matching(emoji, 2);
+        for(let wastage of Object.values(wastageTypes))
 			this.#matchings[wastage[0].alt] = wastage;
-        }
+
         this.#flippedCards = new Array();
-        this.#setDifficulty(difficulty);
     }
 
     get flippedCards() {
@@ -53,15 +51,7 @@ export default class Level {
 	}
 
     get score() {
-        switch(Level.#difficulty) {
-            case "simple":
-                return this.#score; 
-            case "medium":
-                return this.#score;
-            case "complex":
-                //console.log(this.#score);
-                return this.#score;
-        }
+		return this.#score;
     }
     addScore() {
         this.#score += (500 / (this.#mistakes > 0 ? this.#mistakes : 1));
@@ -74,23 +64,6 @@ export default class Level {
         this.#mistakes++;
     }
 
-    static get difficulty() {
-        return (Level.#difficulty) ? Level.#difficulty : undefined;
-    }
-
-    #setDifficulty(difficulty) {
-        switch(difficulty) {
-            case "simple":
-                Level.#difficulty = difficulty;
-                break;
-            case "medium":
-                Level.#difficulty = difficulty;
-                break;
-            case "complex":
-                Level.#difficulty = difficulty;
-                break;
-        }
-    }
 
     #matchings;
 	#completedMatchings;
@@ -98,7 +71,7 @@ export default class Level {
     #score = 0;
     #mistakes = 0;
     #highScore;
-    static #difficulty;
+    //static #difficulty;
     static #resetting = false;
 }
 
