@@ -170,8 +170,6 @@ def verify(request):
             activitiesID = Treasure.getTreasure(huntID).getStageActivity(stage)
             location = Treasure.getActivities()[activitiesID]['location']
             x,y = location.split(",")
-            print(x,latitude)
-            print(y,longitude)
 
             circle = Circle((float(x),float(y)),radius = 0.001) #a circle centering on the qr code with about a 40m radius
             if(circle.contains_point([latitude,longitude])):
@@ -197,7 +195,7 @@ def verify(request):
                     #show a message about being on the wrong stage
                     try:
                         hunt = Treasure.getTreasure(id=huntID)
-                        print(Treasure.getStageNo(request.user.username,huntID))
+
                         if Treasure.getStageNo(request.user.username,huntID) == 0:
                             #if the user has not started, show the location of the first page
                             activityID = hunt.getStageActivity(1)

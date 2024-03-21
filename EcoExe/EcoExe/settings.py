@@ -136,7 +136,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-DEFAULT_FROM_EMAIL = 'EcoExe <noreply@ecoexe.me>'
+DEFAULT_FROM_EMAIL = 'EcoExe <no-reply@ecoexe.me>'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
